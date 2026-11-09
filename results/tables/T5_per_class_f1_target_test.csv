@@ -1,0 +1,1721 @@
+family,transfer,seed,variant,class_index,class_name,support,f1
+cross_dataset,PAMAP2_to_RealWorld,52,baseline,0,lying,551,0.049415
+cross_dataset,PAMAP2_to_RealWorld,52,baseline,1,sitting,522,0.061224
+cross_dataset,PAMAP2_to_RealWorld,52,baseline,2,standing,548,0.451422
+cross_dataset,PAMAP2_to_RealWorld,52,baseline,3,walking,621,0.582090
+cross_dataset,PAMAP2_to_RealWorld,52,baseline,4,running,652,0.756610
+cross_dataset,PAMAP2_to_RealWorld,52,source_only_continued,0,lying,551,0.113145
+cross_dataset,PAMAP2_to_RealWorld,52,source_only_continued,1,sitting,522,0.174334
+cross_dataset,PAMAP2_to_RealWorld,52,source_only_continued,2,standing,548,0.417992
+cross_dataset,PAMAP2_to_RealWorld,52,source_only_continued,3,walking,621,0.454545
+cross_dataset,PAMAP2_to_RealWorld,52,source_only_continued,4,running,652,0.696181
+cross_dataset,PAMAP2_to_RealWorld,52,lambda0_target_pass,0,lying,551,0.091160
+cross_dataset,PAMAP2_to_RealWorld,52,lambda0_target_pass,1,sitting,522,0.059341
+cross_dataset,PAMAP2_to_RealWorld,52,lambda0_target_pass,2,standing,548,0.450621
+cross_dataset,PAMAP2_to_RealWorld,52,lambda0_target_pass,3,walking,621,0.433576
+cross_dataset,PAMAP2_to_RealWorld,52,lambda0_target_pass,4,running,652,0.353684
+cross_dataset,PAMAP2_to_RealWorld,52,deep_coral,0,lying,551,0.521519
+cross_dataset,PAMAP2_to_RealWorld,52,deep_coral,1,sitting,522,0.207452
+cross_dataset,PAMAP2_to_RealWorld,52,deep_coral,2,standing,548,0.538136
+cross_dataset,PAMAP2_to_RealWorld,52,deep_coral,3,walking,621,0.577492
+cross_dataset,PAMAP2_to_RealWorld,52,deep_coral,4,running,652,0.591876
+cross_dataset,PAMAP2_to_RealWorld,100,baseline,0,lying,551,0.094309
+cross_dataset,PAMAP2_to_RealWorld,100,baseline,1,sitting,522,0.005682
+cross_dataset,PAMAP2_to_RealWorld,100,baseline,2,standing,548,0.224402
+cross_dataset,PAMAP2_to_RealWorld,100,baseline,3,walking,621,0.347163
+cross_dataset,PAMAP2_to_RealWorld,100,baseline,4,running,652,0.538322
+cross_dataset,PAMAP2_to_RealWorld,100,source_only_continued,0,lying,551,0.328649
+cross_dataset,PAMAP2_to_RealWorld,100,source_only_continued,1,sitting,522,0.016620
+cross_dataset,PAMAP2_to_RealWorld,100,source_only_continued,2,standing,548,0.291925
+cross_dataset,PAMAP2_to_RealWorld,100,source_only_continued,3,walking,621,0.104818
+cross_dataset,PAMAP2_to_RealWorld,100,source_only_continued,4,running,652,0.192878
+cross_dataset,PAMAP2_to_RealWorld,100,lambda0_target_pass,0,lying,551,0.321293
+cross_dataset,PAMAP2_to_RealWorld,100,lambda0_target_pass,1,sitting,522,0.098318
+cross_dataset,PAMAP2_to_RealWorld,100,lambda0_target_pass,2,standing,548,0.228500
+cross_dataset,PAMAP2_to_RealWorld,100,lambda0_target_pass,3,walking,621,0.495335
+cross_dataset,PAMAP2_to_RealWorld,100,lambda0_target_pass,4,running,652,0.839631
+cross_dataset,PAMAP2_to_RealWorld,100,deep_coral,0,lying,551,0.487696
+cross_dataset,PAMAP2_to_RealWorld,100,deep_coral,1,sitting,522,0.121053
+cross_dataset,PAMAP2_to_RealWorld,100,deep_coral,2,standing,548,0.440580
+cross_dataset,PAMAP2_to_RealWorld,100,deep_coral,3,walking,621,0.413502
+cross_dataset,PAMAP2_to_RealWorld,100,deep_coral,4,running,652,0.818627
+cross_dataset,PAMAP2_to_RealWorld,445,baseline,0,lying,551,0.306599
+cross_dataset,PAMAP2_to_RealWorld,445,baseline,1,sitting,522,0.201592
+cross_dataset,PAMAP2_to_RealWorld,445,baseline,2,standing,548,0.403175
+cross_dataset,PAMAP2_to_RealWorld,445,baseline,3,walking,621,0.522070
+cross_dataset,PAMAP2_to_RealWorld,445,baseline,4,running,652,0.241420
+cross_dataset,PAMAP2_to_RealWorld,445,source_only_continued,0,lying,551,0.020022
+cross_dataset,PAMAP2_to_RealWorld,445,source_only_continued,1,sitting,522,0.002805
+cross_dataset,PAMAP2_to_RealWorld,445,source_only_continued,2,standing,548,0.221951
+cross_dataset,PAMAP2_to_RealWorld,445,source_only_continued,3,walking,621,0.406803
+cross_dataset,PAMAP2_to_RealWorld,445,source_only_continued,4,running,652,0.193246
+cross_dataset,PAMAP2_to_RealWorld,445,lambda0_target_pass,0,lying,551,0.368768
+cross_dataset,PAMAP2_to_RealWorld,445,lambda0_target_pass,1,sitting,522,0.105263
+cross_dataset,PAMAP2_to_RealWorld,445,lambda0_target_pass,2,standing,548,0.318596
+cross_dataset,PAMAP2_to_RealWorld,445,lambda0_target_pass,3,walking,621,0.504673
+cross_dataset,PAMAP2_to_RealWorld,445,lambda0_target_pass,4,running,652,0.002433
+cross_dataset,PAMAP2_to_RealWorld,445,deep_coral,0,lying,551,0.375114
+cross_dataset,PAMAP2_to_RealWorld,445,deep_coral,1,sitting,522,0.182979
+cross_dataset,PAMAP2_to_RealWorld,445,deep_coral,2,standing,548,0.494024
+cross_dataset,PAMAP2_to_RealWorld,445,deep_coral,3,walking,621,0.442254
+cross_dataset,PAMAP2_to_RealWorld,445,deep_coral,4,running,652,0.207479
+cross_dataset,PAMAP2_to_RealWorld,545,baseline,0,lying,551,0.411654
+cross_dataset,PAMAP2_to_RealWorld,545,baseline,1,sitting,522,0.014467
+cross_dataset,PAMAP2_to_RealWorld,545,baseline,2,standing,548,0.014085
+cross_dataset,PAMAP2_to_RealWorld,545,baseline,3,walking,621,0.487021
+cross_dataset,PAMAP2_to_RealWorld,545,baseline,4,running,652,0.278906
+cross_dataset,PAMAP2_to_RealWorld,545,source_only_continued,0,lying,551,0.360287
+cross_dataset,PAMAP2_to_RealWorld,545,source_only_continued,1,sitting,522,0.016949
+cross_dataset,PAMAP2_to_RealWorld,545,source_only_continued,2,standing,548,0.393578
+cross_dataset,PAMAP2_to_RealWorld,545,source_only_continued,3,walking,621,0.542151
+cross_dataset,PAMAP2_to_RealWorld,545,source_only_continued,4,running,652,0.442013
+cross_dataset,PAMAP2_to_RealWorld,545,lambda0_target_pass,0,lying,551,0.602718
+cross_dataset,PAMAP2_to_RealWorld,545,lambda0_target_pass,1,sitting,522,0.090395
+cross_dataset,PAMAP2_to_RealWorld,545,lambda0_target_pass,2,standing,548,0.196532
+cross_dataset,PAMAP2_to_RealWorld,545,lambda0_target_pass,3,walking,621,0.656660
+cross_dataset,PAMAP2_to_RealWorld,545,lambda0_target_pass,4,running,652,0.498528
+cross_dataset,PAMAP2_to_RealWorld,545,deep_coral,0,lying,551,0.678756
+cross_dataset,PAMAP2_to_RealWorld,545,deep_coral,1,sitting,522,0.057217
+cross_dataset,PAMAP2_to_RealWorld,545,deep_coral,2,standing,548,0.471535
+cross_dataset,PAMAP2_to_RealWorld,545,deep_coral,3,walking,621,0.601052
+cross_dataset,PAMAP2_to_RealWorld,545,deep_coral,4,running,652,0.564551
+cross_dataset,PAMAP2_to_RealWorld,881,baseline,0,lying,551,0.078107
+cross_dataset,PAMAP2_to_RealWorld,881,baseline,1,sitting,522,0.039409
+cross_dataset,PAMAP2_to_RealWorld,881,baseline,2,standing,548,0.462659
+cross_dataset,PAMAP2_to_RealWorld,881,baseline,3,walking,621,0.583043
+cross_dataset,PAMAP2_to_RealWorld,881,baseline,4,running,652,0.238845
+cross_dataset,PAMAP2_to_RealWorld,881,source_only_continued,0,lying,551,0.032787
+cross_dataset,PAMAP2_to_RealWorld,881,source_only_continued,1,sitting,522,0.135747
+cross_dataset,PAMAP2_to_RealWorld,881,source_only_continued,2,standing,548,0.499015
+cross_dataset,PAMAP2_to_RealWorld,881,source_only_continued,3,walking,621,0.647123
+cross_dataset,PAMAP2_to_RealWorld,881,source_only_continued,4,running,652,0.488479
+cross_dataset,PAMAP2_to_RealWorld,881,lambda0_target_pass,0,lying,551,0.027650
+cross_dataset,PAMAP2_to_RealWorld,881,lambda0_target_pass,1,sitting,522,0.207792
+cross_dataset,PAMAP2_to_RealWorld,881,lambda0_target_pass,2,standing,548,0.428331
+cross_dataset,PAMAP2_to_RealWorld,881,lambda0_target_pass,3,walking,621,0.565324
+cross_dataset,PAMAP2_to_RealWorld,881,lambda0_target_pass,4,running,652,0.483391
+cross_dataset,PAMAP2_to_RealWorld,881,deep_coral,0,lying,551,0.393227
+cross_dataset,PAMAP2_to_RealWorld,881,deep_coral,1,sitting,522,0.260870
+cross_dataset,PAMAP2_to_RealWorld,881,deep_coral,2,standing,548,0.515213
+cross_dataset,PAMAP2_to_RealWorld,881,deep_coral,3,walking,621,0.636364
+cross_dataset,PAMAP2_to_RealWorld,881,deep_coral,4,running,652,0.590861
+cross_dataset,RealWorld_to_PAMAP2,52,baseline,0,lying,307,0.626087
+cross_dataset,RealWorld_to_PAMAP2,52,baseline,1,sitting,315,0.000000
+cross_dataset,RealWorld_to_PAMAP2,52,baseline,2,standing,323,0.038339
+cross_dataset,RealWorld_to_PAMAP2,52,baseline,3,walking,421,0.867374
+cross_dataset,RealWorld_to_PAMAP2,52,baseline,4,running,60,0.270936
+cross_dataset,RealWorld_to_PAMAP2,52,source_only_continued,0,lying,307,0.633188
+cross_dataset,RealWorld_to_PAMAP2,52,source_only_continued,1,sitting,315,0.000000
+cross_dataset,RealWorld_to_PAMAP2,52,source_only_continued,2,standing,323,0.089955
+cross_dataset,RealWorld_to_PAMAP2,52,source_only_continued,3,walking,421,0.878238
+cross_dataset,RealWorld_to_PAMAP2,52,source_only_continued,4,running,60,0.184211
+cross_dataset,RealWorld_to_PAMAP2,52,lambda0_target_pass,0,lying,307,0.632967
+cross_dataset,RealWorld_to_PAMAP2,52,lambda0_target_pass,1,sitting,315,0.004728
+cross_dataset,RealWorld_to_PAMAP2,52,lambda0_target_pass,2,standing,323,0.136054
+cross_dataset,RealWorld_to_PAMAP2,52,lambda0_target_pass,3,walking,421,0.857143
+cross_dataset,RealWorld_to_PAMAP2,52,lambda0_target_pass,4,running,60,0.160173
+cross_dataset,RealWorld_to_PAMAP2,52,deep_coral,0,lying,307,0.873394
+cross_dataset,RealWorld_to_PAMAP2,52,deep_coral,1,sitting,315,0.018182
+cross_dataset,RealWorld_to_PAMAP2,52,deep_coral,2,standing,323,0.135685
+cross_dataset,RealWorld_to_PAMAP2,52,deep_coral,3,walking,421,0.887451
+cross_dataset,RealWorld_to_PAMAP2,52,deep_coral,4,running,60,0.222698
+cross_dataset,RealWorld_to_PAMAP2,100,baseline,0,lying,307,0.622129
+cross_dataset,RealWorld_to_PAMAP2,100,baseline,1,sitting,315,0.019672
+cross_dataset,RealWorld_to_PAMAP2,100,baseline,2,standing,323,0.024691
+cross_dataset,RealWorld_to_PAMAP2,100,baseline,3,walking,421,0.709581
+cross_dataset,RealWorld_to_PAMAP2,100,baseline,4,running,60,0.133333
+cross_dataset,RealWorld_to_PAMAP2,100,source_only_continued,0,lying,307,0.906096
+cross_dataset,RealWorld_to_PAMAP2,100,source_only_continued,1,sitting,315,0.032454
+cross_dataset,RealWorld_to_PAMAP2,100,source_only_continued,2,standing,323,0.186788
+cross_dataset,RealWorld_to_PAMAP2,100,source_only_continued,3,walking,421,0.823380
+cross_dataset,RealWorld_to_PAMAP2,100,source_only_continued,4,running,60,0.079848
+cross_dataset,RealWorld_to_PAMAP2,100,lambda0_target_pass,0,lying,307,0.726577
+cross_dataset,RealWorld_to_PAMAP2,100,lambda0_target_pass,1,sitting,315,0.196513
+cross_dataset,RealWorld_to_PAMAP2,100,lambda0_target_pass,2,standing,323,0.117647
+cross_dataset,RealWorld_to_PAMAP2,100,lambda0_target_pass,3,walking,421,0.804233
+cross_dataset,RealWorld_to_PAMAP2,100,lambda0_target_pass,4,running,60,0.120172
+cross_dataset,RealWorld_to_PAMAP2,100,deep_coral,0,lying,307,0.876582
+cross_dataset,RealWorld_to_PAMAP2,100,deep_coral,1,sitting,315,0.356643
+cross_dataset,RealWorld_to_PAMAP2,100,deep_coral,2,standing,323,0.166352
+cross_dataset,RealWorld_to_PAMAP2,100,deep_coral,3,walking,421,0.862155
+cross_dataset,RealWorld_to_PAMAP2,100,deep_coral,4,running,60,0.161994
+cross_dataset,RealWorld_to_PAMAP2,445,baseline,0,lying,307,0.745387
+cross_dataset,RealWorld_to_PAMAP2,445,baseline,1,sitting,315,0.034602
+cross_dataset,RealWorld_to_PAMAP2,445,baseline,2,standing,323,0.067454
+cross_dataset,RealWorld_to_PAMAP2,445,baseline,3,walking,421,0.839178
+cross_dataset,RealWorld_to_PAMAP2,445,baseline,4,running,60,0.224359
+cross_dataset,RealWorld_to_PAMAP2,445,source_only_continued,0,lying,307,0.811009
+cross_dataset,RealWorld_to_PAMAP2,445,source_only_continued,1,sitting,315,0.000000
+cross_dataset,RealWorld_to_PAMAP2,445,source_only_continued,2,standing,323,0.108963
+cross_dataset,RealWorld_to_PAMAP2,445,source_only_continued,3,walking,421,0.793269
+cross_dataset,RealWorld_to_PAMAP2,445,source_only_continued,4,running,60,0.235756
+cross_dataset,RealWorld_to_PAMAP2,445,lambda0_target_pass,0,lying,307,0.934426
+cross_dataset,RealWorld_to_PAMAP2,445,lambda0_target_pass,1,sitting,315,0.000000
+cross_dataset,RealWorld_to_PAMAP2,445,lambda0_target_pass,2,standing,323,0.211288
+cross_dataset,RealWorld_to_PAMAP2,445,lambda0_target_pass,3,walking,421,0.892541
+cross_dataset,RealWorld_to_PAMAP2,445,lambda0_target_pass,4,running,60,0.207373
+cross_dataset,RealWorld_to_PAMAP2,445,deep_coral,0,lying,307,0.951907
+cross_dataset,RealWorld_to_PAMAP2,445,deep_coral,1,sitting,315,0.006079
+cross_dataset,RealWorld_to_PAMAP2,445,deep_coral,2,standing,323,0.208092
+cross_dataset,RealWorld_to_PAMAP2,445,deep_coral,3,walking,421,0.884615
+cross_dataset,RealWorld_to_PAMAP2,445,deep_coral,4,running,60,0.232143
+cross_dataset,RealWorld_to_PAMAP2,545,baseline,0,lying,307,0.711297
+cross_dataset,RealWorld_to_PAMAP2,545,baseline,1,sitting,315,0.160164
+cross_dataset,RealWorld_to_PAMAP2,545,baseline,2,standing,323,0.165000
+cross_dataset,RealWorld_to_PAMAP2,545,baseline,3,walking,421,0.160521
+cross_dataset,RealWorld_to_PAMAP2,545,baseline,4,running,60,0.111111
+cross_dataset,RealWorld_to_PAMAP2,545,source_only_continued,0,lying,307,0.956667
+cross_dataset,RealWorld_to_PAMAP2,545,source_only_continued,1,sitting,315,0.300752
+cross_dataset,RealWorld_to_PAMAP2,545,source_only_continued,2,standing,323,0.085960
+cross_dataset,RealWorld_to_PAMAP2,545,source_only_continued,3,walking,421,0.589704
+cross_dataset,RealWorld_to_PAMAP2,545,source_only_continued,4,running,60,0.071842
+cross_dataset,RealWorld_to_PAMAP2,545,lambda0_target_pass,0,lying,307,0.957983
+cross_dataset,RealWorld_to_PAMAP2,545,lambda0_target_pass,1,sitting,315,0.581053
+cross_dataset,RealWorld_to_PAMAP2,545,lambda0_target_pass,2,standing,323,0.184486
+cross_dataset,RealWorld_to_PAMAP2,545,lambda0_target_pass,3,walking,421,0.559043
+cross_dataset,RealWorld_to_PAMAP2,545,lambda0_target_pass,4,running,60,0.154088
+cross_dataset,RealWorld_to_PAMAP2,545,deep_coral,0,lying,307,0.968491
+cross_dataset,RealWorld_to_PAMAP2,545,deep_coral,1,sitting,315,0.778793
+cross_dataset,RealWorld_to_PAMAP2,545,deep_coral,2,standing,323,0.279570
+cross_dataset,RealWorld_to_PAMAP2,545,deep_coral,3,walking,421,0.769655
+cross_dataset,RealWorld_to_PAMAP2,545,deep_coral,4,running,60,0.140625
+cross_dataset,RealWorld_to_PAMAP2,881,baseline,0,lying,307,0.706542
+cross_dataset,RealWorld_to_PAMAP2,881,baseline,1,sitting,315,0.077273
+cross_dataset,RealWorld_to_PAMAP2,881,baseline,2,standing,323,0.214797
+cross_dataset,RealWorld_to_PAMAP2,881,baseline,3,walking,421,0.009456
+cross_dataset,RealWorld_to_PAMAP2,881,baseline,4,running,60,0.114010
+cross_dataset,RealWorld_to_PAMAP2,881,source_only_continued,0,lying,307,0.725076
+cross_dataset,RealWorld_to_PAMAP2,881,source_only_continued,1,sitting,315,0.000000
+cross_dataset,RealWorld_to_PAMAP2,881,source_only_continued,2,standing,323,0.087209
+cross_dataset,RealWorld_to_PAMAP2,881,source_only_continued,3,walking,421,0.096601
+cross_dataset,RealWorld_to_PAMAP2,881,source_only_continued,4,running,60,0.129730
+cross_dataset,RealWorld_to_PAMAP2,881,lambda0_target_pass,0,lying,307,0.828986
+cross_dataset,RealWorld_to_PAMAP2,881,lambda0_target_pass,1,sitting,315,0.000000
+cross_dataset,RealWorld_to_PAMAP2,881,lambda0_target_pass,2,standing,323,0.161039
+cross_dataset,RealWorld_to_PAMAP2,881,lambda0_target_pass,3,walking,421,0.227642
+cross_dataset,RealWorld_to_PAMAP2,881,lambda0_target_pass,4,running,60,0.137278
+cross_dataset,RealWorld_to_PAMAP2,881,deep_coral,0,lying,307,0.904538
+cross_dataset,RealWorld_to_PAMAP2,881,deep_coral,1,sitting,315,0.000000
+cross_dataset,RealWorld_to_PAMAP2,881,deep_coral,2,standing,323,0.240786
+cross_dataset,RealWorld_to_PAMAP2,881,deep_coral,3,walking,421,0.564516
+cross_dataset,RealWorld_to_PAMAP2,881,deep_coral,4,running,60,0.160643
+cross_dataset,PAMAP2_to_MHEALTH,52,baseline,0,lying,117,0.000000
+cross_dataset,PAMAP2_to_MHEALTH,52,baseline,1,sitting,117,0.000000
+cross_dataset,PAMAP2_to_MHEALTH,52,baseline,2,standing,117,0.000000
+cross_dataset,PAMAP2_to_MHEALTH,52,baseline,3,walking,117,0.306483
+cross_dataset,PAMAP2_to_MHEALTH,52,baseline,4,running,234,0.137313
+cross_dataset,PAMAP2_to_MHEALTH,52,source_only_continued,0,lying,117,0.000000
+cross_dataset,PAMAP2_to_MHEALTH,52,source_only_continued,1,sitting,117,0.000000
+cross_dataset,PAMAP2_to_MHEALTH,52,source_only_continued,2,standing,117,0.000000
+cross_dataset,PAMAP2_to_MHEALTH,52,source_only_continued,3,walking,117,0.369515
+cross_dataset,PAMAP2_to_MHEALTH,52,source_only_continued,4,running,234,0.476793
+cross_dataset,PAMAP2_to_MHEALTH,52,lambda0_target_pass,0,lying,117,0.000000
+cross_dataset,PAMAP2_to_MHEALTH,52,lambda0_target_pass,1,sitting,117,0.000000
+cross_dataset,PAMAP2_to_MHEALTH,52,lambda0_target_pass,2,standing,117,0.000000
+cross_dataset,PAMAP2_to_MHEALTH,52,lambda0_target_pass,3,walking,117,0.206897
+cross_dataset,PAMAP2_to_MHEALTH,52,lambda0_target_pass,4,running,234,0.139860
+cross_dataset,PAMAP2_to_MHEALTH,52,deep_coral,0,lying,117,0.000000
+cross_dataset,PAMAP2_to_MHEALTH,52,deep_coral,1,sitting,117,0.000000
+cross_dataset,PAMAP2_to_MHEALTH,52,deep_coral,2,standing,117,0.000000
+cross_dataset,PAMAP2_to_MHEALTH,52,deep_coral,3,walking,117,0.017544
+cross_dataset,PAMAP2_to_MHEALTH,52,deep_coral,4,running,234,0.558891
+cross_dataset,PAMAP2_to_MHEALTH,100,baseline,0,lying,117,0.000000
+cross_dataset,PAMAP2_to_MHEALTH,100,baseline,1,sitting,117,0.259136
+cross_dataset,PAMAP2_to_MHEALTH,100,baseline,2,standing,117,0.280576
+cross_dataset,PAMAP2_to_MHEALTH,100,baseline,3,walking,117,0.000000
+cross_dataset,PAMAP2_to_MHEALTH,100,baseline,4,running,234,0.418919
+cross_dataset,PAMAP2_to_MHEALTH,100,source_only_continued,0,lying,117,0.333333
+cross_dataset,PAMAP2_to_MHEALTH,100,source_only_continued,1,sitting,117,0.000000
+cross_dataset,PAMAP2_to_MHEALTH,100,source_only_continued,2,standing,117,0.315789
+cross_dataset,PAMAP2_to_MHEALTH,100,source_only_continued,3,walking,117,0.000000
+cross_dataset,PAMAP2_to_MHEALTH,100,source_only_continued,4,running,234,0.446903
+cross_dataset,PAMAP2_to_MHEALTH,100,lambda0_target_pass,0,lying,117,0.000000
+cross_dataset,PAMAP2_to_MHEALTH,100,lambda0_target_pass,1,sitting,117,0.268966
+cross_dataset,PAMAP2_to_MHEALTH,100,lambda0_target_pass,2,standing,117,0.000000
+cross_dataset,PAMAP2_to_MHEALTH,100,lambda0_target_pass,3,walking,117,0.000000
+cross_dataset,PAMAP2_to_MHEALTH,100,lambda0_target_pass,4,running,234,0.132979
+cross_dataset,PAMAP2_to_MHEALTH,100,deep_coral,0,lying,117,0.031873
+cross_dataset,PAMAP2_to_MHEALTH,100,deep_coral,1,sitting,117,0.666667
+cross_dataset,PAMAP2_to_MHEALTH,100,deep_coral,2,standing,117,0.000000
+cross_dataset,PAMAP2_to_MHEALTH,100,deep_coral,3,walking,117,0.000000
+cross_dataset,PAMAP2_to_MHEALTH,100,deep_coral,4,running,234,0.000000
+cross_dataset,PAMAP2_to_MHEALTH,445,baseline,0,lying,117,0.000000
+cross_dataset,PAMAP2_to_MHEALTH,445,baseline,1,sitting,117,0.000000
+cross_dataset,PAMAP2_to_MHEALTH,445,baseline,2,standing,117,0.000000
+cross_dataset,PAMAP2_to_MHEALTH,445,baseline,3,walking,117,0.000000
+cross_dataset,PAMAP2_to_MHEALTH,445,baseline,4,running,234,0.213740
+cross_dataset,PAMAP2_to_MHEALTH,445,source_only_continued,0,lying,117,0.000000
+cross_dataset,PAMAP2_to_MHEALTH,445,source_only_continued,1,sitting,117,0.000000
+cross_dataset,PAMAP2_to_MHEALTH,445,source_only_continued,2,standing,117,0.000000
+cross_dataset,PAMAP2_to_MHEALTH,445,source_only_continued,3,walking,117,0.000000
+cross_dataset,PAMAP2_to_MHEALTH,445,source_only_continued,4,running,234,0.035264
+cross_dataset,PAMAP2_to_MHEALTH,445,lambda0_target_pass,0,lying,117,0.000000
+cross_dataset,PAMAP2_to_MHEALTH,445,lambda0_target_pass,1,sitting,117,0.000000
+cross_dataset,PAMAP2_to_MHEALTH,445,lambda0_target_pass,2,standing,117,0.000000
+cross_dataset,PAMAP2_to_MHEALTH,445,lambda0_target_pass,3,walking,117,0.000000
+cross_dataset,PAMAP2_to_MHEALTH,445,lambda0_target_pass,4,running,234,0.000000
+cross_dataset,PAMAP2_to_MHEALTH,445,deep_coral,0,lying,117,0.000000
+cross_dataset,PAMAP2_to_MHEALTH,445,deep_coral,1,sitting,117,0.000000
+cross_dataset,PAMAP2_to_MHEALTH,445,deep_coral,2,standing,117,0.000000
+cross_dataset,PAMAP2_to_MHEALTH,445,deep_coral,3,walking,117,0.000000
+cross_dataset,PAMAP2_to_MHEALTH,445,deep_coral,4,running,234,0.037736
+cross_dataset,PAMAP2_to_MHEALTH,545,baseline,0,lying,117,0.000000
+cross_dataset,PAMAP2_to_MHEALTH,545,baseline,1,sitting,117,0.000000
+cross_dataset,PAMAP2_to_MHEALTH,545,baseline,2,standing,117,0.000000
+cross_dataset,PAMAP2_to_MHEALTH,545,baseline,3,walking,117,0.000000
+cross_dataset,PAMAP2_to_MHEALTH,545,baseline,4,running,234,0.037267
+cross_dataset,PAMAP2_to_MHEALTH,545,source_only_continued,0,lying,117,0.000000
+cross_dataset,PAMAP2_to_MHEALTH,545,source_only_continued,1,sitting,117,0.000000
+cross_dataset,PAMAP2_to_MHEALTH,545,source_only_continued,2,standing,117,0.390000
+cross_dataset,PAMAP2_to_MHEALTH,545,source_only_continued,3,walking,117,0.000000
+cross_dataset,PAMAP2_to_MHEALTH,545,source_only_continued,4,running,234,0.021505
+cross_dataset,PAMAP2_to_MHEALTH,545,lambda0_target_pass,0,lying,117,0.000000
+cross_dataset,PAMAP2_to_MHEALTH,545,lambda0_target_pass,1,sitting,117,0.000000
+cross_dataset,PAMAP2_to_MHEALTH,545,lambda0_target_pass,2,standing,117,0.000000
+cross_dataset,PAMAP2_to_MHEALTH,545,lambda0_target_pass,3,walking,117,0.000000
+cross_dataset,PAMAP2_to_MHEALTH,545,lambda0_target_pass,4,running,234,0.056075
+cross_dataset,PAMAP2_to_MHEALTH,545,deep_coral,0,lying,117,0.000000
+cross_dataset,PAMAP2_to_MHEALTH,545,deep_coral,1,sitting,117,0.000000
+cross_dataset,PAMAP2_to_MHEALTH,545,deep_coral,2,standing,117,0.000000
+cross_dataset,PAMAP2_to_MHEALTH,545,deep_coral,3,walking,117,0.000000
+cross_dataset,PAMAP2_to_MHEALTH,545,deep_coral,4,running,234,0.355422
+cross_dataset,PAMAP2_to_MHEALTH,881,baseline,0,lying,117,0.000000
+cross_dataset,PAMAP2_to_MHEALTH,881,baseline,1,sitting,117,0.249201
+cross_dataset,PAMAP2_to_MHEALTH,881,baseline,2,standing,117,0.327731
+cross_dataset,PAMAP2_to_MHEALTH,881,baseline,3,walking,117,0.000000
+cross_dataset,PAMAP2_to_MHEALTH,881,baseline,4,running,234,0.256983
+cross_dataset,PAMAP2_to_MHEALTH,881,source_only_continued,0,lying,117,0.000000
+cross_dataset,PAMAP2_to_MHEALTH,881,source_only_continued,1,sitting,117,0.000000
+cross_dataset,PAMAP2_to_MHEALTH,881,source_only_continued,2,standing,117,0.395939
+cross_dataset,PAMAP2_to_MHEALTH,881,source_only_continued,3,walking,117,0.000000
+cross_dataset,PAMAP2_to_MHEALTH,881,source_only_continued,4,running,234,0.035264
+cross_dataset,PAMAP2_to_MHEALTH,881,lambda0_target_pass,0,lying,117,0.000000
+cross_dataset,PAMAP2_to_MHEALTH,881,lambda0_target_pass,1,sitting,117,0.260000
+cross_dataset,PAMAP2_to_MHEALTH,881,lambda0_target_pass,2,standing,117,0.000000
+cross_dataset,PAMAP2_to_MHEALTH,881,lambda0_target_pass,3,walking,117,0.000000
+cross_dataset,PAMAP2_to_MHEALTH,881,lambda0_target_pass,4,running,234,0.249377
+cross_dataset,PAMAP2_to_MHEALTH,881,deep_coral,0,lying,117,0.000000
+cross_dataset,PAMAP2_to_MHEALTH,881,deep_coral,1,sitting,117,0.313253
+cross_dataset,PAMAP2_to_MHEALTH,881,deep_coral,2,standing,117,0.000000
+cross_dataset,PAMAP2_to_MHEALTH,881,deep_coral,3,walking,117,0.000000
+cross_dataset,PAMAP2_to_MHEALTH,881,deep_coral,4,running,234,0.171875
+cross_dataset,MHEALTH_to_PAMAP2,52,baseline,0,lying,307,0.345253
+cross_dataset,MHEALTH_to_PAMAP2,52,baseline,1,sitting,315,0.037815
+cross_dataset,MHEALTH_to_PAMAP2,52,baseline,2,standing,323,0.611006
+cross_dataset,MHEALTH_to_PAMAP2,52,baseline,3,walking,421,0.037931
+cross_dataset,MHEALTH_to_PAMAP2,52,baseline,4,running,60,0.218341
+cross_dataset,MHEALTH_to_PAMAP2,52,source_only_continued,0,lying,307,0.000000
+cross_dataset,MHEALTH_to_PAMAP2,52,source_only_continued,1,sitting,315,0.135135
+cross_dataset,MHEALTH_to_PAMAP2,52,source_only_continued,2,standing,323,0.509275
+cross_dataset,MHEALTH_to_PAMAP2,52,source_only_continued,3,walking,421,0.354354
+cross_dataset,MHEALTH_to_PAMAP2,52,source_only_continued,4,running,60,0.069204
+cross_dataset,MHEALTH_to_PAMAP2,52,lambda0_target_pass,0,lying,307,0.297477
+cross_dataset,MHEALTH_to_PAMAP2,52,lambda0_target_pass,1,sitting,315,0.028249
+cross_dataset,MHEALTH_to_PAMAP2,52,lambda0_target_pass,2,standing,323,0.525043
+cross_dataset,MHEALTH_to_PAMAP2,52,lambda0_target_pass,3,walking,421,0.281829
+cross_dataset,MHEALTH_to_PAMAP2,52,lambda0_target_pass,4,running,60,0.145658
+cross_dataset,MHEALTH_to_PAMAP2,52,deep_coral,0,lying,307,0.349593
+cross_dataset,MHEALTH_to_PAMAP2,52,deep_coral,1,sitting,315,0.045326
+cross_dataset,MHEALTH_to_PAMAP2,52,deep_coral,2,standing,323,0.021053
+cross_dataset,MHEALTH_to_PAMAP2,52,deep_coral,3,walking,421,0.000000
+cross_dataset,MHEALTH_to_PAMAP2,52,deep_coral,4,running,60,0.106904
+cross_dataset,MHEALTH_to_PAMAP2,100,baseline,0,lying,307,0.025237
+cross_dataset,MHEALTH_to_PAMAP2,100,baseline,1,sitting,315,0.644681
+cross_dataset,MHEALTH_to_PAMAP2,100,baseline,2,standing,323,0.029240
+cross_dataset,MHEALTH_to_PAMAP2,100,baseline,3,walking,421,0.458735
+cross_dataset,MHEALTH_to_PAMAP2,100,baseline,4,running,60,0.362500
+cross_dataset,MHEALTH_to_PAMAP2,100,source_only_continued,0,lying,307,0.006410
+cross_dataset,MHEALTH_to_PAMAP2,100,source_only_continued,1,sitting,315,0.697727
+cross_dataset,MHEALTH_to_PAMAP2,100,source_only_continued,2,standing,323,0.017910
+cross_dataset,MHEALTH_to_PAMAP2,100,source_only_continued,3,walking,421,0.556569
+cross_dataset,MHEALTH_to_PAMAP2,100,source_only_continued,4,running,60,0.524017
+cross_dataset,MHEALTH_to_PAMAP2,100,lambda0_target_pass,0,lying,307,0.000000
+cross_dataset,MHEALTH_to_PAMAP2,100,lambda0_target_pass,1,sitting,315,0.653805
+cross_dataset,MHEALTH_to_PAMAP2,100,lambda0_target_pass,2,standing,323,0.028818
+cross_dataset,MHEALTH_to_PAMAP2,100,lambda0_target_pass,3,walking,421,0.270335
+cross_dataset,MHEALTH_to_PAMAP2,100,lambda0_target_pass,4,running,60,0.279518
+cross_dataset,MHEALTH_to_PAMAP2,100,deep_coral,0,lying,307,0.053731
+cross_dataset,MHEALTH_to_PAMAP2,100,deep_coral,1,sitting,315,0.651945
+cross_dataset,MHEALTH_to_PAMAP2,100,deep_coral,2,standing,323,0.034985
+cross_dataset,MHEALTH_to_PAMAP2,100,deep_coral,3,walking,421,0.000000
+cross_dataset,MHEALTH_to_PAMAP2,100,deep_coral,4,running,60,0.162055
+cross_dataset,MHEALTH_to_PAMAP2,445,baseline,0,lying,307,0.000000
+cross_dataset,MHEALTH_to_PAMAP2,445,baseline,1,sitting,315,0.000000
+cross_dataset,MHEALTH_to_PAMAP2,445,baseline,2,standing,323,0.000000
+cross_dataset,MHEALTH_to_PAMAP2,445,baseline,3,walking,421,0.514399
+cross_dataset,MHEALTH_to_PAMAP2,445,baseline,4,running,60,0.411552
+cross_dataset,MHEALTH_to_PAMAP2,445,source_only_continued,0,lying,307,0.012531
+cross_dataset,MHEALTH_to_PAMAP2,445,source_only_continued,1,sitting,315,0.000000
+cross_dataset,MHEALTH_to_PAMAP2,445,source_only_continued,2,standing,323,0.014670
+cross_dataset,MHEALTH_to_PAMAP2,445,source_only_continued,3,walking,421,0.008287
+cross_dataset,MHEALTH_to_PAMAP2,445,source_only_continued,4,running,60,0.000000
+cross_dataset,MHEALTH_to_PAMAP2,445,lambda0_target_pass,0,lying,307,0.000000
+cross_dataset,MHEALTH_to_PAMAP2,445,lambda0_target_pass,1,sitting,315,0.252401
+cross_dataset,MHEALTH_to_PAMAP2,445,lambda0_target_pass,2,standing,323,0.009685
+cross_dataset,MHEALTH_to_PAMAP2,445,lambda0_target_pass,3,walking,421,0.253923
+cross_dataset,MHEALTH_to_PAMAP2,445,lambda0_target_pass,4,running,60,0.016620
+cross_dataset,MHEALTH_to_PAMAP2,445,deep_coral,0,lying,307,0.000000
+cross_dataset,MHEALTH_to_PAMAP2,445,deep_coral,1,sitting,315,0.000000
+cross_dataset,MHEALTH_to_PAMAP2,445,deep_coral,2,standing,323,0.000000
+cross_dataset,MHEALTH_to_PAMAP2,445,deep_coral,3,walking,421,0.248804
+cross_dataset,MHEALTH_to_PAMAP2,445,deep_coral,4,running,60,0.304000
+cross_dataset,MHEALTH_to_PAMAP2,545,baseline,0,lying,307,0.000000
+cross_dataset,MHEALTH_to_PAMAP2,545,baseline,1,sitting,315,0.885017
+cross_dataset,MHEALTH_to_PAMAP2,545,baseline,2,standing,323,0.052174
+cross_dataset,MHEALTH_to_PAMAP2,545,baseline,3,walking,421,0.439394
+cross_dataset,MHEALTH_to_PAMAP2,545,baseline,4,running,60,0.456000
+cross_dataset,MHEALTH_to_PAMAP2,545,source_only_continued,0,lying,307,0.000000
+cross_dataset,MHEALTH_to_PAMAP2,545,source_only_continued,1,sitting,315,0.055402
+cross_dataset,MHEALTH_to_PAMAP2,545,source_only_continued,2,standing,323,0.508108
+cross_dataset,MHEALTH_to_PAMAP2,545,source_only_continued,3,walking,421,0.406841
+cross_dataset,MHEALTH_to_PAMAP2,545,source_only_continued,4,running,60,0.028777
+cross_dataset,MHEALTH_to_PAMAP2,545,lambda0_target_pass,0,lying,307,0.000000
+cross_dataset,MHEALTH_to_PAMAP2,545,lambda0_target_pass,1,sitting,315,0.658993
+cross_dataset,MHEALTH_to_PAMAP2,545,lambda0_target_pass,2,standing,323,0.035156
+cross_dataset,MHEALTH_to_PAMAP2,545,lambda0_target_pass,3,walking,421,0.386921
+cross_dataset,MHEALTH_to_PAMAP2,545,lambda0_target_pass,4,running,60,0.572864
+cross_dataset,MHEALTH_to_PAMAP2,545,deep_coral,0,lying,307,0.000000
+cross_dataset,MHEALTH_to_PAMAP2,545,deep_coral,1,sitting,315,0.937600
+cross_dataset,MHEALTH_to_PAMAP2,545,deep_coral,2,standing,323,0.024316
+cross_dataset,MHEALTH_to_PAMAP2,545,deep_coral,3,walking,421,0.151239
+cross_dataset,MHEALTH_to_PAMAP2,545,deep_coral,4,running,60,0.287154
+cross_dataset,MHEALTH_to_PAMAP2,881,baseline,0,lying,307,0.000000
+cross_dataset,MHEALTH_to_PAMAP2,881,baseline,1,sitting,315,0.662607
+cross_dataset,MHEALTH_to_PAMAP2,881,baseline,2,standing,323,0.023055
+cross_dataset,MHEALTH_to_PAMAP2,881,baseline,3,walking,421,0.294985
+cross_dataset,MHEALTH_to_PAMAP2,881,baseline,4,running,60,0.305556
+cross_dataset,MHEALTH_to_PAMAP2,881,source_only_continued,0,lying,307,0.000000
+cross_dataset,MHEALTH_to_PAMAP2,881,source_only_continued,1,sitting,315,0.539711
+cross_dataset,MHEALTH_to_PAMAP2,881,source_only_continued,2,standing,323,0.023866
+cross_dataset,MHEALTH_to_PAMAP2,881,source_only_continued,3,walking,421,0.325069
+cross_dataset,MHEALTH_to_PAMAP2,881,source_only_continued,4,running,60,0.267123
+cross_dataset,MHEALTH_to_PAMAP2,881,lambda0_target_pass,0,lying,307,0.000000
+cross_dataset,MHEALTH_to_PAMAP2,881,lambda0_target_pass,1,sitting,315,0.444062
+cross_dataset,MHEALTH_to_PAMAP2,881,lambda0_target_pass,2,standing,323,0.036364
+cross_dataset,MHEALTH_to_PAMAP2,881,lambda0_target_pass,3,walking,421,0.080134
+cross_dataset,MHEALTH_to_PAMAP2,881,lambda0_target_pass,4,running,60,0.279202
+cross_dataset,MHEALTH_to_PAMAP2,881,deep_coral,0,lying,307,0.034646
+cross_dataset,MHEALTH_to_PAMAP2,881,deep_coral,1,sitting,315,0.863711
+cross_dataset,MHEALTH_to_PAMAP2,881,deep_coral,2,standing,323,0.665685
+cross_dataset,MHEALTH_to_PAMAP2,881,deep_coral,3,walking,421,0.287253
+cross_dataset,MHEALTH_to_PAMAP2,881,deep_coral,4,running,60,0.150538
+cross_dataset,RealWorld_to_MHEALTH,52,baseline,0,lying,117,0.000000
+cross_dataset,RealWorld_to_MHEALTH,52,baseline,1,sitting,117,0.000000
+cross_dataset,RealWorld_to_MHEALTH,52,baseline,2,standing,117,0.000000
+cross_dataset,RealWorld_to_MHEALTH,52,baseline,3,walking,117,0.336493
+cross_dataset,RealWorld_to_MHEALTH,52,baseline,4,running,234,0.830835
+cross_dataset,RealWorld_to_MHEALTH,52,source_only_continued,0,lying,117,0.000000
+cross_dataset,RealWorld_to_MHEALTH,52,source_only_continued,1,sitting,117,0.000000
+cross_dataset,RealWorld_to_MHEALTH,52,source_only_continued,2,standing,117,0.000000
+cross_dataset,RealWorld_to_MHEALTH,52,source_only_continued,3,walking,117,0.018476
+cross_dataset,RealWorld_to_MHEALTH,52,source_only_continued,4,running,234,0.637555
+cross_dataset,RealWorld_to_MHEALTH,52,lambda0_target_pass,0,lying,117,0.000000
+cross_dataset,RealWorld_to_MHEALTH,52,lambda0_target_pass,1,sitting,117,0.000000
+cross_dataset,RealWorld_to_MHEALTH,52,lambda0_target_pass,2,standing,117,0.000000
+cross_dataset,RealWorld_to_MHEALTH,52,lambda0_target_pass,3,walking,117,0.000000
+cross_dataset,RealWorld_to_MHEALTH,52,lambda0_target_pass,4,running,234,0.555556
+cross_dataset,RealWorld_to_MHEALTH,52,deep_coral,0,lying,117,0.000000
+cross_dataset,RealWorld_to_MHEALTH,52,deep_coral,1,sitting,117,0.000000
+cross_dataset,RealWorld_to_MHEALTH,52,deep_coral,2,standing,117,0.000000
+cross_dataset,RealWorld_to_MHEALTH,52,deep_coral,3,walking,117,0.000000
+cross_dataset,RealWorld_to_MHEALTH,52,deep_coral,4,running,234,0.705394
+cross_dataset,RealWorld_to_MHEALTH,100,baseline,0,lying,117,0.000000
+cross_dataset,RealWorld_to_MHEALTH,100,baseline,1,sitting,117,0.000000
+cross_dataset,RealWorld_to_MHEALTH,100,baseline,2,standing,117,0.000000
+cross_dataset,RealWorld_to_MHEALTH,100,baseline,3,walking,117,0.291913
+cross_dataset,RealWorld_to_MHEALTH,100,baseline,4,running,234,0.550459
+cross_dataset,RealWorld_to_MHEALTH,100,source_only_continued,0,lying,117,0.000000
+cross_dataset,RealWorld_to_MHEALTH,100,source_only_continued,1,sitting,117,0.000000
+cross_dataset,RealWorld_to_MHEALTH,100,source_only_continued,2,standing,117,0.000000
+cross_dataset,RealWorld_to_MHEALTH,100,source_only_continued,3,walking,117,0.243902
+cross_dataset,RealWorld_to_MHEALTH,100,source_only_continued,4,running,234,0.655172
+cross_dataset,RealWorld_to_MHEALTH,100,lambda0_target_pass,0,lying,117,0.000000
+cross_dataset,RealWorld_to_MHEALTH,100,lambda0_target_pass,1,sitting,117,0.000000
+cross_dataset,RealWorld_to_MHEALTH,100,lambda0_target_pass,2,standing,117,0.356808
+cross_dataset,RealWorld_to_MHEALTH,100,lambda0_target_pass,3,walking,117,0.000000
+cross_dataset,RealWorld_to_MHEALTH,100,lambda0_target_pass,4,running,234,0.727273
+cross_dataset,RealWorld_to_MHEALTH,100,deep_coral,0,lying,117,0.000000
+cross_dataset,RealWorld_to_MHEALTH,100,deep_coral,1,sitting,117,0.000000
+cross_dataset,RealWorld_to_MHEALTH,100,deep_coral,2,standing,117,0.000000
+cross_dataset,RealWorld_to_MHEALTH,100,deep_coral,3,walking,117,0.000000
+cross_dataset,RealWorld_to_MHEALTH,100,deep_coral,4,running,234,0.833333
+cross_dataset,RealWorld_to_MHEALTH,445,baseline,0,lying,117,0.000000
+cross_dataset,RealWorld_to_MHEALTH,445,baseline,1,sitting,117,0.000000
+cross_dataset,RealWorld_to_MHEALTH,445,baseline,2,standing,117,0.000000
+cross_dataset,RealWorld_to_MHEALTH,445,baseline,3,walking,117,0.000000
+cross_dataset,RealWorld_to_MHEALTH,445,baseline,4,running,234,0.691145
+cross_dataset,RealWorld_to_MHEALTH,445,source_only_continued,0,lying,117,0.000000
+cross_dataset,RealWorld_to_MHEALTH,445,source_only_continued,1,sitting,117,0.000000
+cross_dataset,RealWorld_to_MHEALTH,445,source_only_continued,2,standing,117,0.000000
+cross_dataset,RealWorld_to_MHEALTH,445,source_only_continued,3,walking,117,0.164706
+cross_dataset,RealWorld_to_MHEALTH,445,source_only_continued,4,running,234,0.508604
+cross_dataset,RealWorld_to_MHEALTH,445,lambda0_target_pass,0,lying,117,0.000000
+cross_dataset,RealWorld_to_MHEALTH,445,lambda0_target_pass,1,sitting,117,0.000000
+cross_dataset,RealWorld_to_MHEALTH,445,lambda0_target_pass,2,standing,117,0.496815
+cross_dataset,RealWorld_to_MHEALTH,445,lambda0_target_pass,3,walking,117,0.160377
+cross_dataset,RealWorld_to_MHEALTH,445,lambda0_target_pass,4,running,234,0.528302
+cross_dataset,RealWorld_to_MHEALTH,445,deep_coral,0,lying,117,0.000000
+cross_dataset,RealWorld_to_MHEALTH,445,deep_coral,1,sitting,117,0.000000
+cross_dataset,RealWorld_to_MHEALTH,445,deep_coral,2,standing,117,0.000000
+cross_dataset,RealWorld_to_MHEALTH,445,deep_coral,3,walking,117,0.000000
+cross_dataset,RealWorld_to_MHEALTH,445,deep_coral,4,running,234,0.693182
+cross_dataset,RealWorld_to_MHEALTH,545,baseline,0,lying,117,0.361111
+cross_dataset,RealWorld_to_MHEALTH,545,baseline,1,sitting,117,0.000000
+cross_dataset,RealWorld_to_MHEALTH,545,baseline,2,standing,117,0.437811
+cross_dataset,RealWorld_to_MHEALTH,545,baseline,3,walking,117,0.410526
+cross_dataset,RealWorld_to_MHEALTH,545,baseline,4,running,234,0.536193
+cross_dataset,RealWorld_to_MHEALTH,545,source_only_continued,0,lying,117,0.000000
+cross_dataset,RealWorld_to_MHEALTH,545,source_only_continued,1,sitting,117,0.000000
+cross_dataset,RealWorld_to_MHEALTH,545,source_only_continued,2,standing,117,0.666667
+cross_dataset,RealWorld_to_MHEALTH,545,source_only_continued,3,walking,117,0.446991
+cross_dataset,RealWorld_to_MHEALTH,545,source_only_continued,4,running,234,0.566929
+cross_dataset,RealWorld_to_MHEALTH,545,lambda0_target_pass,0,lying,117,0.000000
+cross_dataset,RealWorld_to_MHEALTH,545,lambda0_target_pass,1,sitting,117,0.000000
+cross_dataset,RealWorld_to_MHEALTH,545,lambda0_target_pass,2,standing,117,0.527027
+cross_dataset,RealWorld_to_MHEALTH,545,lambda0_target_pass,3,walking,117,0.442529
+cross_dataset,RealWorld_to_MHEALTH,545,lambda0_target_pass,4,running,234,0.834499
+cross_dataset,RealWorld_to_MHEALTH,545,deep_coral,0,lying,117,0.000000
+cross_dataset,RealWorld_to_MHEALTH,545,deep_coral,1,sitting,117,0.000000
+cross_dataset,RealWorld_to_MHEALTH,545,deep_coral,2,standing,117,0.304688
+cross_dataset,RealWorld_to_MHEALTH,545,deep_coral,3,walking,117,0.052632
+cross_dataset,RealWorld_to_MHEALTH,545,deep_coral,4,running,234,0.717808
+cross_dataset,RealWorld_to_MHEALTH,881,baseline,0,lying,117,0.224138
+cross_dataset,RealWorld_to_MHEALTH,881,baseline,1,sitting,117,0.000000
+cross_dataset,RealWorld_to_MHEALTH,881,baseline,2,standing,117,0.400000
+cross_dataset,RealWorld_to_MHEALTH,881,baseline,3,walking,117,0.223214
+cross_dataset,RealWorld_to_MHEALTH,881,baseline,4,running,234,0.600390
+cross_dataset,RealWorld_to_MHEALTH,881,source_only_continued,0,lying,117,0.000000
+cross_dataset,RealWorld_to_MHEALTH,881,source_only_continued,1,sitting,117,0.000000
+cross_dataset,RealWorld_to_MHEALTH,881,source_only_continued,2,standing,117,0.400000
+cross_dataset,RealWorld_to_MHEALTH,881,source_only_continued,3,walking,117,0.378182
+cross_dataset,RealWorld_to_MHEALTH,881,source_only_continued,4,running,234,0.378788
+cross_dataset,RealWorld_to_MHEALTH,881,lambda0_target_pass,0,lying,117,0.000000
+cross_dataset,RealWorld_to_MHEALTH,881,lambda0_target_pass,1,sitting,117,0.000000
+cross_dataset,RealWorld_to_MHEALTH,881,lambda0_target_pass,2,standing,117,0.500000
+cross_dataset,RealWorld_to_MHEALTH,881,lambda0_target_pass,3,walking,117,0.000000
+cross_dataset,RealWorld_to_MHEALTH,881,lambda0_target_pass,4,running,234,0.660907
+cross_dataset,RealWorld_to_MHEALTH,881,deep_coral,0,lying,117,0.000000
+cross_dataset,RealWorld_to_MHEALTH,881,deep_coral,1,sitting,117,0.000000
+cross_dataset,RealWorld_to_MHEALTH,881,deep_coral,2,standing,117,0.000000
+cross_dataset,RealWorld_to_MHEALTH,881,deep_coral,3,walking,117,0.000000
+cross_dataset,RealWorld_to_MHEALTH,881,deep_coral,4,running,234,0.575342
+cross_dataset,MHEALTH_to_RealWorld,52,baseline,0,lying,551,0.016967
+cross_dataset,MHEALTH_to_RealWorld,52,baseline,1,sitting,522,0.284330
+cross_dataset,MHEALTH_to_RealWorld,52,baseline,2,standing,548,0.169145
+cross_dataset,MHEALTH_to_RealWorld,52,baseline,3,walking,621,0.006612
+cross_dataset,MHEALTH_to_RealWorld,52,baseline,4,running,652,0.315464
+cross_dataset,MHEALTH_to_RealWorld,52,source_only_continued,0,lying,551,0.388286
+cross_dataset,MHEALTH_to_RealWorld,52,source_only_continued,1,sitting,522,0.220000
+cross_dataset,MHEALTH_to_RealWorld,52,source_only_continued,2,standing,548,0.584249
+cross_dataset,MHEALTH_to_RealWorld,52,source_only_continued,3,walking,621,0.135433
+cross_dataset,MHEALTH_to_RealWorld,52,source_only_continued,4,running,652,0.624413
+cross_dataset,MHEALTH_to_RealWorld,52,lambda0_target_pass,0,lying,551,0.017112
+cross_dataset,MHEALTH_to_RealWorld,52,lambda0_target_pass,1,sitting,522,0.219108
+cross_dataset,MHEALTH_to_RealWorld,52,lambda0_target_pass,2,standing,548,0.247826
+cross_dataset,MHEALTH_to_RealWorld,52,lambda0_target_pass,3,walking,621,0.022989
+cross_dataset,MHEALTH_to_RealWorld,52,lambda0_target_pass,4,running,652,0.537295
+cross_dataset,MHEALTH_to_RealWorld,52,deep_coral,0,lying,551,0.018583
+cross_dataset,MHEALTH_to_RealWorld,52,deep_coral,1,sitting,522,0.247874
+cross_dataset,MHEALTH_to_RealWorld,52,deep_coral,2,standing,548,0.023360
+cross_dataset,MHEALTH_to_RealWorld,52,deep_coral,3,walking,621,0.000000
+cross_dataset,MHEALTH_to_RealWorld,52,deep_coral,4,running,652,0.201878
+cross_dataset,MHEALTH_to_RealWorld,100,baseline,0,lying,551,0.013937
+cross_dataset,MHEALTH_to_RealWorld,100,baseline,1,sitting,522,0.081737
+cross_dataset,MHEALTH_to_RealWorld,100,baseline,2,standing,548,0.029851
+cross_dataset,MHEALTH_to_RealWorld,100,baseline,3,walking,621,0.030058
+cross_dataset,MHEALTH_to_RealWorld,100,baseline,4,running,652,0.532110
+cross_dataset,MHEALTH_to_RealWorld,100,source_only_continued,0,lying,551,0.014581
+cross_dataset,MHEALTH_to_RealWorld,100,source_only_continued,1,sitting,522,0.255428
+cross_dataset,MHEALTH_to_RealWorld,100,source_only_continued,2,standing,548,0.035242
+cross_dataset,MHEALTH_to_RealWorld,100,source_only_continued,3,walking,621,0.028501
+cross_dataset,MHEALTH_to_RealWorld,100,source_only_continued,4,running,652,0.512984
+cross_dataset,MHEALTH_to_RealWorld,100,lambda0_target_pass,0,lying,551,0.016949
+cross_dataset,MHEALTH_to_RealWorld,100,lambda0_target_pass,1,sitting,522,0.202020
+cross_dataset,MHEALTH_to_RealWorld,100,lambda0_target_pass,2,standing,548,0.453202
+cross_dataset,MHEALTH_to_RealWorld,100,lambda0_target_pass,3,walking,621,0.021685
+cross_dataset,MHEALTH_to_RealWorld,100,lambda0_target_pass,4,running,652,0.564644
+cross_dataset,MHEALTH_to_RealWorld,100,deep_coral,0,lying,551,0.011058
+cross_dataset,MHEALTH_to_RealWorld,100,deep_coral,1,sitting,522,0.267857
+cross_dataset,MHEALTH_to_RealWorld,100,deep_coral,2,standing,548,0.123762
+cross_dataset,MHEALTH_to_RealWorld,100,deep_coral,3,walking,621,0.014401
+cross_dataset,MHEALTH_to_RealWorld,100,deep_coral,4,running,652,0.199083
+cross_dataset,MHEALTH_to_RealWorld,445,baseline,0,lying,551,0.021108
+cross_dataset,MHEALTH_to_RealWorld,445,baseline,1,sitting,522,0.011990
+cross_dataset,MHEALTH_to_RealWorld,445,baseline,2,standing,548,0.010850
+cross_dataset,MHEALTH_to_RealWorld,445,baseline,3,walking,621,0.209677
+cross_dataset,MHEALTH_to_RealWorld,445,baseline,4,running,652,0.525868
+cross_dataset,MHEALTH_to_RealWorld,445,source_only_continued,0,lying,551,0.079336
+cross_dataset,MHEALTH_to_RealWorld,445,source_only_continued,1,sitting,522,0.016055
+cross_dataset,MHEALTH_to_RealWorld,445,source_only_continued,2,standing,548,0.460568
+cross_dataset,MHEALTH_to_RealWorld,445,source_only_continued,3,walking,621,0.103448
+cross_dataset,MHEALTH_to_RealWorld,445,source_only_continued,4,running,652,0.462305
+cross_dataset,MHEALTH_to_RealWorld,445,lambda0_target_pass,0,lying,551,0.325623
+cross_dataset,MHEALTH_to_RealWorld,445,lambda0_target_pass,1,sitting,522,0.000000
+cross_dataset,MHEALTH_to_RealWorld,445,lambda0_target_pass,2,standing,548,0.474929
+cross_dataset,MHEALTH_to_RealWorld,445,lambda0_target_pass,3,walking,621,0.040225
+cross_dataset,MHEALTH_to_RealWorld,445,lambda0_target_pass,4,running,652,0.436860
+cross_dataset,MHEALTH_to_RealWorld,445,deep_coral,0,lying,551,0.022099
+cross_dataset,MHEALTH_to_RealWorld,445,deep_coral,1,sitting,522,0.183695
+cross_dataset,MHEALTH_to_RealWorld,445,deep_coral,2,standing,548,0.586207
+cross_dataset,MHEALTH_to_RealWorld,445,deep_coral,3,walking,621,0.034296
+cross_dataset,MHEALTH_to_RealWorld,445,deep_coral,4,running,652,0.661028
+cross_dataset,MHEALTH_to_RealWorld,545,baseline,0,lying,551,0.000000
+cross_dataset,MHEALTH_to_RealWorld,545,baseline,1,sitting,522,0.058932
+cross_dataset,MHEALTH_to_RealWorld,545,baseline,2,standing,548,0.004479
+cross_dataset,MHEALTH_to_RealWorld,545,baseline,3,walking,621,0.028615
+cross_dataset,MHEALTH_to_RealWorld,545,baseline,4,running,652,0.488808
+cross_dataset,MHEALTH_to_RealWorld,545,source_only_continued,0,lying,551,0.035088
+cross_dataset,MHEALTH_to_RealWorld,545,source_only_continued,1,sitting,522,0.247159
+cross_dataset,MHEALTH_to_RealWorld,545,source_only_continued,2,standing,548,0.390283
+cross_dataset,MHEALTH_to_RealWorld,545,source_only_continued,3,walking,621,0.029827
+cross_dataset,MHEALTH_to_RealWorld,545,source_only_continued,4,running,652,0.375225
+cross_dataset,MHEALTH_to_RealWorld,545,lambda0_target_pass,0,lying,551,0.000000
+cross_dataset,MHEALTH_to_RealWorld,545,lambda0_target_pass,1,sitting,522,0.050299
+cross_dataset,MHEALTH_to_RealWorld,545,lambda0_target_pass,2,standing,548,0.119481
+cross_dataset,MHEALTH_to_RealWorld,545,lambda0_target_pass,3,walking,621,0.017401
+cross_dataset,MHEALTH_to_RealWorld,545,lambda0_target_pass,4,running,652,0.596610
+cross_dataset,MHEALTH_to_RealWorld,545,deep_coral,0,lying,551,0.022075
+cross_dataset,MHEALTH_to_RealWorld,545,deep_coral,1,sitting,522,0.214550
+cross_dataset,MHEALTH_to_RealWorld,545,deep_coral,2,standing,548,0.000000
+cross_dataset,MHEALTH_to_RealWorld,545,deep_coral,3,walking,621,0.007612
+cross_dataset,MHEALTH_to_RealWorld,545,deep_coral,4,running,652,0.700960
+cross_dataset,MHEALTH_to_RealWorld,881,baseline,0,lying,551,0.007233
+cross_dataset,MHEALTH_to_RealWorld,881,baseline,1,sitting,522,0.291592
+cross_dataset,MHEALTH_to_RealWorld,881,baseline,2,standing,548,0.202965
+cross_dataset,MHEALTH_to_RealWorld,881,baseline,3,walking,621,0.163507
+cross_dataset,MHEALTH_to_RealWorld,881,baseline,4,running,652,0.457474
+cross_dataset,MHEALTH_to_RealWorld,881,source_only_continued,0,lying,551,0.000000
+cross_dataset,MHEALTH_to_RealWorld,881,source_only_continued,1,sitting,522,0.144535
+cross_dataset,MHEALTH_to_RealWorld,881,source_only_continued,2,standing,548,0.047304
+cross_dataset,MHEALTH_to_RealWorld,881,source_only_continued,3,walking,621,0.085157
+cross_dataset,MHEALTH_to_RealWorld,881,source_only_continued,4,running,652,0.335561
+cross_dataset,MHEALTH_to_RealWorld,881,lambda0_target_pass,0,lying,551,0.000000
+cross_dataset,MHEALTH_to_RealWorld,881,lambda0_target_pass,1,sitting,522,0.286744
+cross_dataset,MHEALTH_to_RealWorld,881,lambda0_target_pass,2,standing,548,0.000000
+cross_dataset,MHEALTH_to_RealWorld,881,lambda0_target_pass,3,walking,621,0.027439
+cross_dataset,MHEALTH_to_RealWorld,881,lambda0_target_pass,4,running,652,0.414254
+cross_dataset,MHEALTH_to_RealWorld,881,deep_coral,0,lying,551,0.004073
+cross_dataset,MHEALTH_to_RealWorld,881,deep_coral,1,sitting,522,0.500599
+cross_dataset,MHEALTH_to_RealWorld,881,deep_coral,2,standing,548,0.217931
+cross_dataset,MHEALTH_to_RealWorld,881,deep_coral,3,walking,621,0.423272
+cross_dataset,MHEALTH_to_RealWorld,881,deep_coral,4,running,652,0.368980
+cross_gender,PAMAP2_male_to_PAMAP2_female,52,baseline,0,Nordic walking,18,0.333333
+cross_gender,PAMAP2_male_to_PAMAP2_female,52,baseline,1,ascending stairs,10,0.761905
+cross_gender,PAMAP2_male_to_PAMAP2_female,52,baseline,2,cycling,15,0.875000
+cross_gender,PAMAP2_male_to_PAMAP2_female,52,baseline,3,descending stairs,9,0.275862
+cross_gender,PAMAP2_male_to_PAMAP2_female,52,baseline,4,ironing,18,0.900000
+cross_gender,PAMAP2_male_to_PAMAP2_female,52,baseline,5,lying,14,1.000000
+cross_gender,PAMAP2_male_to_PAMAP2_female,52,baseline,6,rope jumping,7,0.444444
+cross_gender,PAMAP2_male_to_PAMAP2_female,52,baseline,7,running,5,0.909091
+cross_gender,PAMAP2_male_to_PAMAP2_female,52,baseline,8,sitting,13,0.720000
+cross_gender,PAMAP2_male_to_PAMAP2_female,52,baseline,9,standing,16,0.000000
+cross_gender,PAMAP2_male_to_PAMAP2_female,52,baseline,10,vacuum cleaning,12,0.545455
+cross_gender,PAMAP2_male_to_PAMAP2_female,52,baseline,11,walking,20,0.730769
+cross_gender,PAMAP2_male_to_PAMAP2_female,52,source_only_continued,0,Nordic walking,18,0.592593
+cross_gender,PAMAP2_male_to_PAMAP2_female,52,source_only_continued,1,ascending stairs,10,0.842105
+cross_gender,PAMAP2_male_to_PAMAP2_female,52,source_only_continued,2,cycling,15,0.965517
+cross_gender,PAMAP2_male_to_PAMAP2_female,52,source_only_continued,3,descending stairs,9,0.375000
+cross_gender,PAMAP2_male_to_PAMAP2_female,52,source_only_continued,4,ironing,18,0.923077
+cross_gender,PAMAP2_male_to_PAMAP2_female,52,source_only_continued,5,lying,14,1.000000
+cross_gender,PAMAP2_male_to_PAMAP2_female,52,source_only_continued,6,rope jumping,7,0.444444
+cross_gender,PAMAP2_male_to_PAMAP2_female,52,source_only_continued,7,running,5,0.909091
+cross_gender,PAMAP2_male_to_PAMAP2_female,52,source_only_continued,8,sitting,13,0.769231
+cross_gender,PAMAP2_male_to_PAMAP2_female,52,source_only_continued,9,standing,16,0.000000
+cross_gender,PAMAP2_male_to_PAMAP2_female,52,source_only_continued,10,vacuum cleaning,12,0.620690
+cross_gender,PAMAP2_male_to_PAMAP2_female,52,source_only_continued,11,walking,20,0.775510
+cross_gender,PAMAP2_male_to_PAMAP2_female,52,lambda0_target_pass,0,Nordic walking,18,0.500000
+cross_gender,PAMAP2_male_to_PAMAP2_female,52,lambda0_target_pass,1,ascending stairs,10,0.695652
+cross_gender,PAMAP2_male_to_PAMAP2_female,52,lambda0_target_pass,2,cycling,15,0.933333
+cross_gender,PAMAP2_male_to_PAMAP2_female,52,lambda0_target_pass,3,descending stairs,9,0.333333
+cross_gender,PAMAP2_male_to_PAMAP2_female,52,lambda0_target_pass,4,ironing,18,0.923077
+cross_gender,PAMAP2_male_to_PAMAP2_female,52,lambda0_target_pass,5,lying,14,1.000000
+cross_gender,PAMAP2_male_to_PAMAP2_female,52,lambda0_target_pass,6,rope jumping,7,0.444444
+cross_gender,PAMAP2_male_to_PAMAP2_female,52,lambda0_target_pass,7,running,5,1.000000
+cross_gender,PAMAP2_male_to_PAMAP2_female,52,lambda0_target_pass,8,sitting,13,0.666667
+cross_gender,PAMAP2_male_to_PAMAP2_female,52,lambda0_target_pass,9,standing,16,0.000000
+cross_gender,PAMAP2_male_to_PAMAP2_female,52,lambda0_target_pass,10,vacuum cleaning,12,0.620690
+cross_gender,PAMAP2_male_to_PAMAP2_female,52,lambda0_target_pass,11,walking,20,0.745098
+cross_gender,PAMAP2_male_to_PAMAP2_female,52,deep_coral,0,Nordic walking,18,0.480000
+cross_gender,PAMAP2_male_to_PAMAP2_female,52,deep_coral,1,ascending stairs,10,0.666667
+cross_gender,PAMAP2_male_to_PAMAP2_female,52,deep_coral,2,cycling,15,0.933333
+cross_gender,PAMAP2_male_to_PAMAP2_female,52,deep_coral,3,descending stairs,9,0.714286
+cross_gender,PAMAP2_male_to_PAMAP2_female,52,deep_coral,4,ironing,18,0.900000
+cross_gender,PAMAP2_male_to_PAMAP2_female,52,deep_coral,5,lying,14,1.000000
+cross_gender,PAMAP2_male_to_PAMAP2_female,52,deep_coral,6,rope jumping,7,0.000000
+cross_gender,PAMAP2_male_to_PAMAP2_female,52,deep_coral,7,running,5,1.000000
+cross_gender,PAMAP2_male_to_PAMAP2_female,52,deep_coral,8,sitting,13,0.608696
+cross_gender,PAMAP2_male_to_PAMAP2_female,52,deep_coral,9,standing,16,0.842105
+cross_gender,PAMAP2_male_to_PAMAP2_female,52,deep_coral,10,vacuum cleaning,12,0.666667
+cross_gender,PAMAP2_male_to_PAMAP2_female,52,deep_coral,11,walking,20,0.745098
+cross_gender,PAMAP2_male_to_PAMAP2_female,100,baseline,0,Nordic walking,18,0.285714
+cross_gender,PAMAP2_male_to_PAMAP2_female,100,baseline,1,ascending stairs,10,0.761905
+cross_gender,PAMAP2_male_to_PAMAP2_female,100,baseline,2,cycling,15,0.896552
+cross_gender,PAMAP2_male_to_PAMAP2_female,100,baseline,3,descending stairs,9,0.666667
+cross_gender,PAMAP2_male_to_PAMAP2_female,100,baseline,4,ironing,18,0.900000
+cross_gender,PAMAP2_male_to_PAMAP2_female,100,baseline,5,lying,14,0.965517
+cross_gender,PAMAP2_male_to_PAMAP2_female,100,baseline,6,rope jumping,7,0.000000
+cross_gender,PAMAP2_male_to_PAMAP2_female,100,baseline,7,running,5,0.909091
+cross_gender,PAMAP2_male_to_PAMAP2_female,100,baseline,8,sitting,13,0.608696
+cross_gender,PAMAP2_male_to_PAMAP2_female,100,baseline,9,standing,16,0.000000
+cross_gender,PAMAP2_male_to_PAMAP2_female,100,baseline,10,vacuum cleaning,12,0.347826
+cross_gender,PAMAP2_male_to_PAMAP2_female,100,baseline,11,walking,20,0.679245
+cross_gender,PAMAP2_male_to_PAMAP2_female,100,source_only_continued,0,Nordic walking,18,0.285714
+cross_gender,PAMAP2_male_to_PAMAP2_female,100,source_only_continued,1,ascending stairs,10,0.761905
+cross_gender,PAMAP2_male_to_PAMAP2_female,100,source_only_continued,2,cycling,15,0.896552
+cross_gender,PAMAP2_male_to_PAMAP2_female,100,source_only_continued,3,descending stairs,9,0.714286
+cross_gender,PAMAP2_male_to_PAMAP2_female,100,source_only_continued,4,ironing,18,0.923077
+cross_gender,PAMAP2_male_to_PAMAP2_female,100,source_only_continued,5,lying,14,0.965517
+cross_gender,PAMAP2_male_to_PAMAP2_female,100,source_only_continued,6,rope jumping,7,0.000000
+cross_gender,PAMAP2_male_to_PAMAP2_female,100,source_only_continued,7,running,5,0.909091
+cross_gender,PAMAP2_male_to_PAMAP2_female,100,source_only_continued,8,sitting,13,0.437500
+cross_gender,PAMAP2_male_to_PAMAP2_female,100,source_only_continued,9,standing,16,0.000000
+cross_gender,PAMAP2_male_to_PAMAP2_female,100,source_only_continued,10,vacuum cleaning,12,0.450000
+cross_gender,PAMAP2_male_to_PAMAP2_female,100,source_only_continued,11,walking,20,0.703704
+cross_gender,PAMAP2_male_to_PAMAP2_female,100,lambda0_target_pass,0,Nordic walking,18,0.285714
+cross_gender,PAMAP2_male_to_PAMAP2_female,100,lambda0_target_pass,1,ascending stairs,10,0.888889
+cross_gender,PAMAP2_male_to_PAMAP2_female,100,lambda0_target_pass,2,cycling,15,0.933333
+cross_gender,PAMAP2_male_to_PAMAP2_female,100,lambda0_target_pass,3,descending stairs,9,0.714286
+cross_gender,PAMAP2_male_to_PAMAP2_female,100,lambda0_target_pass,4,ironing,18,0.900000
+cross_gender,PAMAP2_male_to_PAMAP2_female,100,lambda0_target_pass,5,lying,14,0.965517
+cross_gender,PAMAP2_male_to_PAMAP2_female,100,lambda0_target_pass,6,rope jumping,7,0.250000
+cross_gender,PAMAP2_male_to_PAMAP2_female,100,lambda0_target_pass,7,running,5,0.909091
+cross_gender,PAMAP2_male_to_PAMAP2_female,100,lambda0_target_pass,8,sitting,13,0.769231
+cross_gender,PAMAP2_male_to_PAMAP2_female,100,lambda0_target_pass,9,standing,16,0.888889
+cross_gender,PAMAP2_male_to_PAMAP2_female,100,lambda0_target_pass,10,vacuum cleaning,12,0.518519
+cross_gender,PAMAP2_male_to_PAMAP2_female,100,lambda0_target_pass,11,walking,20,0.703704
+cross_gender,PAMAP2_male_to_PAMAP2_female,100,deep_coral,0,Nordic walking,18,0.285714
+cross_gender,PAMAP2_male_to_PAMAP2_female,100,deep_coral,1,ascending stairs,10,0.888889
+cross_gender,PAMAP2_male_to_PAMAP2_female,100,deep_coral,2,cycling,15,0.933333
+cross_gender,PAMAP2_male_to_PAMAP2_female,100,deep_coral,3,descending stairs,9,0.714286
+cross_gender,PAMAP2_male_to_PAMAP2_female,100,deep_coral,4,ironing,18,0.900000
+cross_gender,PAMAP2_male_to_PAMAP2_female,100,deep_coral,5,lying,14,0.965517
+cross_gender,PAMAP2_male_to_PAMAP2_female,100,deep_coral,6,rope jumping,7,0.250000
+cross_gender,PAMAP2_male_to_PAMAP2_female,100,deep_coral,7,running,5,1.000000
+cross_gender,PAMAP2_male_to_PAMAP2_female,100,deep_coral,8,sitting,13,0.720000
+cross_gender,PAMAP2_male_to_PAMAP2_female,100,deep_coral,9,standing,16,0.969697
+cross_gender,PAMAP2_male_to_PAMAP2_female,100,deep_coral,10,vacuum cleaning,12,0.516129
+cross_gender,PAMAP2_male_to_PAMAP2_female,100,deep_coral,11,walking,20,0.727273
+cross_gender,PAMAP2_male_to_PAMAP2_female,445,baseline,0,Nordic walking,18,0.260870
+cross_gender,PAMAP2_male_to_PAMAP2_female,445,baseline,1,ascending stairs,10,0.842105
+cross_gender,PAMAP2_male_to_PAMAP2_female,445,baseline,2,cycling,15,0.967742
+cross_gender,PAMAP2_male_to_PAMAP2_female,445,baseline,3,descending stairs,9,0.714286
+cross_gender,PAMAP2_male_to_PAMAP2_female,445,baseline,4,ironing,18,0.878049
+cross_gender,PAMAP2_male_to_PAMAP2_female,445,baseline,5,lying,14,0.962963
+cross_gender,PAMAP2_male_to_PAMAP2_female,445,baseline,6,rope jumping,7,0.250000
+cross_gender,PAMAP2_male_to_PAMAP2_female,445,baseline,7,running,5,0.833333
+cross_gender,PAMAP2_male_to_PAMAP2_female,445,baseline,8,sitting,13,0.666667
+cross_gender,PAMAP2_male_to_PAMAP2_female,445,baseline,9,standing,16,0.941176
+cross_gender,PAMAP2_male_to_PAMAP2_female,445,baseline,10,vacuum cleaning,12,0.666667
+cross_gender,PAMAP2_male_to_PAMAP2_female,445,baseline,11,walking,20,0.666667
+cross_gender,PAMAP2_male_to_PAMAP2_female,445,source_only_continued,0,Nordic walking,18,0.347826
+cross_gender,PAMAP2_male_to_PAMAP2_female,445,source_only_continued,1,ascending stairs,10,0.695652
+cross_gender,PAMAP2_male_to_PAMAP2_female,445,source_only_continued,2,cycling,15,1.000000
+cross_gender,PAMAP2_male_to_PAMAP2_female,445,source_only_continued,3,descending stairs,9,0.571429
+cross_gender,PAMAP2_male_to_PAMAP2_female,445,source_only_continued,4,ironing,18,0.878049
+cross_gender,PAMAP2_male_to_PAMAP2_female,445,source_only_continued,5,lying,14,0.962963
+cross_gender,PAMAP2_male_to_PAMAP2_female,445,source_only_continued,6,rope jumping,7,0.000000
+cross_gender,PAMAP2_male_to_PAMAP2_female,445,source_only_continued,7,running,5,0.444444
+cross_gender,PAMAP2_male_to_PAMAP2_female,445,source_only_continued,8,sitting,13,0.666667
+cross_gender,PAMAP2_male_to_PAMAP2_female,445,source_only_continued,9,standing,16,0.914286
+cross_gender,PAMAP2_male_to_PAMAP2_female,445,source_only_continued,10,vacuum cleaning,12,0.642857
+cross_gender,PAMAP2_male_to_PAMAP2_female,445,source_only_continued,11,walking,20,0.608696
+cross_gender,PAMAP2_male_to_PAMAP2_female,445,lambda0_target_pass,0,Nordic walking,18,0.363636
+cross_gender,PAMAP2_male_to_PAMAP2_female,445,lambda0_target_pass,1,ascending stairs,10,0.695652
+cross_gender,PAMAP2_male_to_PAMAP2_female,445,lambda0_target_pass,2,cycling,15,0.937500
+cross_gender,PAMAP2_male_to_PAMAP2_female,445,lambda0_target_pass,3,descending stairs,9,0.476190
+cross_gender,PAMAP2_male_to_PAMAP2_female,445,lambda0_target_pass,4,ironing,18,0.878049
+cross_gender,PAMAP2_male_to_PAMAP2_female,445,lambda0_target_pass,5,lying,14,0.962963
+cross_gender,PAMAP2_male_to_PAMAP2_female,445,lambda0_target_pass,6,rope jumping,7,0.000000
+cross_gender,PAMAP2_male_to_PAMAP2_female,445,lambda0_target_pass,7,running,5,0.000000
+cross_gender,PAMAP2_male_to_PAMAP2_female,445,lambda0_target_pass,8,sitting,13,0.608696
+cross_gender,PAMAP2_male_to_PAMAP2_female,445,lambda0_target_pass,9,standing,16,0.888889
+cross_gender,PAMAP2_male_to_PAMAP2_female,445,lambda0_target_pass,10,vacuum cleaning,12,0.500000
+cross_gender,PAMAP2_male_to_PAMAP2_female,445,lambda0_target_pass,11,walking,20,0.705882
+cross_gender,PAMAP2_male_to_PAMAP2_female,445,deep_coral,0,Nordic walking,18,0.272727
+cross_gender,PAMAP2_male_to_PAMAP2_female,445,deep_coral,1,ascending stairs,10,0.727273
+cross_gender,PAMAP2_male_to_PAMAP2_female,445,deep_coral,2,cycling,15,0.937500
+cross_gender,PAMAP2_male_to_PAMAP2_female,445,deep_coral,3,descending stairs,9,0.615385
+cross_gender,PAMAP2_male_to_PAMAP2_female,445,deep_coral,4,ironing,18,0.878049
+cross_gender,PAMAP2_male_to_PAMAP2_female,445,deep_coral,5,lying,14,0.962963
+cross_gender,PAMAP2_male_to_PAMAP2_female,445,deep_coral,6,rope jumping,7,0.000000
+cross_gender,PAMAP2_male_to_PAMAP2_female,445,deep_coral,7,running,5,0.833333
+cross_gender,PAMAP2_male_to_PAMAP2_female,445,deep_coral,8,sitting,13,0.666667
+cross_gender,PAMAP2_male_to_PAMAP2_female,445,deep_coral,9,standing,16,0.888889
+cross_gender,PAMAP2_male_to_PAMAP2_female,445,deep_coral,10,vacuum cleaning,12,0.615385
+cross_gender,PAMAP2_male_to_PAMAP2_female,445,deep_coral,11,walking,20,0.692308
+cross_gender,PAMAP2_male_to_PAMAP2_female,545,baseline,0,Nordic walking,18,0.272727
+cross_gender,PAMAP2_male_to_PAMAP2_female,545,baseline,1,ascending stairs,10,0.761905
+cross_gender,PAMAP2_male_to_PAMAP2_female,545,baseline,2,cycling,15,0.875000
+cross_gender,PAMAP2_male_to_PAMAP2_female,545,baseline,3,descending stairs,9,0.285714
+cross_gender,PAMAP2_male_to_PAMAP2_female,545,baseline,4,ironing,18,0.923077
+cross_gender,PAMAP2_male_to_PAMAP2_female,545,baseline,5,lying,14,1.000000
+cross_gender,PAMAP2_male_to_PAMAP2_female,545,baseline,6,rope jumping,7,0.250000
+cross_gender,PAMAP2_male_to_PAMAP2_female,545,baseline,7,running,5,0.833333
+cross_gender,PAMAP2_male_to_PAMAP2_female,545,baseline,8,sitting,13,0.695652
+cross_gender,PAMAP2_male_to_PAMAP2_female,545,baseline,9,standing,16,0.117647
+cross_gender,PAMAP2_male_to_PAMAP2_female,545,baseline,10,vacuum cleaning,12,0.580645
+cross_gender,PAMAP2_male_to_PAMAP2_female,545,baseline,11,walking,20,0.679245
+cross_gender,PAMAP2_male_to_PAMAP2_female,545,source_only_continued,0,Nordic walking,18,0.416667
+cross_gender,PAMAP2_male_to_PAMAP2_female,545,source_only_continued,1,ascending stairs,10,0.640000
+cross_gender,PAMAP2_male_to_PAMAP2_female,545,source_only_continued,2,cycling,15,0.903226
+cross_gender,PAMAP2_male_to_PAMAP2_female,545,source_only_continued,3,descending stairs,9,0.615385
+cross_gender,PAMAP2_male_to_PAMAP2_female,545,source_only_continued,4,ironing,18,0.923077
+cross_gender,PAMAP2_male_to_PAMAP2_female,545,source_only_continued,5,lying,14,1.000000
+cross_gender,PAMAP2_male_to_PAMAP2_female,545,source_only_continued,6,rope jumping,7,0.000000
+cross_gender,PAMAP2_male_to_PAMAP2_female,545,source_only_continued,7,running,5,0.909091
+cross_gender,PAMAP2_male_to_PAMAP2_female,545,source_only_continued,8,sitting,13,0.526316
+cross_gender,PAMAP2_male_to_PAMAP2_female,545,source_only_continued,9,standing,16,1.000000
+cross_gender,PAMAP2_male_to_PAMAP2_female,545,source_only_continued,10,vacuum cleaning,12,0.666667
+cross_gender,PAMAP2_male_to_PAMAP2_female,545,source_only_continued,11,walking,20,0.730769
+cross_gender,PAMAP2_male_to_PAMAP2_female,545,lambda0_target_pass,0,Nordic walking,18,0.416667
+cross_gender,PAMAP2_male_to_PAMAP2_female,545,lambda0_target_pass,1,ascending stairs,10,0.761905
+cross_gender,PAMAP2_male_to_PAMAP2_female,545,lambda0_target_pass,2,cycling,15,0.933333
+cross_gender,PAMAP2_male_to_PAMAP2_female,545,lambda0_target_pass,3,descending stairs,9,0.714286
+cross_gender,PAMAP2_male_to_PAMAP2_female,545,lambda0_target_pass,4,ironing,18,0.947368
+cross_gender,PAMAP2_male_to_PAMAP2_female,545,lambda0_target_pass,5,lying,14,0.933333
+cross_gender,PAMAP2_male_to_PAMAP2_female,545,lambda0_target_pass,6,rope jumping,7,0.000000
+cross_gender,PAMAP2_male_to_PAMAP2_female,545,lambda0_target_pass,7,running,5,0.909091
+cross_gender,PAMAP2_male_to_PAMAP2_female,545,lambda0_target_pass,8,sitting,13,0.608696
+cross_gender,PAMAP2_male_to_PAMAP2_female,545,lambda0_target_pass,9,standing,16,0.914286
+cross_gender,PAMAP2_male_to_PAMAP2_female,545,lambda0_target_pass,10,vacuum cleaning,12,0.500000
+cross_gender,PAMAP2_male_to_PAMAP2_female,545,lambda0_target_pass,11,walking,20,0.716981
+cross_gender,PAMAP2_male_to_PAMAP2_female,545,deep_coral,0,Nordic walking,18,0.416667
+cross_gender,PAMAP2_male_to_PAMAP2_female,545,deep_coral,1,ascending stairs,10,0.761905
+cross_gender,PAMAP2_male_to_PAMAP2_female,545,deep_coral,2,cycling,15,0.903226
+cross_gender,PAMAP2_male_to_PAMAP2_female,545,deep_coral,3,descending stairs,9,0.615385
+cross_gender,PAMAP2_male_to_PAMAP2_female,545,deep_coral,4,ironing,18,0.900000
+cross_gender,PAMAP2_male_to_PAMAP2_female,545,deep_coral,5,lying,14,0.965517
+cross_gender,PAMAP2_male_to_PAMAP2_female,545,deep_coral,6,rope jumping,7,0.000000
+cross_gender,PAMAP2_male_to_PAMAP2_female,545,deep_coral,7,running,5,0.909091
+cross_gender,PAMAP2_male_to_PAMAP2_female,545,deep_coral,8,sitting,13,0.636364
+cross_gender,PAMAP2_male_to_PAMAP2_female,545,deep_coral,9,standing,16,0.914286
+cross_gender,PAMAP2_male_to_PAMAP2_female,545,deep_coral,10,vacuum cleaning,12,0.571429
+cross_gender,PAMAP2_male_to_PAMAP2_female,545,deep_coral,11,walking,20,0.716981
+cross_gender,PAMAP2_male_to_PAMAP2_female,881,baseline,0,Nordic walking,18,0.434783
+cross_gender,PAMAP2_male_to_PAMAP2_female,881,baseline,1,ascending stairs,10,0.695652
+cross_gender,PAMAP2_male_to_PAMAP2_female,881,baseline,2,cycling,15,0.848485
+cross_gender,PAMAP2_male_to_PAMAP2_female,881,baseline,3,descending stairs,9,0.714286
+cross_gender,PAMAP2_male_to_PAMAP2_female,881,baseline,4,ironing,18,0.900000
+cross_gender,PAMAP2_male_to_PAMAP2_female,881,baseline,5,lying,14,1.000000
+cross_gender,PAMAP2_male_to_PAMAP2_female,881,baseline,6,rope jumping,7,0.000000
+cross_gender,PAMAP2_male_to_PAMAP2_female,881,baseline,7,running,5,1.000000
+cross_gender,PAMAP2_male_to_PAMAP2_female,881,baseline,8,sitting,13,0.700000
+cross_gender,PAMAP2_male_to_PAMAP2_female,881,baseline,9,standing,16,0.969697
+cross_gender,PAMAP2_male_to_PAMAP2_female,881,baseline,10,vacuum cleaning,12,0.606061
+cross_gender,PAMAP2_male_to_PAMAP2_female,881,baseline,11,walking,20,0.720000
+cross_gender,PAMAP2_male_to_PAMAP2_female,881,source_only_continued,0,Nordic walking,18,0.347826
+cross_gender,PAMAP2_male_to_PAMAP2_female,881,source_only_continued,1,ascending stairs,10,0.410256
+cross_gender,PAMAP2_male_to_PAMAP2_female,881,source_only_continued,2,cycling,15,0.882353
+cross_gender,PAMAP2_male_to_PAMAP2_female,881,source_only_continued,3,descending stairs,9,0.500000
+cross_gender,PAMAP2_male_to_PAMAP2_female,881,source_only_continued,4,ironing,18,0.900000
+cross_gender,PAMAP2_male_to_PAMAP2_female,881,source_only_continued,5,lying,14,1.000000
+cross_gender,PAMAP2_male_to_PAMAP2_female,881,source_only_continued,6,rope jumping,7,0.000000
+cross_gender,PAMAP2_male_to_PAMAP2_female,881,source_only_continued,7,running,5,0.333333
+cross_gender,PAMAP2_male_to_PAMAP2_female,881,source_only_continued,8,sitting,13,0.761905
+cross_gender,PAMAP2_male_to_PAMAP2_female,881,source_only_continued,9,standing,16,0.000000
+cross_gender,PAMAP2_male_to_PAMAP2_female,881,source_only_continued,10,vacuum cleaning,12,0.600000
+cross_gender,PAMAP2_male_to_PAMAP2_female,881,source_only_continued,11,walking,20,0.693878
+cross_gender,PAMAP2_male_to_PAMAP2_female,881,lambda0_target_pass,0,Nordic walking,18,0.400000
+cross_gender,PAMAP2_male_to_PAMAP2_female,881,lambda0_target_pass,1,ascending stairs,10,0.761905
+cross_gender,PAMAP2_male_to_PAMAP2_female,881,lambda0_target_pass,2,cycling,15,0.903226
+cross_gender,PAMAP2_male_to_PAMAP2_female,881,lambda0_target_pass,3,descending stairs,9,0.526316
+cross_gender,PAMAP2_male_to_PAMAP2_female,881,lambda0_target_pass,4,ironing,18,0.900000
+cross_gender,PAMAP2_male_to_PAMAP2_female,881,lambda0_target_pass,5,lying,14,1.000000
+cross_gender,PAMAP2_male_to_PAMAP2_female,881,lambda0_target_pass,6,rope jumping,7,0.000000
+cross_gender,PAMAP2_male_to_PAMAP2_female,881,lambda0_target_pass,7,running,5,0.000000
+cross_gender,PAMAP2_male_to_PAMAP2_female,881,lambda0_target_pass,8,sitting,13,0.782609
+cross_gender,PAMAP2_male_to_PAMAP2_female,881,lambda0_target_pass,9,standing,16,1.000000
+cross_gender,PAMAP2_male_to_PAMAP2_female,881,lambda0_target_pass,10,vacuum cleaning,12,0.645161
+cross_gender,PAMAP2_male_to_PAMAP2_female,881,lambda0_target_pass,11,walking,20,0.769231
+cross_gender,PAMAP2_male_to_PAMAP2_female,881,deep_coral,0,Nordic walking,18,0.416667
+cross_gender,PAMAP2_male_to_PAMAP2_female,881,deep_coral,1,ascending stairs,10,0.727273
+cross_gender,PAMAP2_male_to_PAMAP2_female,881,deep_coral,2,cycling,15,0.967742
+cross_gender,PAMAP2_male_to_PAMAP2_female,881,deep_coral,3,descending stairs,9,0.588235
+cross_gender,PAMAP2_male_to_PAMAP2_female,881,deep_coral,4,ironing,18,0.878049
+cross_gender,PAMAP2_male_to_PAMAP2_female,881,deep_coral,5,lying,14,1.000000
+cross_gender,PAMAP2_male_to_PAMAP2_female,881,deep_coral,6,rope jumping,7,0.000000
+cross_gender,PAMAP2_male_to_PAMAP2_female,881,deep_coral,7,running,5,0.571429
+cross_gender,PAMAP2_male_to_PAMAP2_female,881,deep_coral,8,sitting,13,0.636364
+cross_gender,PAMAP2_male_to_PAMAP2_female,881,deep_coral,9,standing,16,1.000000
+cross_gender,PAMAP2_male_to_PAMAP2_female,881,deep_coral,10,vacuum cleaning,12,0.645161
+cross_gender,PAMAP2_male_to_PAMAP2_female,881,deep_coral,11,walking,20,0.769231
+cross_gender,PAMAP2_female_to_PAMAP2_male,52,baseline,0,Nordic walking,310,0.743523
+cross_gender,PAMAP2_female_to_PAMAP2_male,52,baseline,1,ascending stairs,189,0.321637
+cross_gender,PAMAP2_female_to_PAMAP2_male,52,baseline,2,cycling,291,0.773389
+cross_gender,PAMAP2_female_to_PAMAP2_male,52,baseline,3,descending stairs,169,0.536443
+cross_gender,PAMAP2_female_to_PAMAP2_male,52,baseline,4,ironing,401,0.841060
+cross_gender,PAMAP2_female_to_PAMAP2_male,52,baseline,5,lying,334,0.836310
+cross_gender,PAMAP2_female_to_PAMAP2_male,52,baseline,6,rope jumping,85,0.000000
+cross_gender,PAMAP2_female_to_PAMAP2_male,52,baseline,7,running,290,0.587156
+cross_gender,PAMAP2_female_to_PAMAP2_male,52,baseline,8,sitting,304,0.578313
+cross_gender,PAMAP2_female_to_PAMAP2_male,52,baseline,9,standing,290,0.387255
+cross_gender,PAMAP2_female_to_PAMAP2_male,52,baseline,10,vacuum cleaning,290,0.674651
+cross_gender,PAMAP2_female_to_PAMAP2_male,52,baseline,11,walking,317,0.322751
+cross_gender,PAMAP2_female_to_PAMAP2_male,52,source_only_continued,0,Nordic walking,310,0.779570
+cross_gender,PAMAP2_female_to_PAMAP2_male,52,source_only_continued,1,ascending stairs,189,0.475107
+cross_gender,PAMAP2_female_to_PAMAP2_male,52,source_only_continued,2,cycling,291,0.903346
+cross_gender,PAMAP2_female_to_PAMAP2_male,52,source_only_continued,3,descending stairs,169,0.621984
+cross_gender,PAMAP2_female_to_PAMAP2_male,52,source_only_continued,4,ironing,401,0.820404
+cross_gender,PAMAP2_female_to_PAMAP2_male,52,source_only_continued,5,lying,334,0.815906
+cross_gender,PAMAP2_female_to_PAMAP2_male,52,source_only_continued,6,rope jumping,85,0.126984
+cross_gender,PAMAP2_female_to_PAMAP2_male,52,source_only_continued,7,running,290,0.879079
+cross_gender,PAMAP2_female_to_PAMAP2_male,52,source_only_continued,8,sitting,304,0.587992
+cross_gender,PAMAP2_female_to_PAMAP2_male,52,source_only_continued,9,standing,290,0.402036
+cross_gender,PAMAP2_female_to_PAMAP2_male,52,source_only_continued,10,vacuum cleaning,290,0.734059
+cross_gender,PAMAP2_female_to_PAMAP2_male,52,source_only_continued,11,walking,317,0.398990
+cross_gender,PAMAP2_female_to_PAMAP2_male,52,lambda0_target_pass,0,Nordic walking,310,0.772069
+cross_gender,PAMAP2_female_to_PAMAP2_male,52,lambda0_target_pass,1,ascending stairs,189,0.669405
+cross_gender,PAMAP2_female_to_PAMAP2_male,52,lambda0_target_pass,2,cycling,291,0.942857
+cross_gender,PAMAP2_female_to_PAMAP2_male,52,lambda0_target_pass,3,descending stairs,169,0.649533
+cross_gender,PAMAP2_female_to_PAMAP2_male,52,lambda0_target_pass,4,ironing,401,0.823651
+cross_gender,PAMAP2_female_to_PAMAP2_male,52,lambda0_target_pass,5,lying,334,0.862385
+cross_gender,PAMAP2_female_to_PAMAP2_male,52,lambda0_target_pass,6,rope jumping,85,0.646154
+cross_gender,PAMAP2_female_to_PAMAP2_male,52,lambda0_target_pass,7,running,290,0.955437
+cross_gender,PAMAP2_female_to_PAMAP2_male,52,lambda0_target_pass,8,sitting,304,0.593361
+cross_gender,PAMAP2_female_to_PAMAP2_male,52,lambda0_target_pass,9,standing,290,0.394805
+cross_gender,PAMAP2_female_to_PAMAP2_male,52,lambda0_target_pass,10,vacuum cleaning,290,0.707038
+cross_gender,PAMAP2_female_to_PAMAP2_male,52,lambda0_target_pass,11,walking,317,0.624277
+cross_gender,PAMAP2_female_to_PAMAP2_male,52,deep_coral,0,Nordic walking,310,0.775726
+cross_gender,PAMAP2_female_to_PAMAP2_male,52,deep_coral,1,ascending stairs,189,0.670757
+cross_gender,PAMAP2_female_to_PAMAP2_male,52,deep_coral,2,cycling,291,0.959720
+cross_gender,PAMAP2_female_to_PAMAP2_male,52,deep_coral,3,descending stairs,169,0.731458
+cross_gender,PAMAP2_female_to_PAMAP2_male,52,deep_coral,4,ironing,401,0.812692
+cross_gender,PAMAP2_female_to_PAMAP2_male,52,deep_coral,5,lying,334,0.864122
+cross_gender,PAMAP2_female_to_PAMAP2_male,52,deep_coral,6,rope jumping,85,0.363636
+cross_gender,PAMAP2_female_to_PAMAP2_male,52,deep_coral,7,running,290,0.960854
+cross_gender,PAMAP2_female_to_PAMAP2_male,52,deep_coral,8,sitting,304,0.588477
+cross_gender,PAMAP2_female_to_PAMAP2_male,52,deep_coral,9,standing,290,0.414698
+cross_gender,PAMAP2_female_to_PAMAP2_male,52,deep_coral,10,vacuum cleaning,290,0.721477
+cross_gender,PAMAP2_female_to_PAMAP2_male,52,deep_coral,11,walking,317,0.636535
+cross_gender,PAMAP2_female_to_PAMAP2_male,100,baseline,0,Nordic walking,310,0.749679
+cross_gender,PAMAP2_female_to_PAMAP2_male,100,baseline,1,ascending stairs,189,0.536184
+cross_gender,PAMAP2_female_to_PAMAP2_male,100,baseline,2,cycling,291,0.909722
+cross_gender,PAMAP2_female_to_PAMAP2_male,100,baseline,3,descending stairs,169,0.763314
+cross_gender,PAMAP2_female_to_PAMAP2_male,100,baseline,4,ironing,401,0.811741
+cross_gender,PAMAP2_female_to_PAMAP2_male,100,baseline,5,lying,334,0.850153
+cross_gender,PAMAP2_female_to_PAMAP2_male,100,baseline,6,rope jumping,85,0.104575
+cross_gender,PAMAP2_female_to_PAMAP2_male,100,baseline,7,running,290,0.892655
+cross_gender,PAMAP2_female_to_PAMAP2_male,100,baseline,8,sitting,304,0.536998
+cross_gender,PAMAP2_female_to_PAMAP2_male,100,baseline,9,standing,290,0.382749
+cross_gender,PAMAP2_female_to_PAMAP2_male,100,baseline,10,vacuum cleaning,290,0.728455
+cross_gender,PAMAP2_female_to_PAMAP2_male,100,baseline,11,walking,317,0.603524
+cross_gender,PAMAP2_female_to_PAMAP2_male,100,source_only_continued,0,Nordic walking,310,0.785425
+cross_gender,PAMAP2_female_to_PAMAP2_male,100,source_only_continued,1,ascending stairs,189,0.494012
+cross_gender,PAMAP2_female_to_PAMAP2_male,100,source_only_continued,2,cycling,291,0.948490
+cross_gender,PAMAP2_female_to_PAMAP2_male,100,source_only_continued,3,descending stairs,169,0.602247
+cross_gender,PAMAP2_female_to_PAMAP2_male,100,source_only_continued,4,ironing,401,0.899103
+cross_gender,PAMAP2_female_to_PAMAP2_male,100,source_only_continued,5,lying,334,0.853659
+cross_gender,PAMAP2_female_to_PAMAP2_male,100,source_only_continued,6,rope jumping,85,0.208333
+cross_gender,PAMAP2_female_to_PAMAP2_male,100,source_only_continued,7,running,290,0.939716
+cross_gender,PAMAP2_female_to_PAMAP2_male,100,source_only_continued,8,sitting,304,0.590437
+cross_gender,PAMAP2_female_to_PAMAP2_male,100,source_only_continued,9,standing,290,0.406417
+cross_gender,PAMAP2_female_to_PAMAP2_male,100,source_only_continued,10,vacuum cleaning,290,0.736508
+cross_gender,PAMAP2_female_to_PAMAP2_male,100,source_only_continued,11,walking,317,0.525581
+cross_gender,PAMAP2_female_to_PAMAP2_male,100,lambda0_target_pass,0,Nordic walking,310,0.798906
+cross_gender,PAMAP2_female_to_PAMAP2_male,100,lambda0_target_pass,1,ascending stairs,189,0.559585
+cross_gender,PAMAP2_female_to_PAMAP2_male,100,lambda0_target_pass,2,cycling,291,0.935593
+cross_gender,PAMAP2_female_to_PAMAP2_male,100,lambda0_target_pass,3,descending stairs,169,0.656934
+cross_gender,PAMAP2_female_to_PAMAP2_male,100,lambda0_target_pass,4,ironing,401,0.848677
+cross_gender,PAMAP2_female_to_PAMAP2_male,100,lambda0_target_pass,5,lying,334,0.862385
+cross_gender,PAMAP2_female_to_PAMAP2_male,100,lambda0_target_pass,6,rope jumping,85,0.711111
+cross_gender,PAMAP2_female_to_PAMAP2_male,100,lambda0_target_pass,7,running,290,0.950704
+cross_gender,PAMAP2_female_to_PAMAP2_male,100,lambda0_target_pass,8,sitting,304,0.583333
+cross_gender,PAMAP2_female_to_PAMAP2_male,100,lambda0_target_pass,9,standing,290,0.411609
+cross_gender,PAMAP2_female_to_PAMAP2_male,100,lambda0_target_pass,10,vacuum cleaning,290,0.721754
+cross_gender,PAMAP2_female_to_PAMAP2_male,100,lambda0_target_pass,11,walking,317,0.661053
+cross_gender,PAMAP2_female_to_PAMAP2_male,100,deep_coral,0,Nordic walking,310,0.851632
+cross_gender,PAMAP2_female_to_PAMAP2_male,100,deep_coral,1,ascending stairs,189,0.573944
+cross_gender,PAMAP2_female_to_PAMAP2_male,100,deep_coral,2,cycling,291,0.892508
+cross_gender,PAMAP2_female_to_PAMAP2_male,100,deep_coral,3,descending stairs,169,0.699029
+cross_gender,PAMAP2_female_to_PAMAP2_male,100,deep_coral,4,ironing,401,0.848034
+cross_gender,PAMAP2_female_to_PAMAP2_male,100,deep_coral,5,lying,334,0.856278
+cross_gender,PAMAP2_female_to_PAMAP2_male,100,deep_coral,6,rope jumping,85,0.473684
+cross_gender,PAMAP2_female_to_PAMAP2_male,100,deep_coral,7,running,290,0.949033
+cross_gender,PAMAP2_female_to_PAMAP2_male,100,deep_coral,8,sitting,304,0.530172
+cross_gender,PAMAP2_female_to_PAMAP2_male,100,deep_coral,9,standing,290,0.413437
+cross_gender,PAMAP2_female_to_PAMAP2_male,100,deep_coral,10,vacuum cleaning,290,0.737564
+cross_gender,PAMAP2_female_to_PAMAP2_male,100,deep_coral,11,walking,317,0.765049
+cross_gender,PAMAP2_female_to_PAMAP2_male,445,baseline,0,Nordic walking,310,0.662132
+cross_gender,PAMAP2_female_to_PAMAP2_male,445,baseline,1,ascending stairs,189,0.433735
+cross_gender,PAMAP2_female_to_PAMAP2_male,445,baseline,2,cycling,291,0.879121
+cross_gender,PAMAP2_female_to_PAMAP2_male,445,baseline,3,descending stairs,169,0.735955
+cross_gender,PAMAP2_female_to_PAMAP2_male,445,baseline,4,ironing,401,0.846416
+cross_gender,PAMAP2_female_to_PAMAP2_male,445,baseline,5,lying,334,0.826471
+cross_gender,PAMAP2_female_to_PAMAP2_male,445,baseline,6,rope jumping,85,0.015038
+cross_gender,PAMAP2_female_to_PAMAP2_male,445,baseline,7,running,290,0.857143
+cross_gender,PAMAP2_female_to_PAMAP2_male,445,baseline,8,sitting,304,0.592133
+cross_gender,PAMAP2_female_to_PAMAP2_male,445,baseline,9,standing,290,0.401985
+cross_gender,PAMAP2_female_to_PAMAP2_male,445,baseline,10,vacuum cleaning,290,0.713533
+cross_gender,PAMAP2_female_to_PAMAP2_male,445,baseline,11,walking,317,0.078788
+cross_gender,PAMAP2_female_to_PAMAP2_male,445,source_only_continued,0,Nordic walking,310,0.672150
+cross_gender,PAMAP2_female_to_PAMAP2_male,445,source_only_continued,1,ascending stairs,189,0.429513
+cross_gender,PAMAP2_female_to_PAMAP2_male,445,source_only_continued,2,cycling,291,0.795181
+cross_gender,PAMAP2_female_to_PAMAP2_male,445,source_only_continued,3,descending stairs,169,0.696296
+cross_gender,PAMAP2_female_to_PAMAP2_male,445,source_only_continued,4,ironing,401,0.841984
+cross_gender,PAMAP2_female_to_PAMAP2_male,445,source_only_continued,5,lying,334,0.828194
+cross_gender,PAMAP2_female_to_PAMAP2_male,445,source_only_continued,6,rope jumping,85,0.160714
+cross_gender,PAMAP2_female_to_PAMAP2_male,445,source_only_continued,7,running,290,0.916968
+cross_gender,PAMAP2_female_to_PAMAP2_male,445,source_only_continued,8,sitting,304,0.586066
+cross_gender,PAMAP2_female_to_PAMAP2_male,445,source_only_continued,9,standing,290,0.380723
+cross_gender,PAMAP2_female_to_PAMAP2_male,445,source_only_continued,10,vacuum cleaning,290,0.696113
+cross_gender,PAMAP2_female_to_PAMAP2_male,445,source_only_continued,11,walking,317,0.156977
+cross_gender,PAMAP2_female_to_PAMAP2_male,445,lambda0_target_pass,0,Nordic walking,310,0.681499
+cross_gender,PAMAP2_female_to_PAMAP2_male,445,lambda0_target_pass,1,ascending stairs,189,0.466381
+cross_gender,PAMAP2_female_to_PAMAP2_male,445,lambda0_target_pass,2,cycling,291,0.829828
+cross_gender,PAMAP2_female_to_PAMAP2_male,445,lambda0_target_pass,3,descending stairs,169,0.703125
+cross_gender,PAMAP2_female_to_PAMAP2_male,445,lambda0_target_pass,4,ironing,401,0.811254
+cross_gender,PAMAP2_female_to_PAMAP2_male,445,lambda0_target_pass,5,lying,334,0.814493
+cross_gender,PAMAP2_female_to_PAMAP2_male,445,lambda0_target_pass,6,rope jumping,85,0.357724
+cross_gender,PAMAP2_female_to_PAMAP2_male,445,lambda0_target_pass,7,running,290,0.919786
+cross_gender,PAMAP2_female_to_PAMAP2_male,445,lambda0_target_pass,8,sitting,304,0.585366
+cross_gender,PAMAP2_female_to_PAMAP2_male,445,lambda0_target_pass,9,standing,290,0.321932
+cross_gender,PAMAP2_female_to_PAMAP2_male,445,lambda0_target_pass,10,vacuum cleaning,290,0.653992
+cross_gender,PAMAP2_female_to_PAMAP2_male,445,lambda0_target_pass,11,walking,317,0.118343
+cross_gender,PAMAP2_female_to_PAMAP2_male,445,deep_coral,0,Nordic walking,310,0.756827
+cross_gender,PAMAP2_female_to_PAMAP2_male,445,deep_coral,1,ascending stairs,189,0.459384
+cross_gender,PAMAP2_female_to_PAMAP2_male,445,deep_coral,2,cycling,291,0.829828
+cross_gender,PAMAP2_female_to_PAMAP2_male,445,deep_coral,3,descending stairs,169,0.753541
+cross_gender,PAMAP2_female_to_PAMAP2_male,445,deep_coral,4,ironing,401,0.791569
+cross_gender,PAMAP2_female_to_PAMAP2_male,445,deep_coral,5,lying,334,0.816208
+cross_gender,PAMAP2_female_to_PAMAP2_male,445,deep_coral,6,rope jumping,85,0.166667
+cross_gender,PAMAP2_female_to_PAMAP2_male,445,deep_coral,7,running,290,0.941799
+cross_gender,PAMAP2_female_to_PAMAP2_male,445,deep_coral,8,sitting,304,0.592593
+cross_gender,PAMAP2_female_to_PAMAP2_male,445,deep_coral,9,standing,290,0.349345
+cross_gender,PAMAP2_female_to_PAMAP2_male,445,deep_coral,10,vacuum cleaning,290,0.633094
+cross_gender,PAMAP2_female_to_PAMAP2_male,445,deep_coral,11,walking,317,0.544622
+cross_gender,PAMAP2_female_to_PAMAP2_male,545,baseline,0,Nordic walking,310,0.668203
+cross_gender,PAMAP2_female_to_PAMAP2_male,545,baseline,1,ascending stairs,189,0.508634
+cross_gender,PAMAP2_female_to_PAMAP2_male,545,baseline,2,cycling,291,0.838966
+cross_gender,PAMAP2_female_to_PAMAP2_male,545,baseline,3,descending stairs,169,0.792023
+cross_gender,PAMAP2_female_to_PAMAP2_male,545,baseline,4,ironing,401,0.884354
+cross_gender,PAMAP2_female_to_PAMAP2_male,545,baseline,5,lying,334,0.820961
+cross_gender,PAMAP2_female_to_PAMAP2_male,545,baseline,6,rope jumping,85,0.611765
+cross_gender,PAMAP2_female_to_PAMAP2_male,545,baseline,7,running,290,0.942004
+cross_gender,PAMAP2_female_to_PAMAP2_male,545,baseline,8,sitting,304,0.581818
+cross_gender,PAMAP2_female_to_PAMAP2_male,545,baseline,9,standing,290,0.402062
+cross_gender,PAMAP2_female_to_PAMAP2_male,545,baseline,10,vacuum cleaning,290,0.682171
+cross_gender,PAMAP2_female_to_PAMAP2_male,545,baseline,11,walking,317,0.162319
+cross_gender,PAMAP2_female_to_PAMAP2_male,545,source_only_continued,0,Nordic walking,310,0.695962
+cross_gender,PAMAP2_female_to_PAMAP2_male,545,source_only_continued,1,ascending stairs,189,0.500000
+cross_gender,PAMAP2_female_to_PAMAP2_male,545,source_only_continued,2,cycling,291,0.803279
+cross_gender,PAMAP2_female_to_PAMAP2_male,545,source_only_continued,3,descending stairs,169,0.658879
+cross_gender,PAMAP2_female_to_PAMAP2_male,545,source_only_continued,4,ironing,401,0.884571
+cross_gender,PAMAP2_female_to_PAMAP2_male,545,source_only_continued,5,lying,334,0.830633
+cross_gender,PAMAP2_female_to_PAMAP2_male,545,source_only_continued,6,rope jumping,85,0.662921
+cross_gender,PAMAP2_female_to_PAMAP2_male,545,source_only_continued,7,running,290,0.948307
+cross_gender,PAMAP2_female_to_PAMAP2_male,545,source_only_continued,8,sitting,304,0.584362
+cross_gender,PAMAP2_female_to_PAMAP2_male,545,source_only_continued,9,standing,290,0.400000
+cross_gender,PAMAP2_female_to_PAMAP2_male,545,source_only_continued,10,vacuum cleaning,290,0.714286
+cross_gender,PAMAP2_female_to_PAMAP2_male,545,source_only_continued,11,walking,317,0.277174
+cross_gender,PAMAP2_female_to_PAMAP2_male,545,lambda0_target_pass,0,Nordic walking,310,0.691943
+cross_gender,PAMAP2_female_to_PAMAP2_male,545,lambda0_target_pass,1,ascending stairs,189,0.613678
+cross_gender,PAMAP2_female_to_PAMAP2_male,545,lambda0_target_pass,2,cycling,291,0.903108
+cross_gender,PAMAP2_female_to_PAMAP2_male,545,lambda0_target_pass,3,descending stairs,169,0.752632
+cross_gender,PAMAP2_female_to_PAMAP2_male,545,lambda0_target_pass,4,ironing,401,0.832215
+cross_gender,PAMAP2_female_to_PAMAP2_male,545,lambda0_target_pass,5,lying,334,0.790503
+cross_gender,PAMAP2_female_to_PAMAP2_male,545,lambda0_target_pass,6,rope jumping,85,0.752577
+cross_gender,PAMAP2_female_to_PAMAP2_male,545,lambda0_target_pass,7,running,290,0.953571
+cross_gender,PAMAP2_female_to_PAMAP2_male,545,lambda0_target_pass,8,sitting,304,0.596708
+cross_gender,PAMAP2_female_to_PAMAP2_male,545,lambda0_target_pass,9,standing,290,0.352679
+cross_gender,PAMAP2_female_to_PAMAP2_male,545,lambda0_target_pass,10,vacuum cleaning,290,0.689165
+cross_gender,PAMAP2_female_to_PAMAP2_male,545,lambda0_target_pass,11,walking,317,0.272480
+cross_gender,PAMAP2_female_to_PAMAP2_male,545,deep_coral,0,Nordic walking,310,0.692764
+cross_gender,PAMAP2_female_to_PAMAP2_male,545,deep_coral,1,ascending stairs,189,0.644401
+cross_gender,PAMAP2_female_to_PAMAP2_male,545,deep_coral,2,cycling,291,0.913043
+cross_gender,PAMAP2_female_to_PAMAP2_male,545,deep_coral,3,descending stairs,169,0.730570
+cross_gender,PAMAP2_female_to_PAMAP2_male,545,deep_coral,4,ironing,401,0.808696
+cross_gender,PAMAP2_female_to_PAMAP2_male,545,deep_coral,5,lying,334,0.800000
+cross_gender,PAMAP2_female_to_PAMAP2_male,545,deep_coral,6,rope jumping,85,0.760417
+cross_gender,PAMAP2_female_to_PAMAP2_male,545,deep_coral,7,running,290,0.950178
+cross_gender,PAMAP2_female_to_PAMAP2_male,545,deep_coral,8,sitting,304,0.597938
+cross_gender,PAMAP2_female_to_PAMAP2_male,545,deep_coral,9,standing,290,0.373272
+cross_gender,PAMAP2_female_to_PAMAP2_male,545,deep_coral,10,vacuum cleaning,290,0.707581
+cross_gender,PAMAP2_female_to_PAMAP2_male,545,deep_coral,11,walking,317,0.371501
+cross_gender,PAMAP2_female_to_PAMAP2_male,881,baseline,0,Nordic walking,310,0.802759
+cross_gender,PAMAP2_female_to_PAMAP2_male,881,baseline,1,ascending stairs,189,0.650888
+cross_gender,PAMAP2_female_to_PAMAP2_male,881,baseline,2,cycling,291,0.927007
+cross_gender,PAMAP2_female_to_PAMAP2_male,881,baseline,3,descending stairs,169,0.832370
+cross_gender,PAMAP2_female_to_PAMAP2_male,881,baseline,4,ironing,401,0.832618
+cross_gender,PAMAP2_female_to_PAMAP2_male,881,baseline,5,lying,334,0.795518
+cross_gender,PAMAP2_female_to_PAMAP2_male,881,baseline,6,rope jumping,85,0.700000
+cross_gender,PAMAP2_female_to_PAMAP2_male,881,baseline,7,running,290,0.888060
+cross_gender,PAMAP2_female_to_PAMAP2_male,881,baseline,8,sitting,304,0.581967
+cross_gender,PAMAP2_female_to_PAMAP2_male,881,baseline,9,standing,290,0.393701
+cross_gender,PAMAP2_female_to_PAMAP2_male,881,baseline,10,vacuum cleaning,290,0.739771
+cross_gender,PAMAP2_female_to_PAMAP2_male,881,baseline,11,walking,317,0.833333
+cross_gender,PAMAP2_female_to_PAMAP2_male,881,source_only_continued,0,Nordic walking,310,0.767677
+cross_gender,PAMAP2_female_to_PAMAP2_male,881,source_only_continued,1,ascending stairs,189,0.689362
+cross_gender,PAMAP2_female_to_PAMAP2_male,881,source_only_continued,2,cycling,291,0.955117
+cross_gender,PAMAP2_female_to_PAMAP2_male,881,source_only_continued,3,descending stairs,169,0.839879
+cross_gender,PAMAP2_female_to_PAMAP2_male,881,source_only_continued,4,ironing,401,0.846652
+cross_gender,PAMAP2_female_to_PAMAP2_male,881,source_only_continued,5,lying,334,0.791086
+cross_gender,PAMAP2_female_to_PAMAP2_male,881,source_only_continued,6,rope jumping,85,0.451389
+cross_gender,PAMAP2_female_to_PAMAP2_male,881,source_only_continued,7,running,290,0.516624
+cross_gender,PAMAP2_female_to_PAMAP2_male,881,source_only_continued,8,sitting,304,0.595833
+cross_gender,PAMAP2_female_to_PAMAP2_male,881,source_only_continued,9,standing,290,0.236686
+cross_gender,PAMAP2_female_to_PAMAP2_male,881,source_only_continued,10,vacuum cleaning,290,0.786942
+cross_gender,PAMAP2_female_to_PAMAP2_male,881,source_only_continued,11,walking,317,0.751958
+cross_gender,PAMAP2_female_to_PAMAP2_male,881,lambda0_target_pass,0,Nordic walking,310,0.739517
+cross_gender,PAMAP2_female_to_PAMAP2_male,881,lambda0_target_pass,1,ascending stairs,189,0.536825
+cross_gender,PAMAP2_female_to_PAMAP2_male,881,lambda0_target_pass,2,cycling,291,0.909091
+cross_gender,PAMAP2_female_to_PAMAP2_male,881,lambda0_target_pass,3,descending stairs,169,0.680851
+cross_gender,PAMAP2_female_to_PAMAP2_male,881,lambda0_target_pass,4,ironing,401,0.864572
+cross_gender,PAMAP2_female_to_PAMAP2_male,881,lambda0_target_pass,5,lying,334,0.830904
+cross_gender,PAMAP2_female_to_PAMAP2_male,881,lambda0_target_pass,6,rope jumping,85,0.215827
+cross_gender,PAMAP2_female_to_PAMAP2_male,881,lambda0_target_pass,7,running,290,0.931699
+cross_gender,PAMAP2_female_to_PAMAP2_male,881,lambda0_target_pass,8,sitting,304,0.573222
+cross_gender,PAMAP2_female_to_PAMAP2_male,881,lambda0_target_pass,9,standing,290,0.368000
+cross_gender,PAMAP2_female_to_PAMAP2_male,881,lambda0_target_pass,10,vacuum cleaning,290,0.804233
+cross_gender,PAMAP2_female_to_PAMAP2_male,881,lambda0_target_pass,11,walking,317,0.525581
+cross_gender,PAMAP2_female_to_PAMAP2_male,881,deep_coral,0,Nordic walking,310,0.710145
+cross_gender,PAMAP2_female_to_PAMAP2_male,881,deep_coral,1,ascending stairs,189,0.660000
+cross_gender,PAMAP2_female_to_PAMAP2_male,881,deep_coral,2,cycling,291,0.952548
+cross_gender,PAMAP2_female_to_PAMAP2_male,881,deep_coral,3,descending stairs,169,0.814607
+cross_gender,PAMAP2_female_to_PAMAP2_male,881,deep_coral,4,ironing,401,0.853448
+cross_gender,PAMAP2_female_to_PAMAP2_male,881,deep_coral,5,lying,334,0.820961
+cross_gender,PAMAP2_female_to_PAMAP2_male,881,deep_coral,6,rope jumping,85,0.455026
+cross_gender,PAMAP2_female_to_PAMAP2_male,881,deep_coral,7,running,290,0.937500
+cross_gender,PAMAP2_female_to_PAMAP2_male,881,deep_coral,8,sitting,304,0.575000
+cross_gender,PAMAP2_female_to_PAMAP2_male,881,deep_coral,9,standing,290,0.340426
+cross_gender,PAMAP2_female_to_PAMAP2_male,881,deep_coral,10,vacuum cleaning,290,0.807207
+cross_gender,PAMAP2_female_to_PAMAP2_male,881,deep_coral,11,walking,317,0.709677
+cross_gender,RealWorld_male_to_RealWorld_female,52,baseline,0,climbingdown,299,0.440629
+cross_gender,RealWorld_male_to_RealWorld_female,52,baseline,1,climbingup,325,0.639073
+cross_gender,RealWorld_male_to_RealWorld_female,52,baseline,2,jumping,48,0.746988
+cross_gender,RealWorld_male_to_RealWorld_female,52,baseline,3,lying,335,0.884409
+cross_gender,RealWorld_male_to_RealWorld_female,52,baseline,4,running,371,0.668151
+cross_gender,RealWorld_male_to_RealWorld_female,52,baseline,5,sitting,361,0.868035
+cross_gender,RealWorld_male_to_RealWorld_female,52,baseline,6,standing,379,0.580531
+cross_gender,RealWorld_male_to_RealWorld_female,52,baseline,7,walking,407,0.619355
+cross_gender,RealWorld_male_to_RealWorld_female,52,source_only_continued,0,climbingdown,299,0.437223
+cross_gender,RealWorld_male_to_RealWorld_female,52,source_only_continued,1,climbingup,325,0.559028
+cross_gender,RealWorld_male_to_RealWorld_female,52,source_only_continued,2,jumping,48,0.731707
+cross_gender,RealWorld_male_to_RealWorld_female,52,source_only_continued,3,lying,335,0.868421
+cross_gender,RealWorld_male_to_RealWorld_female,52,source_only_continued,4,running,371,0.659168
+cross_gender,RealWorld_male_to_RealWorld_female,52,source_only_continued,5,sitting,361,0.777236
+cross_gender,RealWorld_male_to_RealWorld_female,52,source_only_continued,6,standing,379,0.538462
+cross_gender,RealWorld_male_to_RealWorld_female,52,source_only_continued,7,walking,407,0.627624
+cross_gender,RealWorld_male_to_RealWorld_female,52,lambda0_target_pass,0,climbingdown,299,0.458042
+cross_gender,RealWorld_male_to_RealWorld_female,52,lambda0_target_pass,1,climbingup,325,0.610169
+cross_gender,RealWorld_male_to_RealWorld_female,52,lambda0_target_pass,2,jumping,48,0.594595
+cross_gender,RealWorld_male_to_RealWorld_female,52,lambda0_target_pass,3,lying,335,0.871863
+cross_gender,RealWorld_male_to_RealWorld_female,52,lambda0_target_pass,4,running,371,0.735108
+cross_gender,RealWorld_male_to_RealWorld_female,52,lambda0_target_pass,5,sitting,361,0.928668
+cross_gender,RealWorld_male_to_RealWorld_female,52,lambda0_target_pass,6,standing,379,0.615652
+cross_gender,RealWorld_male_to_RealWorld_female,52,lambda0_target_pass,7,walking,407,0.650149
+cross_gender,RealWorld_male_to_RealWorld_female,52,deep_coral,0,climbingdown,299,0.497427
+cross_gender,RealWorld_male_to_RealWorld_female,52,deep_coral,1,climbingup,325,0.582090
+cross_gender,RealWorld_male_to_RealWorld_female,52,deep_coral,2,jumping,48,0.700000
+cross_gender,RealWorld_male_to_RealWorld_female,52,deep_coral,3,lying,335,0.870712
+cross_gender,RealWorld_male_to_RealWorld_female,52,deep_coral,4,running,371,0.769988
+cross_gender,RealWorld_male_to_RealWorld_female,52,deep_coral,5,sitting,361,0.907840
+cross_gender,RealWorld_male_to_RealWorld_female,52,deep_coral,6,standing,379,0.614311
+cross_gender,RealWorld_male_to_RealWorld_female,52,deep_coral,7,walking,407,0.669388
+cross_gender,RealWorld_male_to_RealWorld_female,100,baseline,0,climbingdown,299,0.451450
+cross_gender,RealWorld_male_to_RealWorld_female,100,baseline,1,climbingup,325,0.566540
+cross_gender,RealWorld_male_to_RealWorld_female,100,baseline,2,jumping,48,0.493151
+cross_gender,RealWorld_male_to_RealWorld_female,100,baseline,3,lying,335,0.867021
+cross_gender,RealWorld_male_to_RealWorld_female,100,baseline,4,running,371,0.731501
+cross_gender,RealWorld_male_to_RealWorld_female,100,baseline,5,sitting,361,0.915254
+cross_gender,RealWorld_male_to_RealWorld_female,100,baseline,6,standing,379,0.380762
+cross_gender,RealWorld_male_to_RealWorld_female,100,baseline,7,walking,407,0.634794
+cross_gender,RealWorld_male_to_RealWorld_female,100,source_only_continued,0,climbingdown,299,0.430011
+cross_gender,RealWorld_male_to_RealWorld_female,100,source_only_continued,1,climbingup,325,0.476684
+cross_gender,RealWorld_male_to_RealWorld_female,100,source_only_continued,2,jumping,48,0.772727
+cross_gender,RealWorld_male_to_RealWorld_female,100,source_only_continued,3,lying,335,0.878706
+cross_gender,RealWorld_male_to_RealWorld_female,100,source_only_continued,4,running,371,0.641148
+cross_gender,RealWorld_male_to_RealWorld_female,100,source_only_continued,5,sitting,361,0.901907
+cross_gender,RealWorld_male_to_RealWorld_female,100,source_only_continued,6,standing,379,0.534545
+cross_gender,RealWorld_male_to_RealWorld_female,100,source_only_continued,7,walking,407,0.420382
+cross_gender,RealWorld_male_to_RealWorld_female,100,lambda0_target_pass,0,climbingdown,299,0.446645
+cross_gender,RealWorld_male_to_RealWorld_female,100,lambda0_target_pass,1,climbingup,325,0.450567
+cross_gender,RealWorld_male_to_RealWorld_female,100,lambda0_target_pass,2,jumping,48,0.658228
+cross_gender,RealWorld_male_to_RealWorld_female,100,lambda0_target_pass,3,lying,335,0.872825
+cross_gender,RealWorld_male_to_RealWorld_female,100,lambda0_target_pass,4,running,371,0.683258
+cross_gender,RealWorld_male_to_RealWorld_female,100,lambda0_target_pass,5,sitting,361,0.916549
+cross_gender,RealWorld_male_to_RealWorld_female,100,lambda0_target_pass,6,standing,379,0.460076
+cross_gender,RealWorld_male_to_RealWorld_female,100,lambda0_target_pass,7,walking,407,0.309811
+cross_gender,RealWorld_male_to_RealWorld_female,100,deep_coral,0,climbingdown,299,0.453423
+cross_gender,RealWorld_male_to_RealWorld_female,100,deep_coral,1,climbingup,325,0.458462
+cross_gender,RealWorld_male_to_RealWorld_female,100,deep_coral,2,jumping,48,0.707317
+cross_gender,RealWorld_male_to_RealWorld_female,100,deep_coral,3,lying,335,0.870494
+cross_gender,RealWorld_male_to_RealWorld_female,100,deep_coral,4,running,371,0.681922
+cross_gender,RealWorld_male_to_RealWorld_female,100,deep_coral,5,sitting,361,0.894737
+cross_gender,RealWorld_male_to_RealWorld_female,100,deep_coral,6,standing,379,0.462121
+cross_gender,RealWorld_male_to_RealWorld_female,100,deep_coral,7,walking,407,0.341216
+cross_gender,RealWorld_male_to_RealWorld_female,445,baseline,0,climbingdown,299,0.543011
+cross_gender,RealWorld_male_to_RealWorld_female,445,baseline,1,climbingup,325,0.633441
+cross_gender,RealWorld_male_to_RealWorld_female,445,baseline,2,jumping,48,0.698795
+cross_gender,RealWorld_male_to_RealWorld_female,445,baseline,3,lying,335,0.833760
+cross_gender,RealWorld_male_to_RealWorld_female,445,baseline,4,running,371,0.594397
+cross_gender,RealWorld_male_to_RealWorld_female,445,baseline,5,sitting,361,0.885201
+cross_gender,RealWorld_male_to_RealWorld_female,445,baseline,6,standing,379,0.298507
+cross_gender,RealWorld_male_to_RealWorld_female,445,baseline,7,walking,407,0.620347
+cross_gender,RealWorld_male_to_RealWorld_female,445,source_only_continued,0,climbingdown,299,0.490991
+cross_gender,RealWorld_male_to_RealWorld_female,445,source_only_continued,1,climbingup,325,0.566423
+cross_gender,RealWorld_male_to_RealWorld_female,445,source_only_continued,2,jumping,48,0.571429
+cross_gender,RealWorld_male_to_RealWorld_female,445,source_only_continued,3,lying,335,0.832695
+cross_gender,RealWorld_male_to_RealWorld_female,445,source_only_continued,4,running,371,0.461538
+cross_gender,RealWorld_male_to_RealWorld_female,445,source_only_continued,5,sitting,361,0.827988
+cross_gender,RealWorld_male_to_RealWorld_female,445,source_only_continued,6,standing,379,0.371134
+cross_gender,RealWorld_male_to_RealWorld_female,445,source_only_continued,7,walking,407,0.448864
+cross_gender,RealWorld_male_to_RealWorld_female,445,lambda0_target_pass,0,climbingdown,299,0.540865
+cross_gender,RealWorld_male_to_RealWorld_female,445,lambda0_target_pass,1,climbingup,325,0.516330
+cross_gender,RealWorld_male_to_RealWorld_female,445,lambda0_target_pass,2,jumping,48,0.641026
+cross_gender,RealWorld_male_to_RealWorld_female,445,lambda0_target_pass,3,lying,335,0.870494
+cross_gender,RealWorld_male_to_RealWorld_female,445,lambda0_target_pass,4,running,371,0.713348
+cross_gender,RealWorld_male_to_RealWorld_female,445,lambda0_target_pass,5,sitting,361,0.762376
+cross_gender,RealWorld_male_to_RealWorld_female,445,lambda0_target_pass,6,standing,379,0.523132
+cross_gender,RealWorld_male_to_RealWorld_female,445,lambda0_target_pass,7,walking,407,0.495495
+cross_gender,RealWorld_male_to_RealWorld_female,445,deep_coral,0,climbingdown,299,0.561133
+cross_gender,RealWorld_male_to_RealWorld_female,445,deep_coral,1,climbingup,325,0.497842
+cross_gender,RealWorld_male_to_RealWorld_female,445,deep_coral,2,jumping,48,0.675000
+cross_gender,RealWorld_male_to_RealWorld_female,445,deep_coral,3,lying,335,0.870494
+cross_gender,RealWorld_male_to_RealWorld_female,445,deep_coral,4,running,371,0.702825
+cross_gender,RealWorld_male_to_RealWorld_female,445,deep_coral,5,sitting,361,0.781790
+cross_gender,RealWorld_male_to_RealWorld_female,445,deep_coral,6,standing,379,0.473498
+cross_gender,RealWorld_male_to_RealWorld_female,445,deep_coral,7,walking,407,0.496218
+cross_gender,RealWorld_male_to_RealWorld_female,545,baseline,0,climbingdown,299,0.598566
+cross_gender,RealWorld_male_to_RealWorld_female,545,baseline,1,climbingup,325,0.690314
+cross_gender,RealWorld_male_to_RealWorld_female,545,baseline,2,jumping,48,0.700000
+cross_gender,RealWorld_male_to_RealWorld_female,545,baseline,3,lying,335,0.852288
+cross_gender,RealWorld_male_to_RealWorld_female,545,baseline,4,running,371,0.555686
+cross_gender,RealWorld_male_to_RealWorld_female,545,baseline,5,sitting,361,0.866261
+cross_gender,RealWorld_male_to_RealWorld_female,545,baseline,6,standing,379,0.292994
+cross_gender,RealWorld_male_to_RealWorld_female,545,baseline,7,walking,407,0.630901
+cross_gender,RealWorld_male_to_RealWorld_female,545,source_only_continued,0,climbingdown,299,0.584392
+cross_gender,RealWorld_male_to_RealWorld_female,545,source_only_continued,1,climbingup,325,0.665806
+cross_gender,RealWorld_male_to_RealWorld_female,545,source_only_continued,2,jumping,48,0.692308
+cross_gender,RealWorld_male_to_RealWorld_female,545,source_only_continued,3,lying,335,0.875168
+cross_gender,RealWorld_male_to_RealWorld_female,545,source_only_continued,4,running,371,0.601660
+cross_gender,RealWorld_male_to_RealWorld_female,545,source_only_continued,5,sitting,361,0.552124
+cross_gender,RealWorld_male_to_RealWorld_female,545,source_only_continued,6,standing,379,0.515315
+cross_gender,RealWorld_male_to_RealWorld_female,545,source_only_continued,7,walking,407,0.546296
+cross_gender,RealWorld_male_to_RealWorld_female,545,lambda0_target_pass,0,climbingdown,299,0.522023
+cross_gender,RealWorld_male_to_RealWorld_female,545,lambda0_target_pass,1,climbingup,325,0.676971
+cross_gender,RealWorld_male_to_RealWorld_female,545,lambda0_target_pass,2,jumping,48,0.640000
+cross_gender,RealWorld_male_to_RealWorld_female,545,lambda0_target_pass,3,lying,335,0.863576
+cross_gender,RealWorld_male_to_RealWorld_female,545,lambda0_target_pass,4,running,371,0.632911
+cross_gender,RealWorld_male_to_RealWorld_female,545,lambda0_target_pass,5,sitting,361,0.766447
+cross_gender,RealWorld_male_to_RealWorld_female,545,lambda0_target_pass,6,standing,379,0.599327
+cross_gender,RealWorld_male_to_RealWorld_female,545,lambda0_target_pass,7,walking,407,0.620922
+cross_gender,RealWorld_male_to_RealWorld_female,545,deep_coral,0,climbingdown,299,0.551724
+cross_gender,RealWorld_male_to_RealWorld_female,545,deep_coral,1,climbingup,325,0.683834
+cross_gender,RealWorld_male_to_RealWorld_female,545,deep_coral,2,jumping,48,0.657895
+cross_gender,RealWorld_male_to_RealWorld_female,545,deep_coral,3,lying,335,0.871658
+cross_gender,RealWorld_male_to_RealWorld_female,545,deep_coral,4,running,371,0.644444
+cross_gender,RealWorld_male_to_RealWorld_female,545,deep_coral,5,sitting,361,0.893983
+cross_gender,RealWorld_male_to_RealWorld_female,545,deep_coral,6,standing,379,0.496296
+cross_gender,RealWorld_male_to_RealWorld_female,545,deep_coral,7,walking,407,0.641379
+cross_gender,RealWorld_male_to_RealWorld_female,881,baseline,0,climbingdown,299,0.396552
+cross_gender,RealWorld_male_to_RealWorld_female,881,baseline,1,climbingup,325,0.500949
+cross_gender,RealWorld_male_to_RealWorld_female,881,baseline,2,jumping,48,0.702703
+cross_gender,RealWorld_male_to_RealWorld_female,881,baseline,3,lying,335,0.960236
+cross_gender,RealWorld_male_to_RealWorld_female,881,baseline,4,running,371,0.585973
+cross_gender,RealWorld_male_to_RealWorld_female,881,baseline,5,sitting,361,0.895565
+cross_gender,RealWorld_male_to_RealWorld_female,881,baseline,6,standing,379,0.297030
+cross_gender,RealWorld_male_to_RealWorld_female,881,baseline,7,walking,407,0.420063
+cross_gender,RealWorld_male_to_RealWorld_female,881,source_only_continued,0,climbingdown,299,0.448747
+cross_gender,RealWorld_male_to_RealWorld_female,881,source_only_continued,1,climbingup,325,0.407705
+cross_gender,RealWorld_male_to_RealWorld_female,881,source_only_continued,2,jumping,48,0.761905
+cross_gender,RealWorld_male_to_RealWorld_female,881,source_only_continued,3,lying,335,0.879892
+cross_gender,RealWorld_male_to_RealWorld_female,881,source_only_continued,4,running,371,0.619687
+cross_gender,RealWorld_male_to_RealWorld_female,881,source_only_continued,5,sitting,361,0.942172
+cross_gender,RealWorld_male_to_RealWorld_female,881,source_only_continued,6,standing,379,0.325866
+cross_gender,RealWorld_male_to_RealWorld_female,881,source_only_continued,7,walking,407,0.428571
+cross_gender,RealWorld_male_to_RealWorld_female,881,lambda0_target_pass,0,climbingdown,299,0.392473
+cross_gender,RealWorld_male_to_RealWorld_female,881,lambda0_target_pass,1,climbingup,325,0.320144
+cross_gender,RealWorld_male_to_RealWorld_female,881,lambda0_target_pass,2,jumping,48,0.675676
+cross_gender,RealWorld_male_to_RealWorld_female,881,lambda0_target_pass,3,lying,335,0.954612
+cross_gender,RealWorld_male_to_RealWorld_female,881,lambda0_target_pass,4,running,371,0.572482
+cross_gender,RealWorld_male_to_RealWorld_female,881,lambda0_target_pass,5,sitting,361,0.916094
+cross_gender,RealWorld_male_to_RealWorld_female,881,lambda0_target_pass,6,standing,379,0.250000
+cross_gender,RealWorld_male_to_RealWorld_female,881,lambda0_target_pass,7,walking,407,0.351351
+cross_gender,RealWorld_male_to_RealWorld_female,881,deep_coral,0,climbingdown,299,0.390666
+cross_gender,RealWorld_male_to_RealWorld_female,881,deep_coral,1,climbingup,325,0.339969
+cross_gender,RealWorld_male_to_RealWorld_female,881,deep_coral,2,jumping,48,0.701299
+cross_gender,RealWorld_male_to_RealWorld_female,881,deep_coral,3,lying,335,0.968796
+cross_gender,RealWorld_male_to_RealWorld_female,881,deep_coral,4,running,371,0.562748
+cross_gender,RealWorld_male_to_RealWorld_female,881,deep_coral,5,sitting,361,0.933518
+cross_gender,RealWorld_male_to_RealWorld_female,881,deep_coral,6,standing,379,0.218884
+cross_gender,RealWorld_male_to_RealWorld_female,881,deep_coral,7,walking,407,0.249541
+cross_gender,RealWorld_female_to_RealWorld_male,52,baseline,0,climbingdown,239,0.663477
+cross_gender,RealWorld_female_to_RealWorld_male,52,baseline,1,climbingup,307,0.423841
+cross_gender,RealWorld_female_to_RealWorld_male,52,baseline,2,jumping,61,0.670455
+cross_gender,RealWorld_female_to_RealWorld_male,52,baseline,3,lying,399,0.539419
+cross_gender,RealWorld_female_to_RealWorld_male,52,baseline,4,running,413,0.900130
+cross_gender,RealWorld_female_to_RealWorld_male,52,baseline,5,sitting,384,0.596844
+cross_gender,RealWorld_female_to_RealWorld_male,52,baseline,6,standing,383,0.704871
+cross_gender,RealWorld_female_to_RealWorld_male,52,baseline,7,walking,383,0.885986
+cross_gender,RealWorld_female_to_RealWorld_male,52,source_only_continued,0,climbingdown,239,0.503347
+cross_gender,RealWorld_female_to_RealWorld_male,52,source_only_continued,1,climbingup,307,0.418410
+cross_gender,RealWorld_female_to_RealWorld_male,52,source_only_continued,2,jumping,61,0.926829
+cross_gender,RealWorld_female_to_RealWorld_male,52,source_only_continued,3,lying,399,0.631068
+cross_gender,RealWorld_female_to_RealWorld_male,52,source_only_continued,4,running,413,0.951066
+cross_gender,RealWorld_female_to_RealWorld_male,52,source_only_continued,5,sitting,384,0.380952
+cross_gender,RealWorld_female_to_RealWorld_male,52,source_only_continued,6,standing,383,0.868280
+cross_gender,RealWorld_female_to_RealWorld_male,52,source_only_continued,7,walking,383,0.813522
+cross_gender,RealWorld_female_to_RealWorld_male,52,lambda0_target_pass,0,climbingdown,239,0.542169
+cross_gender,RealWorld_female_to_RealWorld_male,52,lambda0_target_pass,1,climbingup,307,0.330059
+cross_gender,RealWorld_female_to_RealWorld_male,52,lambda0_target_pass,2,jumping,61,0.924370
+cross_gender,RealWorld_female_to_RealWorld_male,52,lambda0_target_pass,3,lying,399,0.609375
+cross_gender,RealWorld_female_to_RealWorld_male,52,lambda0_target_pass,4,running,413,0.921021
+cross_gender,RealWorld_female_to_RealWorld_male,52,lambda0_target_pass,5,sitting,384,0.274322
+cross_gender,RealWorld_female_to_RealWorld_male,52,lambda0_target_pass,6,standing,383,0.714286
+cross_gender,RealWorld_female_to_RealWorld_male,52,lambda0_target_pass,7,walking,383,0.756592
+cross_gender,RealWorld_female_to_RealWorld_male,52,deep_coral,0,climbingdown,239,0.537178
+cross_gender,RealWorld_female_to_RealWorld_male,52,deep_coral,1,climbingup,307,0.411523
+cross_gender,RealWorld_female_to_RealWorld_male,52,deep_coral,2,jumping,61,0.903226
+cross_gender,RealWorld_female_to_RealWorld_male,52,deep_coral,3,lying,399,0.610329
+cross_gender,RealWorld_female_to_RealWorld_male,52,deep_coral,4,running,413,0.932544
+cross_gender,RealWorld_female_to_RealWorld_male,52,deep_coral,5,sitting,384,0.316344
+cross_gender,RealWorld_female_to_RealWorld_male,52,deep_coral,6,standing,383,0.670442
+cross_gender,RealWorld_female_to_RealWorld_male,52,deep_coral,7,walking,383,0.799571
+cross_gender,RealWorld_female_to_RealWorld_male,100,baseline,0,climbingdown,239,0.620451
+cross_gender,RealWorld_female_to_RealWorld_male,100,baseline,1,climbingup,307,0.531915
+cross_gender,RealWorld_female_to_RealWorld_male,100,baseline,2,jumping,61,0.935484
+cross_gender,RealWorld_female_to_RealWorld_male,100,baseline,3,lying,399,0.474453
+cross_gender,RealWorld_female_to_RealWorld_male,100,baseline,4,running,413,0.885117
+cross_gender,RealWorld_female_to_RealWorld_male,100,baseline,5,sitting,384,0.422920
+cross_gender,RealWorld_female_to_RealWorld_male,100,baseline,6,standing,383,0.645057
+cross_gender,RealWorld_female_to_RealWorld_male,100,baseline,7,walking,383,0.882283
+cross_gender,RealWorld_female_to_RealWorld_male,100,source_only_continued,0,climbingdown,239,0.320513
+cross_gender,RealWorld_female_to_RealWorld_male,100,source_only_continued,1,climbingup,307,0.533881
+cross_gender,RealWorld_female_to_RealWorld_male,100,source_only_continued,2,jumping,61,0.816901
+cross_gender,RealWorld_female_to_RealWorld_male,100,source_only_continued,3,lying,399,0.496815
+cross_gender,RealWorld_female_to_RealWorld_male,100,source_only_continued,4,running,413,0.928661
+cross_gender,RealWorld_female_to_RealWorld_male,100,source_only_continued,5,sitting,384,0.423659
+cross_gender,RealWorld_female_to_RealWorld_male,100,source_only_continued,6,standing,383,0.605784
+cross_gender,RealWorld_female_to_RealWorld_male,100,source_only_continued,7,walking,383,0.697111
+cross_gender,RealWorld_female_to_RealWorld_male,100,lambda0_target_pass,0,climbingdown,239,0.264368
+cross_gender,RealWorld_female_to_RealWorld_male,100,lambda0_target_pass,1,climbingup,307,0.545455
+cross_gender,RealWorld_female_to_RealWorld_male,100,lambda0_target_pass,2,jumping,61,0.865672
+cross_gender,RealWorld_female_to_RealWorld_male,100,lambda0_target_pass,3,lying,399,0.506494
+cross_gender,RealWorld_female_to_RealWorld_male,100,lambda0_target_pass,4,running,413,0.867470
+cross_gender,RealWorld_female_to_RealWorld_male,100,lambda0_target_pass,5,sitting,384,0.438672
+cross_gender,RealWorld_female_to_RealWorld_male,100,lambda0_target_pass,6,standing,383,0.576812
+cross_gender,RealWorld_female_to_RealWorld_male,100,lambda0_target_pass,7,walking,383,0.681239
+cross_gender,RealWorld_female_to_RealWorld_male,100,deep_coral,0,climbingdown,239,0.266075
+cross_gender,RealWorld_female_to_RealWorld_male,100,deep_coral,1,climbingup,307,0.367973
+cross_gender,RealWorld_female_to_RealWorld_male,100,deep_coral,2,jumping,61,0.808219
+cross_gender,RealWorld_female_to_RealWorld_male,100,deep_coral,3,lying,399,0.473418
+cross_gender,RealWorld_female_to_RealWorld_male,100,deep_coral,4,running,413,0.941320
+cross_gender,RealWorld_female_to_RealWorld_male,100,deep_coral,5,sitting,384,0.540636
+cross_gender,RealWorld_female_to_RealWorld_male,100,deep_coral,6,standing,383,0.567760
+cross_gender,RealWorld_female_to_RealWorld_male,100,deep_coral,7,walking,383,0.693234
+cross_gender,RealWorld_female_to_RealWorld_male,445,baseline,0,climbingdown,239,0.486202
+cross_gender,RealWorld_female_to_RealWorld_male,445,baseline,1,climbingup,307,0.547893
+cross_gender,RealWorld_female_to_RealWorld_male,445,baseline,2,jumping,61,0.786667
+cross_gender,RealWorld_female_to_RealWorld_male,445,baseline,3,lying,399,0.527027
+cross_gender,RealWorld_female_to_RealWorld_male,445,baseline,4,running,413,0.841415
+cross_gender,RealWorld_female_to_RealWorld_male,445,baseline,5,sitting,384,0.259965
+cross_gender,RealWorld_female_to_RealWorld_male,445,baseline,6,standing,383,0.606289
+cross_gender,RealWorld_female_to_RealWorld_male,445,baseline,7,walking,383,0.896386
+cross_gender,RealWorld_female_to_RealWorld_male,445,source_only_continued,0,climbingdown,239,0.563611
+cross_gender,RealWorld_female_to_RealWorld_male,445,source_only_continued,1,climbingup,307,0.518272
+cross_gender,RealWorld_female_to_RealWorld_male,445,source_only_continued,2,jumping,61,0.690058
+cross_gender,RealWorld_female_to_RealWorld_male,445,source_only_continued,3,lying,399,0.576419
+cross_gender,RealWorld_female_to_RealWorld_male,445,source_only_continued,4,running,413,0.776335
+cross_gender,RealWorld_female_to_RealWorld_male,445,source_only_continued,5,sitting,384,0.286969
+cross_gender,RealWorld_female_to_RealWorld_male,445,source_only_continued,6,standing,383,0.770039
+cross_gender,RealWorld_female_to_RealWorld_male,445,source_only_continued,7,walking,383,0.918519
+cross_gender,RealWorld_female_to_RealWorld_male,445,lambda0_target_pass,0,climbingdown,239,0.640316
+cross_gender,RealWorld_female_to_RealWorld_male,445,lambda0_target_pass,1,climbingup,307,0.528418
+cross_gender,RealWorld_female_to_RealWorld_male,445,lambda0_target_pass,2,jumping,61,0.950000
+cross_gender,RealWorld_female_to_RealWorld_male,445,lambda0_target_pass,3,lying,399,0.512484
+cross_gender,RealWorld_female_to_RealWorld_male,445,lambda0_target_pass,4,running,413,0.892430
+cross_gender,RealWorld_female_to_RealWorld_male,445,lambda0_target_pass,5,sitting,384,0.270833
+cross_gender,RealWorld_female_to_RealWorld_male,445,lambda0_target_pass,6,standing,383,0.577778
+cross_gender,RealWorld_female_to_RealWorld_male,445,lambda0_target_pass,7,walking,383,0.817582
+cross_gender,RealWorld_female_to_RealWorld_male,445,deep_coral,0,climbingdown,239,0.670433
+cross_gender,RealWorld_female_to_RealWorld_male,445,deep_coral,1,climbingup,307,0.544554
+cross_gender,RealWorld_female_to_RealWorld_male,445,deep_coral,2,jumping,61,0.959350
+cross_gender,RealWorld_female_to_RealWorld_male,445,deep_coral,3,lying,399,0.528105
+cross_gender,RealWorld_female_to_RealWorld_male,445,deep_coral,4,running,413,0.943110
+cross_gender,RealWorld_female_to_RealWorld_male,445,deep_coral,5,sitting,384,0.297619
+cross_gender,RealWorld_female_to_RealWorld_male,445,deep_coral,6,standing,383,0.581395
+cross_gender,RealWorld_female_to_RealWorld_male,445,deep_coral,7,walking,383,0.849315
+cross_gender,RealWorld_female_to_RealWorld_male,545,baseline,0,climbingdown,239,0.546737
+cross_gender,RealWorld_female_to_RealWorld_male,545,baseline,1,climbingup,307,0.411674
+cross_gender,RealWorld_female_to_RealWorld_male,545,baseline,2,jumping,61,0.907692
+cross_gender,RealWorld_female_to_RealWorld_male,545,baseline,3,lying,399,0.570175
+cross_gender,RealWorld_female_to_RealWorld_male,545,baseline,4,running,413,0.952147
+cross_gender,RealWorld_female_to_RealWorld_male,545,baseline,5,sitting,384,0.372277
+cross_gender,RealWorld_female_to_RealWorld_male,545,baseline,6,standing,383,0.795429
+cross_gender,RealWorld_female_to_RealWorld_male,545,baseline,7,walking,383,0.816685
+cross_gender,RealWorld_female_to_RealWorld_male,545,source_only_continued,0,climbingdown,239,0.461333
+cross_gender,RealWorld_female_to_RealWorld_male,545,source_only_continued,1,climbingup,307,0.489311
+cross_gender,RealWorld_female_to_RealWorld_male,545,source_only_continued,2,jumping,61,0.967213
+cross_gender,RealWorld_female_to_RealWorld_male,545,source_only_continued,3,lying,399,0.625767
+cross_gender,RealWorld_female_to_RealWorld_male,545,source_only_continued,4,running,413,0.949749
+cross_gender,RealWorld_female_to_RealWorld_male,545,source_only_continued,5,sitting,384,0.423077
+cross_gender,RealWorld_female_to_RealWorld_male,545,source_only_continued,6,standing,383,0.917738
+cross_gender,RealWorld_female_to_RealWorld_male,545,source_only_continued,7,walking,383,0.835017
+cross_gender,RealWorld_female_to_RealWorld_male,545,lambda0_target_pass,0,climbingdown,239,0.439372
+cross_gender,RealWorld_female_to_RealWorld_male,545,lambda0_target_pass,1,climbingup,307,0.604167
+cross_gender,RealWorld_female_to_RealWorld_male,545,lambda0_target_pass,2,jumping,61,0.894737
+cross_gender,RealWorld_female_to_RealWorld_male,545,lambda0_target_pass,3,lying,399,0.620253
+cross_gender,RealWorld_female_to_RealWorld_male,545,lambda0_target_pass,4,running,413,0.927361
+cross_gender,RealWorld_female_to_RealWorld_male,545,lambda0_target_pass,5,sitting,384,0.456140
+cross_gender,RealWorld_female_to_RealWorld_male,545,lambda0_target_pass,6,standing,383,0.712215
+cross_gender,RealWorld_female_to_RealWorld_male,545,lambda0_target_pass,7,walking,383,0.821192
+cross_gender,RealWorld_female_to_RealWorld_male,545,deep_coral,0,climbingdown,239,0.453297
+cross_gender,RealWorld_female_to_RealWorld_male,545,deep_coral,1,climbingup,307,0.490566
+cross_gender,RealWorld_female_to_RealWorld_male,545,deep_coral,2,jumping,61,0.833333
+cross_gender,RealWorld_female_to_RealWorld_male,545,deep_coral,3,lying,399,0.549125
+cross_gender,RealWorld_female_to_RealWorld_male,545,deep_coral,4,running,413,0.942613
+cross_gender,RealWorld_female_to_RealWorld_male,545,deep_coral,5,sitting,384,0.487342
+cross_gender,RealWorld_female_to_RealWorld_male,545,deep_coral,6,standing,383,0.706223
+cross_gender,RealWorld_female_to_RealWorld_male,545,deep_coral,7,walking,383,0.767802
+cross_gender,RealWorld_female_to_RealWorld_male,881,baseline,0,climbingdown,239,0.590786
+cross_gender,RealWorld_female_to_RealWorld_male,881,baseline,1,climbingup,307,0.325243
+cross_gender,RealWorld_female_to_RealWorld_male,881,baseline,2,jumping,61,0.778626
+cross_gender,RealWorld_female_to_RealWorld_male,881,baseline,3,lying,399,0.466825
+cross_gender,RealWorld_female_to_RealWorld_male,881,baseline,4,running,413,0.956843
+cross_gender,RealWorld_female_to_RealWorld_male,881,baseline,5,sitting,384,0.518519
+cross_gender,RealWorld_female_to_RealWorld_male,881,baseline,6,standing,383,0.662400
+cross_gender,RealWorld_female_to_RealWorld_male,881,baseline,7,walking,383,0.771458
+cross_gender,RealWorld_female_to_RealWorld_male,881,source_only_continued,0,climbingdown,239,0.473083
+cross_gender,RealWorld_female_to_RealWorld_male,881,source_only_continued,1,climbingup,307,0.316742
+cross_gender,RealWorld_female_to_RealWorld_male,881,source_only_continued,2,jumping,61,0.719298
+cross_gender,RealWorld_female_to_RealWorld_male,881,source_only_continued,3,lying,399,0.479115
+cross_gender,RealWorld_female_to_RealWorld_male,881,source_only_continued,4,running,413,0.911688
+cross_gender,RealWorld_female_to_RealWorld_male,881,source_only_continued,5,sitting,384,0.530466
+cross_gender,RealWorld_female_to_RealWorld_male,881,source_only_continued,6,standing,383,0.586156
+cross_gender,RealWorld_female_to_RealWorld_male,881,source_only_continued,7,walking,383,0.802589
+cross_gender,RealWorld_female_to_RealWorld_male,881,lambda0_target_pass,0,climbingdown,239,0.432727
+cross_gender,RealWorld_female_to_RealWorld_male,881,lambda0_target_pass,1,climbingup,307,0.315476
+cross_gender,RealWorld_female_to_RealWorld_male,881,lambda0_target_pass,2,jumping,61,0.666667
+cross_gender,RealWorld_female_to_RealWorld_male,881,lambda0_target_pass,3,lying,399,0.477108
+cross_gender,RealWorld_female_to_RealWorld_male,881,lambda0_target_pass,4,running,413,0.855989
+cross_gender,RealWorld_female_to_RealWorld_male,881,lambda0_target_pass,5,sitting,384,0.531250
+cross_gender,RealWorld_female_to_RealWorld_male,881,lambda0_target_pass,6,standing,383,0.657364
+cross_gender,RealWorld_female_to_RealWorld_male,881,lambda0_target_pass,7,walking,383,0.744511
+cross_gender,RealWorld_female_to_RealWorld_male,881,deep_coral,0,climbingdown,239,0.465201
+cross_gender,RealWorld_female_to_RealWorld_male,881,deep_coral,1,climbingup,307,0.337349
+cross_gender,RealWorld_female_to_RealWorld_male,881,deep_coral,2,jumping,61,0.759259
+cross_gender,RealWorld_female_to_RealWorld_male,881,deep_coral,3,lying,399,0.469751
+cross_gender,RealWorld_female_to_RealWorld_male,881,deep_coral,4,running,413,0.912237
+cross_gender,RealWorld_female_to_RealWorld_male,881,deep_coral,5,sitting,384,0.537522
+cross_gender,RealWorld_female_to_RealWorld_male,881,deep_coral,6,standing,383,0.630094
+cross_gender,RealWorld_female_to_RealWorld_male,881,deep_coral,7,walking,383,0.777429
+cross_age,RealWorld_below30_to_RealWorld_age30plus,52,baseline,0,climbingdown,157,0.536000
+cross_age,RealWorld_below30_to_RealWorld_age30plus,52,baseline,1,climbingup,173,0.545752
+cross_age,RealWorld_below30_to_RealWorld_age30plus,52,baseline,2,jumping,27,0.457143
+cross_age,RealWorld_below30_to_RealWorld_age30plus,52,baseline,3,lying,162,0.761446
+cross_age,RealWorld_below30_to_RealWorld_age30plus,52,baseline,4,running,179,0.660674
+cross_age,RealWorld_below30_to_RealWorld_age30plus,52,baseline,5,sitting,175,0.815029
+cross_age,RealWorld_below30_to_RealWorld_age30plus,52,baseline,6,standing,211,0.017937
+cross_age,RealWorld_below30_to_RealWorld_age30plus,52,baseline,7,walking,186,0.149533
+cross_age,RealWorld_below30_to_RealWorld_age30plus,52,source_only_continued,0,climbingdown,157,0.662420
+cross_age,RealWorld_below30_to_RealWorld_age30plus,52,source_only_continued,1,climbingup,173,0.584906
+cross_age,RealWorld_below30_to_RealWorld_age30plus,52,source_only_continued,2,jumping,27,0.772727
+cross_age,RealWorld_below30_to_RealWorld_age30plus,52,source_only_continued,3,lying,162,0.905444
+cross_age,RealWorld_below30_to_RealWorld_age30plus,52,source_only_continued,4,running,179,0.602941
+cross_age,RealWorld_below30_to_RealWorld_age30plus,52,source_only_continued,5,sitting,175,0.776025
+cross_age,RealWorld_below30_to_RealWorld_age30plus,52,source_only_continued,6,standing,211,0.018100
+cross_age,RealWorld_below30_to_RealWorld_age30plus,52,source_only_continued,7,walking,186,0.235294
+cross_age,RealWorld_below30_to_RealWorld_age30plus,52,lambda0_target_pass,0,climbingdown,157,0.681648
+cross_age,RealWorld_below30_to_RealWorld_age30plus,52,lambda0_target_pass,1,climbingup,173,0.591497
+cross_age,RealWorld_below30_to_RealWorld_age30plus,52,lambda0_target_pass,2,jumping,27,0.500000
+cross_age,RealWorld_below30_to_RealWorld_age30plus,52,lambda0_target_pass,3,lying,162,0.773723
+cross_age,RealWorld_below30_to_RealWorld_age30plus,52,lambda0_target_pass,4,running,179,0.702128
+cross_age,RealWorld_below30_to_RealWorld_age30plus,52,lambda0_target_pass,5,sitting,175,0.821752
+cross_age,RealWorld_below30_to_RealWorld_age30plus,52,lambda0_target_pass,6,standing,211,0.034934
+cross_age,RealWorld_below30_to_RealWorld_age30plus,52,lambda0_target_pass,7,walking,186,0.376471
+cross_age,RealWorld_below30_to_RealWorld_age30plus,52,deep_coral,0,climbingdown,157,0.675958
+cross_age,RealWorld_below30_to_RealWorld_age30plus,52,deep_coral,1,climbingup,173,0.666667
+cross_age,RealWorld_below30_to_RealWorld_age30plus,52,deep_coral,2,jumping,27,0.312500
+cross_age,RealWorld_below30_to_RealWorld_age30plus,52,deep_coral,3,lying,162,0.764423
+cross_age,RealWorld_below30_to_RealWorld_age30plus,52,deep_coral,4,running,179,0.705882
+cross_age,RealWorld_below30_to_RealWorld_age30plus,52,deep_coral,5,sitting,175,0.836364
+cross_age,RealWorld_below30_to_RealWorld_age30plus,52,deep_coral,6,standing,211,0.026432
+cross_age,RealWorld_below30_to_RealWorld_age30plus,52,deep_coral,7,walking,186,0.576052
+cross_age,RealWorld_below30_to_RealWorld_age30plus,100,baseline,0,climbingdown,157,0.505119
+cross_age,RealWorld_below30_to_RealWorld_age30plus,100,baseline,1,climbingup,173,0.656151
+cross_age,RealWorld_below30_to_RealWorld_age30plus,100,baseline,2,jumping,27,0.000000
+cross_age,RealWorld_below30_to_RealWorld_age30plus,100,baseline,3,lying,162,0.805063
+cross_age,RealWorld_below30_to_RealWorld_age30plus,100,baseline,4,running,179,0.679901
+cross_age,RealWorld_below30_to_RealWorld_age30plus,100,baseline,5,sitting,175,0.892950
+cross_age,RealWorld_below30_to_RealWorld_age30plus,100,baseline,6,standing,211,0.018265
+cross_age,RealWorld_below30_to_RealWorld_age30plus,100,baseline,7,walking,186,0.161905
+cross_age,RealWorld_below30_to_RealWorld_age30plus,100,source_only_continued,0,climbingdown,157,0.549180
+cross_age,RealWorld_below30_to_RealWorld_age30plus,100,source_only_continued,1,climbingup,173,0.684492
+cross_age,RealWorld_below30_to_RealWorld_age30plus,100,source_only_continued,2,jumping,27,0.071429
+cross_age,RealWorld_below30_to_RealWorld_age30plus,100,source_only_continued,3,lying,162,0.786070
+cross_age,RealWorld_below30_to_RealWorld_age30plus,100,source_only_continued,4,running,179,0.721649
+cross_age,RealWorld_below30_to_RealWorld_age30plus,100,source_only_continued,5,sitting,175,0.773842
+cross_age,RealWorld_below30_to_RealWorld_age30plus,100,source_only_continued,6,standing,211,0.039370
+cross_age,RealWorld_below30_to_RealWorld_age30plus,100,source_only_continued,7,walking,186,0.309623
+cross_age,RealWorld_below30_to_RealWorld_age30plus,100,lambda0_target_pass,0,climbingdown,157,0.528302
+cross_age,RealWorld_below30_to_RealWorld_age30plus,100,lambda0_target_pass,1,climbingup,173,0.711538
+cross_age,RealWorld_below30_to_RealWorld_age30plus,100,lambda0_target_pass,2,jumping,27,0.000000
+cross_age,RealWorld_below30_to_RealWorld_age30plus,100,lambda0_target_pass,3,lying,162,0.788030
+cross_age,RealWorld_below30_to_RealWorld_age30plus,100,lambda0_target_pass,4,running,179,0.854054
+cross_age,RealWorld_below30_to_RealWorld_age30plus,100,lambda0_target_pass,5,sitting,175,0.745308
+cross_age,RealWorld_below30_to_RealWorld_age30plus,100,lambda0_target_pass,6,standing,211,0.352941
+cross_age,RealWorld_below30_to_RealWorld_age30plus,100,lambda0_target_pass,7,walking,186,0.408759
+cross_age,RealWorld_below30_to_RealWorld_age30plus,100,deep_coral,0,climbingdown,157,0.563855
+cross_age,RealWorld_below30_to_RealWorld_age30plus,100,deep_coral,1,climbingup,173,0.717949
+cross_age,RealWorld_below30_to_RealWorld_age30plus,100,deep_coral,2,jumping,27,0.200000
+cross_age,RealWorld_below30_to_RealWorld_age30plus,100,deep_coral,3,lying,162,0.750594
+cross_age,RealWorld_below30_to_RealWorld_age30plus,100,deep_coral,4,running,179,0.805128
+cross_age,RealWorld_below30_to_RealWorld_age30plus,100,deep_coral,5,sitting,175,0.516717
+cross_age,RealWorld_below30_to_RealWorld_age30plus,100,deep_coral,6,standing,211,0.032258
+cross_age,RealWorld_below30_to_RealWorld_age30plus,100,deep_coral,7,walking,186,0.482993
+cross_age,RealWorld_below30_to_RealWorld_age30plus,445,baseline,0,climbingdown,157,0.599553
+cross_age,RealWorld_below30_to_RealWorld_age30plus,445,baseline,1,climbingup,173,0.460177
+cross_age,RealWorld_below30_to_RealWorld_age30plus,445,baseline,2,jumping,27,0.318841
+cross_age,RealWorld_below30_to_RealWorld_age30plus,445,baseline,3,lying,162,0.981481
+cross_age,RealWorld_below30_to_RealWorld_age30plus,445,baseline,4,running,179,0.612048
+cross_age,RealWorld_below30_to_RealWorld_age30plus,445,baseline,5,sitting,175,0.488722
+cross_age,RealWorld_below30_to_RealWorld_age30plus,445,baseline,6,standing,211,0.000000
+cross_age,RealWorld_below30_to_RealWorld_age30plus,445,baseline,7,walking,186,0.288210
+cross_age,RealWorld_below30_to_RealWorld_age30plus,445,source_only_continued,0,climbingdown,157,0.661111
+cross_age,RealWorld_below30_to_RealWorld_age30plus,445,source_only_continued,1,climbingup,173,0.405028
+cross_age,RealWorld_below30_to_RealWorld_age30plus,445,source_only_continued,2,jumping,27,0.541667
+cross_age,RealWorld_below30_to_RealWorld_age30plus,445,source_only_continued,3,lying,162,0.984520
+cross_age,RealWorld_below30_to_RealWorld_age30plus,445,source_only_continued,4,running,179,0.852564
+cross_age,RealWorld_below30_to_RealWorld_age30plus,445,source_only_continued,5,sitting,175,0.960452
+cross_age,RealWorld_below30_to_RealWorld_age30plus,445,source_only_continued,6,standing,211,0.000000
+cross_age,RealWorld_below30_to_RealWorld_age30plus,445,source_only_continued,7,walking,186,0.156098
+cross_age,RealWorld_below30_to_RealWorld_age30plus,445,lambda0_target_pass,0,climbingdown,157,0.660317
+cross_age,RealWorld_below30_to_RealWorld_age30plus,445,lambda0_target_pass,1,climbingup,173,0.456355
+cross_age,RealWorld_below30_to_RealWorld_age30plus,445,lambda0_target_pass,2,jumping,27,0.387097
+cross_age,RealWorld_below30_to_RealWorld_age30plus,445,lambda0_target_pass,3,lying,162,0.817481
+cross_age,RealWorld_below30_to_RealWorld_age30plus,445,lambda0_target_pass,4,running,179,0.571429
+cross_age,RealWorld_below30_to_RealWorld_age30plus,445,lambda0_target_pass,5,sitting,175,0.936639
+cross_age,RealWorld_below30_to_RealWorld_age30plus,445,lambda0_target_pass,6,standing,211,0.000000
+cross_age,RealWorld_below30_to_RealWorld_age30plus,445,lambda0_target_pass,7,walking,186,0.329114
+cross_age,RealWorld_below30_to_RealWorld_age30plus,445,deep_coral,0,climbingdown,157,0.588235
+cross_age,RealWorld_below30_to_RealWorld_age30plus,445,deep_coral,1,climbingup,173,0.524528
+cross_age,RealWorld_below30_to_RealWorld_age30plus,445,deep_coral,2,jumping,27,0.577778
+cross_age,RealWorld_below30_to_RealWorld_age30plus,445,deep_coral,3,lying,162,0.789082
+cross_age,RealWorld_below30_to_RealWorld_age30plus,445,deep_coral,4,running,179,0.601093
+cross_age,RealWorld_below30_to_RealWorld_age30plus,445,deep_coral,5,sitting,175,0.939227
+cross_age,RealWorld_below30_to_RealWorld_age30plus,445,deep_coral,6,standing,211,0.008969
+cross_age,RealWorld_below30_to_RealWorld_age30plus,445,deep_coral,7,walking,186,0.337553
+cross_age,RealWorld_below30_to_RealWorld_age30plus,545,baseline,0,climbingdown,157,0.567460
+cross_age,RealWorld_below30_to_RealWorld_age30plus,545,baseline,1,climbingup,173,0.541761
+cross_age,RealWorld_below30_to_RealWorld_age30plus,545,baseline,2,jumping,27,0.800000
+cross_age,RealWorld_below30_to_RealWorld_age30plus,545,baseline,3,lying,162,0.810256
+cross_age,RealWorld_below30_to_RealWorld_age30plus,545,baseline,4,running,179,0.652893
+cross_age,RealWorld_below30_to_RealWorld_age30plus,545,baseline,5,sitting,175,0.267241
+cross_age,RealWorld_below30_to_RealWorld_age30plus,545,baseline,6,standing,211,0.000000
+cross_age,RealWorld_below30_to_RealWorld_age30plus,545,baseline,7,walking,186,0.183486
+cross_age,RealWorld_below30_to_RealWorld_age30plus,545,source_only_continued,0,climbingdown,157,0.573674
+cross_age,RealWorld_below30_to_RealWorld_age30plus,545,source_only_continued,1,climbingup,173,0.701847
+cross_age,RealWorld_below30_to_RealWorld_age30plus,545,source_only_continued,2,jumping,27,0.714286
+cross_age,RealWorld_below30_to_RealWorld_age30plus,545,source_only_continued,3,lying,162,0.791980
+cross_age,RealWorld_below30_to_RealWorld_age30plus,545,source_only_continued,4,running,179,0.637097
+cross_age,RealWorld_below30_to_RealWorld_age30plus,545,source_only_continued,5,sitting,175,0.211268
+cross_age,RealWorld_below30_to_RealWorld_age30plus,545,source_only_continued,6,standing,211,0.000000
+cross_age,RealWorld_below30_to_RealWorld_age30plus,545,source_only_continued,7,walking,186,0.103286
+cross_age,RealWorld_below30_to_RealWorld_age30plus,545,lambda0_target_pass,0,climbingdown,157,0.604082
+cross_age,RealWorld_below30_to_RealWorld_age30plus,545,lambda0_target_pass,1,climbingup,173,0.760638
+cross_age,RealWorld_below30_to_RealWorld_age30plus,545,lambda0_target_pass,2,jumping,27,0.714286
+cross_age,RealWorld_below30_to_RealWorld_age30plus,545,lambda0_target_pass,3,lying,162,0.791980
+cross_age,RealWorld_below30_to_RealWorld_age30plus,545,lambda0_target_pass,4,running,179,0.607076
+cross_age,RealWorld_below30_to_RealWorld_age30plus,545,lambda0_target_pass,5,sitting,175,0.121212
+cross_age,RealWorld_below30_to_RealWorld_age30plus,545,lambda0_target_pass,6,standing,211,0.009009
+cross_age,RealWorld_below30_to_RealWorld_age30plus,545,lambda0_target_pass,7,walking,186,0.133333
+cross_age,RealWorld_below30_to_RealWorld_age30plus,545,deep_coral,0,climbingdown,157,0.562249
+cross_age,RealWorld_below30_to_RealWorld_age30plus,545,deep_coral,1,climbingup,173,0.720222
+cross_age,RealWorld_below30_to_RealWorld_age30plus,545,deep_coral,2,jumping,27,0.826087
+cross_age,RealWorld_below30_to_RealWorld_age30plus,545,deep_coral,3,lying,162,0.789082
+cross_age,RealWorld_below30_to_RealWorld_age30plus,545,deep_coral,4,running,179,0.754098
+cross_age,RealWorld_below30_to_RealWorld_age30plus,545,deep_coral,5,sitting,175,0.549020
+cross_age,RealWorld_below30_to_RealWorld_age30plus,545,deep_coral,6,standing,211,0.009091
+cross_age,RealWorld_below30_to_RealWorld_age30plus,545,deep_coral,7,walking,186,0.166667
+cross_age,RealWorld_below30_to_RealWorld_age30plus,881,baseline,0,climbingdown,157,0.557875
+cross_age,RealWorld_below30_to_RealWorld_age30plus,881,baseline,1,climbingup,173,0.711246
+cross_age,RealWorld_below30_to_RealWorld_age30plus,881,baseline,2,jumping,27,0.500000
+cross_age,RealWorld_below30_to_RealWorld_age30plus,881,baseline,3,lying,162,0.776413
+cross_age,RealWorld_below30_to_RealWorld_age30plus,881,baseline,4,running,179,0.580071
+cross_age,RealWorld_below30_to_RealWorld_age30plus,881,baseline,5,sitting,175,0.283465
+cross_age,RealWorld_below30_to_RealWorld_age30plus,881,baseline,6,standing,211,0.018265
+cross_age,RealWorld_below30_to_RealWorld_age30plus,881,baseline,7,walking,186,0.087379
+cross_age,RealWorld_below30_to_RealWorld_age30plus,881,source_only_continued,0,climbingdown,157,0.605809
+cross_age,RealWorld_below30_to_RealWorld_age30plus,881,source_only_continued,1,climbingup,173,0.750000
+cross_age,RealWorld_below30_to_RealWorld_age30plus,881,source_only_continued,2,jumping,27,0.578947
+cross_age,RealWorld_below30_to_RealWorld_age30plus,881,source_only_continued,3,lying,162,0.757794
+cross_age,RealWorld_below30_to_RealWorld_age30plus,881,source_only_continued,4,running,179,0.645291
+cross_age,RealWorld_below30_to_RealWorld_age30plus,881,source_only_continued,5,sitting,175,0.626761
+cross_age,RealWorld_below30_to_RealWorld_age30plus,881,source_only_continued,6,standing,211,0.000000
+cross_age,RealWorld_below30_to_RealWorld_age30plus,881,source_only_continued,7,walking,186,0.288136
+cross_age,RealWorld_below30_to_RealWorld_age30plus,881,lambda0_target_pass,0,climbingdown,157,0.612766
+cross_age,RealWorld_below30_to_RealWorld_age30plus,881,lambda0_target_pass,1,climbingup,173,0.746667
+cross_age,RealWorld_below30_to_RealWorld_age30plus,881,lambda0_target_pass,2,jumping,27,0.875000
+cross_age,RealWorld_below30_to_RealWorld_age30plus,881,lambda0_target_pass,3,lying,162,0.632000
+cross_age,RealWorld_below30_to_RealWorld_age30plus,881,lambda0_target_pass,4,running,179,0.869333
+cross_age,RealWorld_below30_to_RealWorld_age30plus,881,lambda0_target_pass,5,sitting,175,0.803625
+cross_age,RealWorld_below30_to_RealWorld_age30plus,881,lambda0_target_pass,6,standing,211,0.000000
+cross_age,RealWorld_below30_to_RealWorld_age30plus,881,lambda0_target_pass,7,walking,186,0.230088
+cross_age,RealWorld_below30_to_RealWorld_age30plus,881,deep_coral,0,climbingdown,157,0.625000
+cross_age,RealWorld_below30_to_RealWorld_age30plus,881,deep_coral,1,climbingup,173,0.737401
+cross_age,RealWorld_below30_to_RealWorld_age30plus,881,deep_coral,2,jumping,27,0.875000
+cross_age,RealWorld_below30_to_RealWorld_age30plus,881,deep_coral,3,lying,162,0.646217
+cross_age,RealWorld_below30_to_RealWorld_age30plus,881,deep_coral,4,running,179,0.867021
+cross_age,RealWorld_below30_to_RealWorld_age30plus,881,deep_coral,5,sitting,175,0.778135
+cross_age,RealWorld_below30_to_RealWorld_age30plus,881,deep_coral,6,standing,211,0.000000
+cross_age,RealWorld_below30_to_RealWorld_age30plus,881,deep_coral,7,walking,186,0.253275
+cross_age,RealWorld_age30plus_to_RealWorld_below30,52,baseline,0,climbingdown,237,0.124224
+cross_age,RealWorld_age30plus_to_RealWorld_below30,52,baseline,1,climbingup,323,0.297220
+cross_age,RealWorld_age30plus_to_RealWorld_below30,52,baseline,2,jumping,70,0.474074
+cross_age,RealWorld_age30plus_to_RealWorld_below30,52,baseline,3,lying,382,0.551205
+cross_age,RealWorld_age30plus_to_RealWorld_below30,52,baseline,4,running,386,0.493392
+cross_age,RealWorld_age30plus_to_RealWorld_below30,52,baseline,5,sitting,400,0.146552
+cross_age,RealWorld_age30plus_to_RealWorld_below30,52,baseline,6,standing,372,0.063927
+cross_age,RealWorld_age30plus_to_RealWorld_below30,52,baseline,7,walking,397,0.572614
+cross_age,RealWorld_age30plus_to_RealWorld_below30,52,source_only_continued,0,climbingdown,237,0.230263
+cross_age,RealWorld_age30plus_to_RealWorld_below30,52,source_only_continued,1,climbingup,323,0.366704
+cross_age,RealWorld_age30plus_to_RealWorld_below30,52,source_only_continued,2,jumping,70,0.862500
+cross_age,RealWorld_age30plus_to_RealWorld_below30,52,source_only_continued,3,lying,382,0.718351
+cross_age,RealWorld_age30plus_to_RealWorld_below30,52,source_only_continued,4,running,386,0.782065
+cross_age,RealWorld_age30plus_to_RealWorld_below30,52,source_only_continued,5,sitting,400,0.678625
+cross_age,RealWorld_age30plus_to_RealWorld_below30,52,source_only_continued,6,standing,372,0.055814
+cross_age,RealWorld_age30plus_to_RealWorld_below30,52,source_only_continued,7,walking,397,0.556818
+cross_age,RealWorld_age30plus_to_RealWorld_below30,52,lambda0_target_pass,0,climbingdown,237,0.428571
+cross_age,RealWorld_age30plus_to_RealWorld_below30,52,lambda0_target_pass,1,climbingup,323,0.357808
+cross_age,RealWorld_age30plus_to_RealWorld_below30,52,lambda0_target_pass,2,jumping,70,0.878981
+cross_age,RealWorld_age30plus_to_RealWorld_below30,52,lambda0_target_pass,3,lying,382,0.712195
+cross_age,RealWorld_age30plus_to_RealWorld_below30,52,lambda0_target_pass,4,running,386,0.803437
+cross_age,RealWorld_age30plus_to_RealWorld_below30,52,lambda0_target_pass,5,sitting,400,0.627507
+cross_age,RealWorld_age30plus_to_RealWorld_below30,52,lambda0_target_pass,6,standing,372,0.038741
+cross_age,RealWorld_age30plus_to_RealWorld_below30,52,lambda0_target_pass,7,walking,397,0.475548
+cross_age,RealWorld_age30plus_to_RealWorld_below30,52,deep_coral,0,climbingdown,237,0.395280
+cross_age,RealWorld_age30plus_to_RealWorld_below30,52,deep_coral,1,climbingup,323,0.341842
+cross_age,RealWorld_age30plus_to_RealWorld_below30,52,deep_coral,2,jumping,70,0.901961
+cross_age,RealWorld_age30plus_to_RealWorld_below30,52,deep_coral,3,lying,382,0.720472
+cross_age,RealWorld_age30plus_to_RealWorld_below30,52,deep_coral,4,running,386,0.814255
+cross_age,RealWorld_age30plus_to_RealWorld_below30,52,deep_coral,5,sitting,400,0.642356
+cross_age,RealWorld_age30plus_to_RealWorld_below30,52,deep_coral,6,standing,372,0.033816
+cross_age,RealWorld_age30plus_to_RealWorld_below30,52,deep_coral,7,walking,397,0.550595
+cross_age,RealWorld_age30plus_to_RealWorld_below30,100,baseline,0,climbingdown,237,0.173285
+cross_age,RealWorld_age30plus_to_RealWorld_below30,100,baseline,1,climbingup,323,0.352113
+cross_age,RealWorld_age30plus_to_RealWorld_below30,100,baseline,2,jumping,70,0.752137
+cross_age,RealWorld_age30plus_to_RealWorld_below30,100,baseline,3,lying,382,0.877698
+cross_age,RealWorld_age30plus_to_RealWorld_below30,100,baseline,4,running,386,0.723608
+cross_age,RealWorld_age30plus_to_RealWorld_below30,100,baseline,5,sitting,400,0.756757
+cross_age,RealWorld_age30plus_to_RealWorld_below30,100,baseline,6,standing,372,0.025381
+cross_age,RealWorld_age30plus_to_RealWorld_below30,100,baseline,7,walking,397,0.348148
+cross_age,RealWorld_age30plus_to_RealWorld_below30,100,source_only_continued,0,climbingdown,237,0.016529
+cross_age,RealWorld_age30plus_to_RealWorld_below30,100,source_only_continued,1,climbingup,323,0.329293
+cross_age,RealWorld_age30plus_to_RealWorld_below30,100,source_only_continued,2,jumping,70,0.596491
+cross_age,RealWorld_age30plus_to_RealWorld_below30,100,source_only_continued,3,lying,382,0.746939
+cross_age,RealWorld_age30plus_to_RealWorld_below30,100,source_only_continued,4,running,386,0.776058
+cross_age,RealWorld_age30plus_to_RealWorld_below30,100,source_only_continued,5,sitting,400,0.641815
+cross_age,RealWorld_age30plus_to_RealWorld_below30,100,source_only_continued,6,standing,372,0.015228
+cross_age,RealWorld_age30plus_to_RealWorld_below30,100,source_only_continued,7,walking,397,0.456522
+cross_age,RealWorld_age30plus_to_RealWorld_below30,100,lambda0_target_pass,0,climbingdown,237,0.063745
+cross_age,RealWorld_age30plus_to_RealWorld_below30,100,lambda0_target_pass,1,climbingup,323,0.324948
+cross_age,RealWorld_age30plus_to_RealWorld_below30,100,lambda0_target_pass,2,jumping,70,0.656000
+cross_age,RealWorld_age30plus_to_RealWorld_below30,100,lambda0_target_pass,3,lying,382,0.748466
+cross_age,RealWorld_age30plus_to_RealWorld_below30,100,lambda0_target_pass,4,running,386,0.793213
+cross_age,RealWorld_age30plus_to_RealWorld_below30,100,lambda0_target_pass,5,sitting,400,0.634461
+cross_age,RealWorld_age30plus_to_RealWorld_below30,100,lambda0_target_pass,6,standing,372,0.034826
+cross_age,RealWorld_age30plus_to_RealWorld_below30,100,lambda0_target_pass,7,walking,397,0.455814
+cross_age,RealWorld_age30plus_to_RealWorld_below30,100,deep_coral,0,climbingdown,237,0.095238
+cross_age,RealWorld_age30plus_to_RealWorld_below30,100,deep_coral,1,climbingup,323,0.330097
+cross_age,RealWorld_age30plus_to_RealWorld_below30,100,deep_coral,2,jumping,70,0.775510
+cross_age,RealWorld_age30plus_to_RealWorld_below30,100,deep_coral,3,lying,382,0.710680
+cross_age,RealWorld_age30plus_to_RealWorld_below30,100,deep_coral,4,running,386,0.787879
+cross_age,RealWorld_age30plus_to_RealWorld_below30,100,deep_coral,5,sitting,400,0.704846
+cross_age,RealWorld_age30plus_to_RealWorld_below30,100,deep_coral,6,standing,372,0.044888
+cross_age,RealWorld_age30plus_to_RealWorld_below30,100,deep_coral,7,walking,397,0.453372
+cross_age,RealWorld_age30plus_to_RealWorld_below30,445,baseline,0,climbingdown,237,0.263889
+cross_age,RealWorld_age30plus_to_RealWorld_below30,445,baseline,1,climbingup,323,0.380844
+cross_age,RealWorld_age30plus_to_RealWorld_below30,445,baseline,2,jumping,70,0.375839
+cross_age,RealWorld_age30plus_to_RealWorld_below30,445,baseline,3,lying,382,0.711370
+cross_age,RealWorld_age30plus_to_RealWorld_below30,445,baseline,4,running,386,0.739941
+cross_age,RealWorld_age30plus_to_RealWorld_below30,445,baseline,5,sitting,400,0.683616
+cross_age,RealWorld_age30plus_to_RealWorld_below30,445,baseline,6,standing,372,0.009828
+cross_age,RealWorld_age30plus_to_RealWorld_below30,445,baseline,7,walking,397,0.520548
+cross_age,RealWorld_age30plus_to_RealWorld_below30,445,source_only_continued,0,climbingdown,237,0.226190
+cross_age,RealWorld_age30plus_to_RealWorld_below30,445,source_only_continued,1,climbingup,323,0.365949
+cross_age,RealWorld_age30plus_to_RealWorld_below30,445,source_only_continued,2,jumping,70,0.304348
+cross_age,RealWorld_age30plus_to_RealWorld_below30,445,source_only_continued,3,lying,382,0.699904
+cross_age,RealWorld_age30plus_to_RealWorld_below30,445,source_only_continued,4,running,386,0.785863
+cross_age,RealWorld_age30plus_to_RealWorld_below30,445,source_only_continued,5,sitting,400,0.691020
+cross_age,RealWorld_age30plus_to_RealWorld_below30,445,source_only_continued,6,standing,372,0.015385
+cross_age,RealWorld_age30plus_to_RealWorld_below30,445,source_only_continued,7,walking,397,0.409556
+cross_age,RealWorld_age30plus_to_RealWorld_below30,445,lambda0_target_pass,0,climbingdown,237,0.191781
+cross_age,RealWorld_age30plus_to_RealWorld_below30,445,lambda0_target_pass,1,climbingup,323,0.348348
+cross_age,RealWorld_age30plus_to_RealWorld_below30,445,lambda0_target_pass,2,jumping,70,0.438710
+cross_age,RealWorld_age30plus_to_RealWorld_below30,445,lambda0_target_pass,3,lying,382,0.739394
+cross_age,RealWorld_age30plus_to_RealWorld_below30,445,lambda0_target_pass,4,running,386,0.814255
+cross_age,RealWorld_age30plus_to_RealWorld_below30,445,lambda0_target_pass,5,sitting,400,0.678261
+cross_age,RealWorld_age30plus_to_RealWorld_below30,445,lambda0_target_pass,6,standing,372,0.013857
+cross_age,RealWorld_age30plus_to_RealWorld_below30,445,lambda0_target_pass,7,walking,397,0.412943
+cross_age,RealWorld_age30plus_to_RealWorld_below30,445,deep_coral,0,climbingdown,237,0.303406
+cross_age,RealWorld_age30plus_to_RealWorld_below30,445,deep_coral,1,climbingup,323,0.373102
+cross_age,RealWorld_age30plus_to_RealWorld_below30,445,deep_coral,2,jumping,70,0.295082
+cross_age,RealWorld_age30plus_to_RealWorld_below30,445,deep_coral,3,lying,382,0.715543
+cross_age,RealWorld_age30plus_to_RealWorld_below30,445,deep_coral,4,running,386,0.795359
+cross_age,RealWorld_age30plus_to_RealWorld_below30,445,deep_coral,5,sitting,400,0.713267
+cross_age,RealWorld_age30plus_to_RealWorld_below30,445,deep_coral,6,standing,372,0.018868
+cross_age,RealWorld_age30plus_to_RealWorld_below30,445,deep_coral,7,walking,397,0.509687
+cross_age,RealWorld_age30plus_to_RealWorld_below30,545,baseline,0,climbingdown,237,0.264059
+cross_age,RealWorld_age30plus_to_RealWorld_below30,545,baseline,1,climbingup,323,0.333657
+cross_age,RealWorld_age30plus_to_RealWorld_below30,545,baseline,2,jumping,70,0.428571
+cross_age,RealWorld_age30plus_to_RealWorld_below30,545,baseline,3,lying,382,0.713725
+cross_age,RealWorld_age30plus_to_RealWorld_below30,545,baseline,4,running,386,0.736721
+cross_age,RealWorld_age30plus_to_RealWorld_below30,545,baseline,5,sitting,400,0.649007
+cross_age,RealWorld_age30plus_to_RealWorld_below30,545,baseline,6,standing,372,0.020619
+cross_age,RealWorld_age30plus_to_RealWorld_below30,545,baseline,7,walking,397,0.344595
+cross_age,RealWorld_age30plus_to_RealWorld_below30,545,source_only_continued,0,climbingdown,237,0.097130
+cross_age,RealWorld_age30plus_to_RealWorld_below30,545,source_only_continued,1,climbingup,323,0.314260
+cross_age,RealWorld_age30plus_to_RealWorld_below30,545,source_only_continued,2,jumping,70,0.440000
+cross_age,RealWorld_age30plus_to_RealWorld_below30,545,source_only_continued,3,lying,382,0.615690
+cross_age,RealWorld_age30plus_to_RealWorld_below30,545,source_only_continued,4,running,386,0.509537
+cross_age,RealWorld_age30plus_to_RealWorld_below30,545,source_only_continued,5,sitting,400,0.635607
+cross_age,RealWorld_age30plus_to_RealWorld_below30,545,source_only_continued,6,standing,372,0.010230
+cross_age,RealWorld_age30plus_to_RealWorld_below30,545,source_only_continued,7,walking,397,0.365159
+cross_age,RealWorld_age30plus_to_RealWorld_below30,545,lambda0_target_pass,0,climbingdown,237,0.343598
+cross_age,RealWorld_age30plus_to_RealWorld_below30,545,lambda0_target_pass,1,climbingup,323,0.297797
+cross_age,RealWorld_age30plus_to_RealWorld_below30,545,lambda0_target_pass,2,jumping,70,0.758170
+cross_age,RealWorld_age30plus_to_RealWorld_below30,545,lambda0_target_pass,3,lying,382,0.523305
+cross_age,RealWorld_age30plus_to_RealWorld_below30,545,lambda0_target_pass,4,running,386,0.640097
+cross_age,RealWorld_age30plus_to_RealWorld_below30,545,lambda0_target_pass,5,sitting,400,0.197849
+cross_age,RealWorld_age30plus_to_RealWorld_below30,545,lambda0_target_pass,6,standing,372,0.025316
+cross_age,RealWorld_age30plus_to_RealWorld_below30,545,lambda0_target_pass,7,walking,397,0.308208
+cross_age,RealWorld_age30plus_to_RealWorld_below30,545,deep_coral,0,climbingdown,237,0.345506
+cross_age,RealWorld_age30plus_to_RealWorld_below30,545,deep_coral,1,climbingup,323,0.336117
+cross_age,RealWorld_age30plus_to_RealWorld_below30,545,deep_coral,2,jumping,70,0.710526
+cross_age,RealWorld_age30plus_to_RealWorld_below30,545,deep_coral,3,lying,382,0.678243
+cross_age,RealWorld_age30plus_to_RealWorld_below30,545,deep_coral,4,running,386,0.568336
+cross_age,RealWorld_age30plus_to_RealWorld_below30,545,deep_coral,5,sitting,400,0.621262
+cross_age,RealWorld_age30plus_to_RealWorld_below30,545,deep_coral,6,standing,372,0.020202
+cross_age,RealWorld_age30plus_to_RealWorld_below30,545,deep_coral,7,walking,397,0.302013
+cross_age,RealWorld_age30plus_to_RealWorld_below30,881,baseline,0,climbingdown,237,0.482558
+cross_age,RealWorld_age30plus_to_RealWorld_below30,881,baseline,1,climbingup,323,0.388558
+cross_age,RealWorld_age30plus_to_RealWorld_below30,881,baseline,2,jumping,70,0.902256
+cross_age,RealWorld_age30plus_to_RealWorld_below30,881,baseline,3,lying,382,0.732919
+cross_age,RealWorld_age30plus_to_RealWorld_below30,881,baseline,4,running,386,0.705332
+cross_age,RealWorld_age30plus_to_RealWorld_below30,881,baseline,5,sitting,400,0.692547
+cross_age,RealWorld_age30plus_to_RealWorld_below30,881,baseline,6,standing,372,0.015584
+cross_age,RealWorld_age30plus_to_RealWorld_below30,881,baseline,7,walking,397,0.482759
+cross_age,RealWorld_age30plus_to_RealWorld_below30,881,source_only_continued,0,climbingdown,237,0.406154
+cross_age,RealWorld_age30plus_to_RealWorld_below30,881,source_only_continued,1,climbingup,323,0.330237
+cross_age,RealWorld_age30plus_to_RealWorld_below30,881,source_only_continued,2,jumping,70,0.544379
+cross_age,RealWorld_age30plus_to_RealWorld_below30,881,source_only_continued,3,lying,382,0.685492
+cross_age,RealWorld_age30plus_to_RealWorld_below30,881,source_only_continued,4,running,386,0.714912
+cross_age,RealWorld_age30plus_to_RealWorld_below30,881,source_only_continued,5,sitting,400,0.640650
+cross_age,RealWorld_age30plus_to_RealWorld_below30,881,source_only_continued,6,standing,372,0.025316
+cross_age,RealWorld_age30plus_to_RealWorld_below30,881,source_only_continued,7,walking,397,0.415512
+cross_age,RealWorld_age30plus_to_RealWorld_below30,881,lambda0_target_pass,0,climbingdown,237,0.417178
+cross_age,RealWorld_age30plus_to_RealWorld_below30,881,lambda0_target_pass,1,climbingup,323,0.306636
+cross_age,RealWorld_age30plus_to_RealWorld_below30,881,lambda0_target_pass,2,jumping,70,0.761364
+cross_age,RealWorld_age30plus_to_RealWorld_below30,881,lambda0_target_pass,3,lying,382,0.739615
+cross_age,RealWorld_age30plus_to_RealWorld_below30,881,lambda0_target_pass,4,running,386,0.702369
+cross_age,RealWorld_age30plus_to_RealWorld_below30,881,lambda0_target_pass,5,sitting,400,0.678179
+cross_age,RealWorld_age30plus_to_RealWorld_below30,881,lambda0_target_pass,6,standing,372,0.024570
+cross_age,RealWorld_age30plus_to_RealWorld_below30,881,lambda0_target_pass,7,walking,397,0.425926
+cross_age,RealWorld_age30plus_to_RealWorld_below30,881,deep_coral,0,climbingdown,237,0.422018
+cross_age,RealWorld_age30plus_to_RealWorld_below30,881,deep_coral,1,climbingup,323,0.315315
+cross_age,RealWorld_age30plus_to_RealWorld_below30,881,deep_coral,2,jumping,70,0.712644
+cross_age,RealWorld_age30plus_to_RealWorld_below30,881,deep_coral,3,lying,382,0.728543
+cross_age,RealWorld_age30plus_to_RealWorld_below30,881,deep_coral,4,running,386,0.740355
+cross_age,RealWorld_age30plus_to_RealWorld_below30,881,deep_coral,5,sitting,400,0.673879
+cross_age,RealWorld_age30plus_to_RealWorld_below30,881,deep_coral,6,standing,372,0.043584
+cross_age,RealWorld_age30plus_to_RealWorld_below30,881,deep_coral,7,walking,397,0.469613

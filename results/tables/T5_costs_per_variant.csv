@@ -1,0 +1,5 @@
+variant,runs_with_duration,total_seconds,total_minutes
+baseline,48,1789.7,29.8
+source_only_continued,60,1883.0,31.4
+lambda0_target_pass,60,3653.5,60.9
+deep_coral,60,3698.0,61.6
