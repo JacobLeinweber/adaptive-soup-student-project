@@ -10,3 +10,6 @@ data/reports/
 data/prepared/plots/
 logs/
 *.egg-info/
+
+# Model checkpoints of experiment runs are kept locally for now (not via Git LFS).
+results/**/*.pt
