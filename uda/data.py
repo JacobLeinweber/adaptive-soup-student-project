@@ -61,10 +61,10 @@ def load_label_map(transfer: Transfer) -> dict:
     return json.loads((checkpoint_dir(transfer) / "config.json").read_text())["label_map"]
 
 
-def load_source_only_model(transfer: Transfer) -> SelfHARCNN:
-    """Build SelfHARCNN and load the supplied source-only weights (the file is only read)."""
+def load_source_only_model(transfer: Transfer, checkpoint: Path | None = None) -> SelfHARCNN:
+    """Build SelfHARCNN and load source-only weights (the file is only read). Default: the supplied checkpoint."""
     model = SelfHARCNN((150, 18), len(load_label_map(transfer)))
-    state = torch.load(checkpoint_dir(transfer) / "model_last.pt", map_location="cpu", weights_only=True)
+    state = torch.load(checkpoint or checkpoint_dir(transfer) / "model_last.pt", map_location="cpu", weights_only=True)
     model.load_state_dict(state, strict=True)
     return model
 

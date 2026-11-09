@@ -13,3 +13,6 @@ logs/
 
 # Model checkpoints of experiment runs are kept locally for now (not via Git LFS).
 results/**/*.pt
+
+# macOS folder metadata
+.DS_Store

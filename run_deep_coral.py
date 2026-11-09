@@ -1,20 +1,21 @@
-"""Deep CORAL and the lambda = 0 controls, starting from the supplied source-only checkpoints.
+"""Deep CORAL and the lambda = 0 controls on the five seeds, each from the source-only model of its seed.
 
 Examples:
-    python run_deep_coral.py --transfer PAMAP2_to_RealWorld
-    python run_deep_coral.py --all
-    python run_deep_coral.py --all --control               # lambda = 0, source only
-    python run_deep_coral.py --all --control-target-pass   # lambda = 0, target windows still pass through the model
+    python run_deep_coral.py --all --all-variants                     # all seeds and variants
+    python run_deep_coral.py --transfer PAMAP2_to_RealWorld --seeds 100
+    python run_deep_coral.py --all --seeds 52 --control               # lambda = 0, source only
+    python run_deep_coral.py --all --seeds 52 --control-target-pass   # lambda = 0, target windows still pass through the model
+
+Seed 52 starts from the supplied checkpoint in models/, the other seeds from results/source_only/.
+Results: results/<variant>/seed_<seed>/<transfer>/. Finished runs are skipped, so an interrupted
+call can simply be repeated.
 
 Target data enter only as windows (features.pkl); this script never opens a target
-evaluation_labels.pkl. Scoring happens afterwards in make_results_tables.py.
+evaluation_labels.pkl. Scoring happens afterwards in make_seed_tables.py.
 """
 from __future__ import annotations
 
 import argparse
-import csv
-import platform
-import subprocess
 import time
 from datetime import datetime, timezone
 from pathlib import Path
@@ -24,10 +25,10 @@ import torch
 
 from src.training.experiments import TRANSFERS, Transfer
 from src.training.train_transfer import ROOT
-from src.training.utils import SEED, write_json
-from uda.data import (check_output_dir, checkpoint_dir, get_transfer, load_label_map, load_labeled,
-                      load_source_only_model, load_unlabeled, sha256)
+from src.training.utils import write_json
+from uda.data import check_output_dir, get_transfer, load_label_map, load_labeled, load_source_only_model, load_unlabeled, sha256
 from uda.evaluation import SPLITS, predict
+from uda.runs import BASELINE, SEEDS, clean_commit, environment, is_complete, source_only_checkpoint, write_train_log
 from uda.training import train_continued
 
 ADATIME = {
@@ -39,8 +40,6 @@ ADATIME = {
 }
 CORAL_WEIGHT = 4.23035475456397        # lambda: AdaTime HAR Deep_Coral "coral_wt"
 SOURCE_CE_WEIGHT = 0.1013209750429822  # AdaTime HAR Deep_Coral "src_cls_loss_wt"
-# Baseline configuration (defaults of run_transfer, identical in all supplied config.json files).
-BASELINE = {"epochs": 30, "batch_size": 32, "lr": 3e-4, "weight_decay": 1e-4, "seed": SEED}
 # Run variants. With target_pass the target windows go through the model in train mode, so they
 # update the BatchNorm statistics; only coral_weight > 0 adds a CORAL gradient on top.
 MODES = {
@@ -52,21 +51,21 @@ MODES = {
                             "method": "lambda0_target_pass (lambda = 0, target windows pass through the model)",
                             "coral_weight": 0.0, "target_pass": True},
 }
-NONDETERMINISM = ("Trained on Apple MPS. PyTorch does not guarantee bitwise reproducible results on MPS; "
-                  "a repeated run with the same seed can differ slightly.")
 
 
-def run_one(transfer: Transfer, mode: dict, output_root: Path, device: torch.device, overwrite: bool) -> None:
-    out = output_root / transfer.name
-    if (out / "config.json").is_file() and not overwrite:
-        print(f"skip {transfer.name}: finished run in {out.relative_to(ROOT) if out.is_relative_to(ROOT) else out}")
+def run_one(transfer: Transfer, mode: dict, seed: int, results_root: Path, device: torch.device, overwrite: bool) -> None:
+    out = results_root / mode["folder"] / f"seed_{seed}" / transfer.name
+    if is_complete(out, SPLITS) and not overwrite:
+        print(f"skip {mode['folder']} seed {seed} {transfer.name}: finished run in {out}", flush=True)
         return
-    print(f"=== {mode['method']}: {transfer.name}", flush=True)
+    commit = clean_commit()
+    print(f"=== {mode['method']}, seed {seed}: {transfer.name}", flush=True)
+    (out / "config.json").unlink(missing_ok=True)
     started = datetime.now(timezone.utc)
-    checkpoint = checkpoint_dir(transfer) / "model_last.pt"
+    checkpoint = source_only_checkpoint(transfer, seed)
     checkpoint_hash = sha256(checkpoint)
     label_map = load_label_map(transfer)
-    model = load_source_only_model(transfer)
+    model = load_source_only_model(transfer, checkpoint)
 
     source_x, source_y, source_meta = load_labeled(transfer.family, transfer.source)
     if source_meta["label_map"] != label_map:
@@ -76,28 +75,25 @@ def run_one(transfer: Transfer, mode: dict, output_root: Path, device: torch.dev
     tic = time.perf_counter()
     history = train_continued(
         model, source_x["train"], source_y["train"], target_x["train"] if mode["target_pass"] else None,
-        coral_weight=mode["coral_weight"], source_ce_weight=SOURCE_CE_WEIGHT, device=device,
+        coral_weight=mode["coral_weight"], source_ce_weight=SOURCE_CE_WEIGHT, seed=seed, device=device,
         **BASELINE, log=lambda line: print(line, flush=True),
     )
     train_seconds = time.perf_counter() - tic
 
     (out / "predictions").mkdir(parents=True, exist_ok=True)
     torch.save({k: v.detach().cpu() for k, v in model.state_dict().items()}, out / "model_last.pt")
-    with (out / "train_log.csv").open("w", newline="", encoding="utf-8") as handle:
-        writer = csv.DictWriter(handle, fieldnames=list(history[0]))
-        writer.writeheader()
-        writer.writerows(history)
+    write_train_log(out / "train_log.csv", history)
     for split in SPLITS:
         domain, part = split.split("_")
         x = source_x[part] if domain == "source" else target_x[part]
         np.savez_compressed(out / "predictions" / f"{split}.npz", y_pred=predict(model, x, device))
 
     if sha256(checkpoint) != checkpoint_hash:
-        raise RuntimeError(f"The supplied checkpoint changed: {checkpoint}")
+        raise RuntimeError(f"The source-only checkpoint changed: {checkpoint}")
     write_json(out / "config.json", {
         "method": mode["method"],
         "transfer": transfer.name, "family": transfer.family,
-        "source": transfer.source, "target": transfer.target, "label_map": label_map,
+        "source": transfer.source, "target": transfer.target, "label_map": label_map, "seed": seed,
         "init_checkpoint": str(checkpoint.relative_to(ROOT)), "init_checkpoint_sha256": checkpoint_hash,
         "coral_weight": mode["coral_weight"], "source_ce_weight": SOURCE_CE_WEIGHT,
         "optimizer": "Adam (torch.optim.Adam, L2 weight decay)", **BASELINE,
@@ -107,10 +103,7 @@ def run_one(transfer: Transfer, mode: dict, output_root: Path, device: torch.dev
         "forward_passes": ("separate source and target passes in train mode, source first"
                            if mode["target_pass"] else "source only"),
         "model_selection": "last epoch", "adatime": ADATIME,
-        "device": str(device), "torch": torch.__version__, "numpy": np.__version__,
-        "python": platform.python_version(), "platform": platform.platform(),
-        "nondeterminism": NONDETERMINISM,
-        "repository_commit": subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=ROOT, text=True).strip(),
+        **environment(device), "repository_commit": commit,
         "started_utc": started.isoformat(), "finished_utc": datetime.now(timezone.utc).isoformat(),
         "train_seconds": round(train_seconds, 1),
     })
@@ -126,17 +119,24 @@ def main() -> None:
     variant.add_argument("--control", action="store_true", help="lambda = 0 control, source only")
     variant.add_argument("--control-target-pass", action="store_true",
                          help="lambda = 0 control in which target windows still pass through the model")
-    parser.add_argument("--output-dir", type=Path, help="default: the folder of the variant under results/")
+    variant.add_argument("--all-variants", action="store_true", help="Deep CORAL and both controls")
+    parser.add_argument("--seeds", type=int, nargs="+", choices=SEEDS, default=list(SEEDS))
+    parser.add_argument("--output-dir", type=Path, help="default: results/")
     parser.add_argument("--device", default="mps")
     parser.add_argument("--overwrite", action="store_true", help="retrain even if a finished run exists")
     args = parser.parse_args()
     if args.device == "mps" and not torch.backends.mps.is_available():
         parser.error("MPS is not available")
-    mode = MODES["control" if args.control else "control_target_pass" if args.control_target_pass else "deep_coral"]
-    output_root = check_output_dir(args.output_dir or ROOT / "results" / mode["folder"])
+    if args.all_variants:
+        modes = list(MODES.values())
+    else:
+        modes = [MODES["control" if args.control else "control_target_pass" if args.control_target_pass else "deep_coral"]]
+    results_root = check_output_dir(args.output_dir or ROOT / "results")
     transfers = TRANSFERS if args.all else [get_transfer(args.transfer)]
-    for transfer in transfers:
-        run_one(transfer, mode, output_root, torch.device(args.device), args.overwrite)
+    for seed in args.seeds:
+        for mode in modes:
+            for transfer in transfers:
+                run_one(transfer, mode, seed, results_root, torch.device(args.device), args.overwrite)
 
 
 if __name__ == "__main__":

@@ -7,7 +7,7 @@ from __future__ import annotations
 
 import numpy as np
 import torch
-from sklearn.metrics import accuracy_score, balanced_accuracy_score, f1_score
+from sklearn.metrics import accuracy_score, balanced_accuracy_score, confusion_matrix, f1_score
 
 from src.training.experiments import Transfer
 from .data import checkpoint_dir, load_label_map, load_labeled
@@ -46,6 +46,13 @@ def compute_metrics(y_true: np.ndarray, y_pred: np.ndarray, num_classes: int) ->
         "weighted_f1": float(f1_score(y_true, y_pred, labels=labels, average="weighted", zero_division=0)),
         "balanced_accuracy": float(balanced_accuracy_score(y_true, y_pred)),
     }
+
+
+def per_class_f1_and_confusion(y_true: np.ndarray, y_pred: np.ndarray, num_classes: int) -> tuple[np.ndarray, np.ndarray]:
+    """F1 per class over the fixed class list, and the confusion matrix (rows: true, columns: predicted)."""
+    labels = list(range(num_classes))
+    return (f1_score(y_true, y_pred, labels=labels, average=None, zero_division=0),
+            confusion_matrix(y_true, y_pred, labels=labels))
 
 
 def true_labels(transfer: Transfer) -> dict[str, np.ndarray]:
