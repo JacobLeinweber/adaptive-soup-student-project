@@ -12,6 +12,7 @@ Tables:
     T2_confusion_target_test.csv            target test, confusion matrix of every run (one row per cell)
     T2_costs_per_run.csv                    training time of every run
     T2_costs_per_variant.csv                training time summed over each variant
+    T2_commits_per_variant.csv              the code commit of every variant
 
 Example: python make_dann_tables.py
 """
@@ -71,6 +72,23 @@ def difference_rows(scores: dict) -> list[list]:
     return rows
 
 
+def commit_rows() -> list[list]:
+    """Stop unless all runs of a variant carry one code commit; return one row per variant.
+
+    The supplied seed-52 baselines were trained outside this repository and carry no commit.
+    """
+    rows = []
+    for variant in VARIANTS:
+        commits = [json.loads((run_dir(variant, t, s) / "config.json").read_text(encoding="utf-8")).get("repository_commit")
+                   for t in TRANSFERS for s in SEEDS]
+        found = sorted({commit for commit in commits if commit})
+        if len(found) != 1:
+            raise SystemExit(f"{variant}: expected one code commit, found {found}")
+        rows.append([variant, found[0], len(commits) - commits.count(None), commits.count(None)])
+        print(f"{variant}: commit {found[0]}, {rows[-1][2]} runs, {rows[-1][3]} supplied runs without commit")
+    return rows
+
+
 def main() -> None:
     tables = check_output_dir(TABLES)
     tables.mkdir(parents=True, exist_ok=True)
@@ -78,6 +96,7 @@ def main() -> None:
                if not (run_dir(v, t, s) / "config.json").is_file()]
     if missing:
         raise SystemExit("Missing runs, no tables written:\n" + "\n".join(missing))
+    commits = commit_rows()
 
     scores, all_splits, per_class, confusion, costs = {}, [], [], [], []
     for transfer in TRANSFERS:
@@ -119,6 +138,7 @@ def main() -> None:
         seconds = [row[-1] for row in costs if row[3] == variant and row[-1] != ""]
         per_variant.append([variant, len(seconds), f"{sum(seconds):.1f}", f"{sum(seconds) / 60:.1f}"])
     write_csv(tables / "T2_costs_per_variant.csv", ["variant", "runs_with_duration", "total_seconds", "total_minutes"], per_variant)
+    write_csv(tables / "T2_commits_per_variant.csv", ["variant", "repository_commit", "runs_with_commit", "supplied_runs_without_commit"], commits)
 
 
 if __name__ == "__main__":
