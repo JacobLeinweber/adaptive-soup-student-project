@@ -1,0 +1,17 @@
+scope,family,name,n_transfers,n_seeds,weighted_f1_diff_mean,weighted_f1_diff_sd,weighted_f1_seeds_dann_higher,macro_f1_diff_mean,macro_f1_diff_sd,macro_f1_seeds_dann_higher,accuracy_diff_mean,accuracy_diff_sd,accuracy_seeds_dann_higher
+transfer,cross_dataset,PAMAP2_to_RealWorld,1,5,0.303557,0.081097,5,0.305033,0.081997,5,0.284243,0.073994,5
+transfer,cross_dataset,RealWorld_to_PAMAP2,1,5,0.160652,0.098796,5,0.150185,0.098453,5,0.180365,0.106613,5
+transfer,cross_dataset,PAMAP2_to_MHEALTH,1,5,0.093890,0.153577,4,0.100645,0.131475,4,0.094302,0.144709,4
+transfer,cross_dataset,MHEALTH_to_PAMAP2,1,5,-0.054145,0.173381,3,-0.044747,0.150005,2,-0.081487,0.162772,2
+transfer,cross_dataset,RealWorld_to_MHEALTH,1,5,-0.016215,0.143032,2,0.008126,0.171711,2,-0.009402,0.132932,2
+transfer,cross_dataset,MHEALTH_to_RealWorld,1,5,0.127490,0.123502,4,0.121518,0.121961,4,0.132619,0.132838,4
+transfer,cross_gender,PAMAP2_male_to_PAMAP2_female,1,5,0.083318,0.065029,5,0.064929,0.063927,4,0.075159,0.054495,5
+transfer,cross_gender,PAMAP2_female_to_PAMAP2_male,1,5,-0.012653,0.039801,2,-0.028724,0.052864,1,-0.012538,0.035913,1
+transfer,cross_gender,RealWorld_male_to_RealWorld_female,1,5,0.045278,0.041929,4,0.040635,0.048506,3,0.048079,0.044419,4
+transfer,cross_gender,RealWorld_female_to_RealWorld_male,1,5,0.015941,0.047989,3,-0.009379,0.083788,2,0.022032,0.050061,3
+transfer,cross_age,RealWorld_below30_to_RealWorld_age30plus,1,5,0.188981,0.072295,5,0.173105,0.076984,5,0.137480,0.064458,5
+transfer,cross_age,RealWorld_age30plus_to_RealWorld_below30,1,5,0.016447,0.025186,3,0.025578,0.024180,4,0.013089,0.027697,3
+group,cross_dataset,cross_dataset,6,5,0.102538,0.022176,5,0.106793,0.028799,5,0.100107,0.027795,5
+group,cross_gender,cross_gender,4,5,0.032971,0.031934,4,0.016865,0.040345,3,0.033183,0.028285,4
+group,cross_age,cross_age,2,5,0.102714,0.030385,5,0.099341,0.037148,5,0.075285,0.030836,5
+group,all,all,12,5,0.079378,0.009957,5,0.075575,0.011723,5,0.073662,0.012675,5

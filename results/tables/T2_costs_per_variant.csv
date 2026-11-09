@@ -1,0 +1,6 @@
+variant,runs_with_duration,total_seconds,total_minutes
+baseline,48,1789.7,29.8
+deep_coral,60,3698.0,61.6
+lambda0_target_pass,60,3653.5,60.9
+dann,60,5400.3,90.0
+dann_lambda0_target_pass,60,3585.1,59.8
