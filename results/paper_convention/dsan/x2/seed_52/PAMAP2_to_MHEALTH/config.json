@@ -1,0 +1,70 @@
+{
+  "method": "dsan",
+  "convention": "paper: loss = 1 * CE(source) + lambda * alignment loss, lambda = factor * base lambda",
+  "transfer": "PAMAP2_to_MHEALTH",
+  "family": "cross_dataset",
+  "source": "PAMAP2",
+  "target": "MHEALTH",
+  "label_map": {
+    "lying": 0,
+    "sitting": 1,
+    "standing": 2,
+    "walking": 3,
+    "running": 4
+  },
+  "seed": 52,
+  "init_checkpoint": "models/cross_dataset/PAMAP2_to_MHEALTH/model_last.pt",
+  "init_checkpoint_sha256": "52953aab71c1cbc4ff52354b189992050d056a4c248cc770c1a8095c76f074ad",
+  "factor": 2.0,
+  "base_lambda": 0.8482302689625306,
+  "alignment_weight": 1.6964605379250612,
+  "alignment_loss": "LMMD",
+  "base_lambda_from": {
+    "adatime_alignment_weight": 1.59,
+    "adatime_source_weight": 1.8744909939900247,
+    "file": "configs/hparams.py:56-62 (class HAR = UCIHAR, 'DSAN'); the loss uses domain_loss_wt, mmd_wt is not read by DSAN"
+  },
+  "source_ce_weight": 1.0,
+  "optimizer": "Adam (torch.optim.Adam, L2 weight decay, default betas)",
+  "epochs": 30,
+  "batch_size": 32,
+  "lr": 0.0003,
+  "weight_decay": 0.0001,
+  "lmmd": {
+    "kernel_num": 5,
+    "kernel_mul": 2.0,
+    "bandwidth": "mean squared distance over all pairs of the stacked batch, no gradient",
+    "pseudo_labels": "softmax outputs of the model on the target batch of the step, no gradient",
+    "weight_schedule": "none (constant weight, as in AdaTime)"
+  },
+  "steps_per_epoch": 114,
+  "n_source_train": 3646,
+  "n_target_train": 1170,
+  "target_input": "target train windows only (features.pkl), no labels",
+  "forward_passes": "separate source and target passes in train mode, source first",
+  "saved_predictions": [
+    "source_val",
+    "source_test",
+    "target_train",
+    "target_val",
+    "target_test"
+  ],
+  "model_selection": "last epoch",
+  "adatime": {
+    "repository": "https://github.com/emadeldeen24/AdaTime",
+    "commit": "2d9be6bd0542e150518afaf8aa0c6ea0823b4a3d",
+    "lmmd": "models/loss.py:205-290 (class LMMD_loss)",
+    "training_step": "algorithms/algorithms.py:580-636 (class DSAN)",
+    "weights": "configs/hparams.py:56-62 (class HAR = UCIHAR, 'DSAN'); the loss uses domain_loss_wt, mmd_wt is not read by DSAN"
+  },
+  "device": "mps",
+  "torch": "2.14.1",
+  "numpy": "2.4.6",
+  "python": "3.13.15",
+  "platform": "macOS-26.5-arm64-arm-64bit-Mach-O",
+  "nondeterminism": "Trained on Apple MPS. PyTorch does not guarantee bitwise reproducible results on MPS; a repeated run with the same seed can differ slightly.",
+  "repository_commit": "bd0cd35c046583a6c0758f4e01ec82fa007e793a",
+  "started_utc": "2026-11-11T23:07:40.579410+00:00",
+  "finished_utc": "2026-11-11T23:08:31.748947+00:00",
+  "train_seconds": 50.9
+}

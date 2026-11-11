@@ -162,6 +162,72 @@ Weighted F1 on target test per transfer, mean ± SD over the seeds, all variants
 
 Source-only continued: continued training without any target data (alignment weight 0, no target forward pass), run with the source loss weight of Deep CORAL.
 
+## Sensitivity to the alignment weight (paper convention, seed 52)
+
+**Only seed 52 was run, and target labels were not used for any choice in this section.** Target values are reported as a sensitivity curve only; the marked choices come from label-free criteria computed on the source validation split. This is a sensitivity analysis, not the final choice of the alignment weight. Values are mean ± sample SD over the 12 transfers (not over seeds, unlike the sections above).
+
+**Setup.** All three methods are run in the convention of their papers: loss = 1 · source cross-entropy + λ · alignment loss. The base λ of a method is the ratio of AdaTime's alignment weight to its source-loss weight for HAR, so that factor 1 has the same ratio as the runs above with the AdaTime weights. With Adam, scaling the whole loss by the source weight c changes nothing except that the weight decay acts like 1e-4 / c; factor 1 therefore differs from the AdaTime runs only in the effective weight decay. Everything else is unchanged (start model, optimiser, budget, forward passes, DANN reversal factor and discriminator, constant DSAN weight). One control run (λ = 0, source weight 1, target forward pass) serves all three methods: with these weights the three training loops give bitwise the same model. Code commit of all runs: `bd0cd35`.
+
+**DEV is not used.** Deep embedded validation was ported from AdaTime, but its importance weights are not sound on our splits. Over the 72 runs with the AdaTime weights, the domain classifier separates source-train from target-train features with a median hold-out accuracy of 96.7 %; the mean importance weight on source validation, which should be close to 1, lies between 0.08 and 1806 (outside [0.5, 2] in 45 runs); DEV is negative for at least one of three classifier seeds in 22 runs, although the cross-entropy cannot be negative; and in 19 of 36 pairs of a method and its control, DEV prefers a different run depending only on the seed of the domain classifier. Only SRC is therefore reported (details in `T7_dev_check.csv`).
+
+| Method | AdaTime alignment weight | AdaTime source weight | Base λ (ratio) | Effective weight decay of the AdaTime runs |
+|---|---:|---:|---:|---:|
+| Deep CORAL | 4.2304 | 0.1013 | 41.7520 | 9.87e-04 |
+| DANN | 2.9437 | 5.1390 | 0.5728 | 1.95e-05 |
+| DSAN | 1.5900 | 1.8745 | 0.8482 | 5.33e-05 |
+
+**Weighted F1 on target test (%)**, mean ± SD over 12 transfers. AdaTime: the runs above with the AdaTime weights (seed 52); in the control column their own control.
+
+| Method | Control (λ = 0) | ×0.25 | ×0.5 | ×1 | ×2 | ×4 | AdaTime weights | AdaTime control |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|
+| Deep CORAL | 45.8 ± 18.2 | 46.6 ± 21.1 | 45.3 ± 20.4 | 48.1 ± 22.6 | 46.2 ± 21.0 | 46.5 ± 22.0 | 46.0 ± 24.3 | 43.6 ± 22.1 |
+| DANN | 45.8 ± 18.2 | 51.2 ± 22.6 | 50.5 ± 21.8 | 52.6 ± 20.7 | 50.9 ± 25.6 | 49.9 ± 25.7 | 51.4 ± 24.9 | 42.7 ± 19.5 |
+| DSAN | 45.8 ± 18.2 | 46.4 ± 27.1 | 47.0 ± 25.0 | 50.0 ± 24.9 | 19.8 ± 24.2 | 10.5 ± 12.6 | 49.8 ± 25.2 | 44.8 ± 18.7 |
+
+Baseline (source-only model, seed 52): 42.0 % weighted F1 on target test.
+
+**Choices of the label-free criteria.** Over the mean: the factor with the best mean criterion over the transfers. Per transfer: each transfer takes its own best factor; the target column is then the mean over the transfers. Candidates are the five factors; in brackets the choice when the control (λ = 0) is a candidate too.
+
+| Method | Criterion | Choice over the mean | Target WF1 at this choice (%) | Per-transfer choices | Target WF1, per-transfer choices (%) | Per-transfer choices with the control as candidate |
+|---|---:|---:|---:|---:|---:|---:|
+| Deep CORAL | SRC (source-val cross-entropy) | ×0.25 (×0.25) | 46.6 | x0.25: 2; x0.5: 4; x1: 1; x2: 3; x4: 2 | 45.6 | x0: 3; x0.25: 2; x0.5: 3; x1: 1; x2: 1; x4: 2 |
+| Deep CORAL | SRC (source-val macro-F1) | ×1 (×0) | 48.1 | x0.25: 3; x0.5: 3; x1: 3; x4: 3 | 47.7 | x0: 4; x0.25: 3; x0.5: 2; x1: 2; x4: 1 |
+| DANN | SRC (source-val cross-entropy) | ×1 (×0) | 52.6 | x0.25: 1; x0.5: 2; x1: 3; x2: 1; x4: 5 | 52.1 | x0: 4; x0.25: 1; x0.5: 2; x1: 2; x4: 3 |
+| DANN | SRC (source-val macro-F1) | ×0.25 (×0.25) | 51.2 | x0.25: 3; x0.5: 1; x1: 1; x2: 5; x4: 2 | 49.7 | x0: 4; x0.25: 2; x0.5: 1; x1: 1; x2: 2; x4: 2 |
+| DSAN | SRC (source-val cross-entropy) | ×1 (×1) | 50.0 | x0.25: 2; x0.5: 3; x1: 4; x2: 1; x4: 2 | 49.5 | x0: 2; x0.25: 1; x0.5: 3; x1: 4; x2: 1; x4: 1 |
+| DSAN | SRC (source-val macro-F1) | ×0.5 (×0.5) | 47.0 | x0.25: 5; x0.5: 3; x1: 3; x2: 1 | 49.3 | x0: 3; x0.25: 2; x0.5: 3; x1: 3; x2: 1 |
+
+**Source weight 1 instead of the AdaTime source weights**, weighted F1 on target test, paired by transfer: mean ± SD of the 12 differences in points, in brackets the number of transfers in which the paper convention is higher.
+
+| Method | Paper ×1 − AdaTime weights | Shared control − AdaTime control | Method − control, paper ×1 | Method − control, AdaTime weights |
+|---|---:|---:|---:|---:|
+| Deep CORAL | +2.1 ± 8.5 (5/12) | +2.2 ± 9.1 (6/12) | +2.3 ± 8.6 (9/12) | +2.4 ± 10.1 (10/12) |
+| DANN | +1.2 ± 7.7 (6/12) | +3.1 ± 3.9 (9/12) | +6.8 ± 10.2 (10/12) | +8.7 ± 14.2 (10/12) |
+| DSAN | +0.2 ± 1.2 (6/12) | +0.9 ± 3.9 (7/12) | +4.2 ± 13.5 (9/12) | +5.0 ± 12.4 (9/12) |
+
+**Figure 7.** Mean over the 12 transfers against the factor (log scale; 0 = shared control). Top: weighted F1 on target test with the factors chosen by the label-free criteria; the dashed line is the baseline. Lower rows: the criteria on source validation. Open diamonds: the runs with the AdaTime weights at the same λ ratio (method at ×1, its own control at 0).
+
+![Figure 7](figures/fig7_lambda_sensitivity.png)
+
+**Figure 8.** Weighted F1 on target test, paper convention at factor 1 minus the run with the AdaTime weights, per transfer; the right panel compares the shared control with each of the three AdaTime controls.
+
+![Figure 8](figures/fig8_paper_vs_adatime.png)
+
+**Figure 9.** Weighted F1 on target test of every factor minus the shared control, per transfer; the framed cell is the factor that SRC (source-val cross-entropy) chooses for that transfer.
+
+![Figure 9](figures/fig9_lambda_per_transfer.png)
+
+**Observations (sensitivity).** Only statements that follow directly from the T7 tables; one seed, so differences of a few points between factors are within the variation seen between seeds above.
+
+- Deep CORAL: weighted F1 on target test lies between 45.3 and 48.1 % over the five factors (shared control 45.8 %); 4 of 5 factors are above the control.
+- DANN: weighted F1 on target test lies between 49.9 and 52.6 % over the five factors (shared control 45.8 %); 5 of 5 factors are above the control.
+- DSAN: weighted F1 on target test lies between 10.5 and 50.0 % over the five factors (shared control 45.8 %); 3 of 5 factors are above the control.
+- DSAN ×2: in 6 of 12 transfers weighted F1 on source test is below 20 % (the model collapses on the labelled source as well); mean SRC macro-F1 on source val 34.4 %.
+- DSAN ×4: in 8 of 12 transfers weighted F1 on source test is below 20 % (the model collapses on the labelled source as well); mean SRC macro-F1 on source val 17.9 %.
+- Choices over the mean: Deep CORAL ×0.25 (source-val cross-entropy), ×1 (source-val macro-F1); DANN ×1 (source-val cross-entropy), ×0.25 (source-val macro-F1); DSAN ×1 (source-val cross-entropy), ×0.5 (source-val macro-F1). The two SRC variants pick the same factor for 0 of 3 methods.
+- If λ = 0 is a candidate, SRC prefers the control over every factor for Deep CORAL with SRC (source-val macro-F1); DANN with SRC (source-val cross-entropy).
+- Paper convention ×1 minus AdaTime weights on target test: Deep CORAL +2.1 ± 8.5 (5/12), DANN +1.2 ± 7.7 (6/12), DSAN +0.2 ± 1.2 (6/12) points.
+
 ## Limitations
 
 Five seeds, the last epoch without model selection, loss weights taken over from another benchmark without tuning, and small target test sets on some transfers limit what these numbers show. See [limitations.md](limitations.md).

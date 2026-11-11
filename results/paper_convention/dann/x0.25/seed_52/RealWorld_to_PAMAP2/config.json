@@ -1,0 +1,74 @@
+{
+  "method": "dann",
+  "convention": "paper: loss = 1 * CE(source) + lambda * alignment loss, lambda = factor * base lambda",
+  "transfer": "RealWorld_to_PAMAP2",
+  "family": "cross_dataset",
+  "source": "RealWorld",
+  "target": "PAMAP2",
+  "label_map": {
+    "lying": 0,
+    "sitting": 1,
+    "standing": 2,
+    "walking": 3,
+    "running": 4
+  },
+  "seed": 52,
+  "init_checkpoint": "models/cross_dataset/RealWorld_to_PAMAP2/model_last.pt",
+  "init_checkpoint_sha256": "3514c610d1f0fe93e59c528003e918866205cce345b70ee70733755496c76287",
+  "factor": 0.25,
+  "base_lambda": 0.5728206602055282,
+  "alignment_weight": 0.14320516505138206,
+  "alignment_loss": "domain loss (discriminator CE on source + target, gradient reversal)",
+  "base_lambda_from": {
+    "adatime_alignment_weight": 2.943729820531079,
+    "adatime_source_weight": 5.1390077646202,
+    "file": "configs/hparams.py:42-47 (class HAR = UCIHAR, 'DANN')"
+  },
+  "source_ce_weight": 1.0,
+  "optimizer": "Adam (torch.optim.Adam, L2 weight decay, default betas)",
+  "epochs": 30,
+  "batch_size": 32,
+  "lr": 0.0003,
+  "weight_decay": 0.0001,
+  "discriminator": {
+    "hidden_dim": 64,
+    "optimizer": "Adam, same lr and weight decay as the network",
+    "betas": [
+      0.5,
+      0.99
+    ],
+    "reversal_schedule": "AdaTime formula, practically alpha = 1 from the first step"
+  },
+  "steps_per_epoch": 303,
+  "n_source_train": 9685,
+  "n_target_train": 3646,
+  "target_input": "target train windows only (features.pkl), no labels",
+  "forward_passes": "separate source and target passes in train mode, source first",
+  "saved_predictions": [
+    "source_val",
+    "source_test",
+    "target_train",
+    "target_val",
+    "target_test"
+  ],
+  "model_selection": "last epoch",
+  "adatime": {
+    "repository": "https://github.com/emadeldeen24/AdaTime",
+    "commit": "2d9be6bd0542e150518afaf8aa0c6ea0823b4a3d",
+    "discriminator": "models/models.py:229-248 (class Discriminator), disc_hid_dim configs/data_model_configs.py:41",
+    "gradient_reversal": "models/models.py:252-261 (class ReverseLayerF)",
+    "reversal_schedule": "algorithms/algorithms.py:321,327-328 (DANN.training_epoch), formula taken literally",
+    "training_step": "algorithms/algorithms.py:284-371 (class DANN)",
+    "weights": "configs/hparams.py:42-47 (class HAR = UCIHAR, 'DANN')"
+  },
+  "device": "mps",
+  "torch": "2.14.1",
+  "numpy": "2.4.6",
+  "python": "3.13.15",
+  "platform": "macOS-26.5-arm64-arm-64bit-Mach-O",
+  "nondeterminism": "Trained on Apple MPS. PyTorch does not guarantee bitwise reproducible results on MPS; a repeated run with the same seed can differ slightly.",
+  "repository_commit": "bd0cd35c046583a6c0758f4e01ec82fa007e793a",
+  "started_utc": "2026-11-11T20:33:04.685931+00:00",
+  "finished_utc": "2026-11-11T20:35:08.972899+00:00",
+  "train_seconds": 122.4
+}

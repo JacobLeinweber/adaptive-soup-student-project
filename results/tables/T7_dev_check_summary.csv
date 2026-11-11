@@ -1,0 +1,15 @@
+check,value
+runs,72.0
+domain classifier hold-out accuracy >= 0.95 (seed 52),51.0
+median domain classifier hold-out accuracy (seed 52),0.9665697674418605
+"mean importance weight on source val, median over runs (seed 52)",2.9730318693172224
+"mean importance weight, min over runs (seed 52)",0.08034799546007508
+"mean importance weight, max over runs (seed 52)",1806.0327170429416
+"mean importance weight outside [0.5, 2] (seed 52)",45.0
+largest single importance weight over all runs (seed 52),1821500.877735173
+non-finite DEV values (all seeds),0.0
+runs with a negative DEV for at least one seed,22.0
+runs whose DEV changes sign between the seeds,17.0
+runs where max/min of |DEV| over the seeds exceeds 2,44.0
+method vs own control pairs,36.0
+pairs whose DEV preference (method or control) changes with the seed,19.0
