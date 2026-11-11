@@ -12,6 +12,9 @@ agree, and writes:
     project_docs/figures/fig6_training_time.png
     project_docs/results.md
 
+If the tables of the alignment-weight sensitivity (T7_*.csv) exist, make_sensitivity_figures.py adds
+figures 7 to 9 and its own section to the results page.
+
 All values are on the target test split unless stated otherwise. A group value (for example
 "Cross-dataset") is first averaged over the transfers of the group within each seed; mean and
 sample standard deviation are then taken over the five seeds.
@@ -405,7 +408,7 @@ def observations(results: Results) -> list[str]:
     return lines
 
 
-def results_page(results: Results, figures: dict[str, str], confusion_variants: list[str]) -> None:
+def results_page(results: Results, figures: dict[str, str], confusion_variants: list[str], extra: list[str] = ()) -> None:
     name = results.name
     group_names = [group for group, _ in results.groups]
     page = ["# Results", "",
@@ -468,6 +471,7 @@ def results_page(results: Results, figures: dict[str, str], confusion_variants: 
         page += [", ".join(name[v] for v in results.extra) + ": continued training without any target data (alignment weight 0, "
                  "no target forward pass), run with the source loss weight of Deep CORAL.", ""]
 
+    page += list(extra)
     page += ["## Limitations", "",
              "Five seeds, the last epoch without model selection, loss weights taken over from another benchmark without tuning, and "
              "small target test sets on some transfers limit what these numbers show. See [limitations.md](limitations.md).", ""]
@@ -482,7 +486,11 @@ def main() -> None:
     confusion, confusion_variants = figure_confusion(results)
     figures = {"groups": figure_groups(results), "paired": figure_paired(results), "heatmap": figure_heatmap(results),
                "probe": figure_probe(results), "confusion": confusion, "costs": figure_costs(results)}
-    results_page(results, figures, confusion_variants)
+    extra = []
+    if (TABLES / "T7_sensitivity_summary.csv").is_file():
+        from make_sensitivity_figures import sensitivity_section  # imports helpers of this module
+        extra = sensitivity_section(first_figure=len(figures) + 1)
+    results_page(results, figures, confusion_variants, extra)
 
 
 if __name__ == "__main__":
