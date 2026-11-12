@@ -7,6 +7,9 @@ Examples:
 
     # 2. Build control method soup (Lambda = 0 target pass controls)
     python create_method_soup.py --methods dann_lambda0_target_pass dsan_lambda0_target_pass lambda0_target_pass --output-name control_method_soup
+
+The averaging step is also used by run_soup.py, which adds the checks of the shared start checkpoint,
+config.json, the BatchNorm variants, the output ensemble and the predictions needed for scoring.
 """
 
 from __future__ import annotations
@@ -19,6 +22,25 @@ from src.training.experiments import TRANSFERS
 from uda.runs import SEEDS
 
 DEFAULT_METHODS = ["dann", "dsan", "deep_coral"]
+
+
+def average_state_dicts(state_dicts: list[dict]) -> dict:
+    """Uniform average of state_dicts with the same keys (the averaging step of create_soups).
+
+    Floating-point entries (weights, biases, BatchNorm running_mean/running_var) are averaged in float32.
+    Integer entries (the BatchNorm counter num_batches_tracked) are averaged with integer division and keep
+    their integer dtype, so that the soup loads into SelfHARCNN with the same dtypes as its ingredients.
+    """
+    first_sd = state_dicts[0]
+    if any(sd.keys() != first_sd.keys() for sd in state_dicts):
+        raise ValueError("The state_dicts do not have the same keys")
+    soup_state_dict = {}
+    for key in first_sd.keys():
+        if first_sd[key].is_floating_point():
+            soup_state_dict[key] = sum(sd[key].float() for sd in state_dicts) / len(state_dicts)
+        else:
+            soup_state_dict[key] = sum(sd[key] for sd in state_dicts) // len(state_dicts)
+    return soup_state_dict
 
 
 def create_soups(methods: list[str], results_root: Path, output_folder_name: str) -> None:
@@ -54,12 +76,8 @@ def create_soups(methods: list[str], results_root: Path, output_folder_name: str
                 continue
             
             # 2. Average the weights (Uniform Simple Model Soup)
-            soup_state_dict = {}
-            first_sd = state_dicts[0]
-            
-            for key in first_sd.keys():
-                soup_state_dict[key] = sum(sd[key].float() for sd in state_dicts) / len(state_dicts)
-                
+            soup_state_dict = average_state_dicts(state_dicts)
+
             # 3. Save the resulting method soup checkpoint
             soup_out_dir = results_root / output_folder_name / seed_dir_name / transfer_name
             soup_out_dir.mkdir(parents=True, exist_ok=True)
