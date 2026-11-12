@@ -490,6 +490,9 @@ def main() -> None:
     if (TABLES / "T7_sensitivity_summary.csv").is_file():
         from make_sensitivity_figures import sensitivity_section  # imports helpers of this module
         extra = sensitivity_section(first_figure=len(figures) + 1)
+    if (TABLES / "T8_summary_target_test.csv").is_file():
+        from make_soup_figures import soup_section  # imports helpers of this module
+        extra = [*extra, *soup_section(first_figure=len(figures) + 4)]
     results_page(results, figures, confusion_variants, extra)
 
 
