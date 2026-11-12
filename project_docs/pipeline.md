@@ -17,6 +17,8 @@ From the supervisor's code we use the list of transfers (`src/training/experimen
 | `uda/dann.py` | Gradient reversal layer, domain discriminator, reversal factor and `train_dann`. |
 | `uda/dsan.py` | Gaussian kernel, class weights, LMMD loss and `train_dsan`. |
 | `uda/evaluation.py` | The common evaluation: predictions, accuracy, macro-F1, weighted F1, balanced accuracy, per-class F1, confusion matrix. **The only module that reads target labels**, after training and for scoring only. |
+| `uda/criteria.py` | Label-free criteria ported from AdaTime: SRC (`source_risk`, cross-entropy and metrics on source validation) and DEV (ported, not used, see `results.md`). |
+| `uda/soup.py` | The ingredients of the two soups, the batch-normalisation re-estimation on target-train windows (`recompute_bn`), logits and softmax for the soups and the output ensembles. |
 | `uda/runs.py` | Bookkeeping: the seeds, the baseline hyper-parameters, `clean_commit` (provenance), `is_complete` (resume), the path of the source-only model of a seed, environment information, training log. |
 
 ### Scripts
@@ -33,7 +35,12 @@ From the supervisor's code we use the list of transfers (`src/training/experimen
 | `make_dann_tables.py` | Adds DANN and its control (`T2_*.csv`). |
 | `make_dsan_tables.py` | All three methods with their controls and the baseline (`T3_*.csv`); stops if the runs of a variant carry different code commits. This is the current main set of tables. |
 | `make_domain_probe.py` | The domain probe (`<prefix>_domain_probe_*.csv`); needs the checkpoints. |
-| `make_figures.py` | Figures and `project_docs/results.md`, built only from `results/tables/*.csv`. |
+| `run_paper_convention.py` | Alignment-weight sensitivity in the convention of the papers (seed 52): three methods × five factors and one shared control. |
+| `make_sensitivity_tables.py`, `make_dev_check.py` | SRC, choices and scores of the sensitivity (`T7_*.csv`); the check of the DEV importance weights. |
+| `create_method_soup.py` | The soup script of the project partner (Denis Petrov): averages the checkpoints of three runs per transfer and seed. Its averaging step `average_state_dicts` is used by `run_soup.py`. |
+| `run_soup.py` | Stage 3: per transfer and seed the soups of the methods and of the controls in both batch-normalisation variants, the two output ensembles, and the source-validation predictions of the six branches; checks the shared start checkpoint; writes predictions and `config.json`. |
+| `make_soup_tables.py` | SRC and the "best branch" choice without target labels, then the scores and paired comparisons of the soups (`T8_*.csv`). |
+| `make_figures.py` | Figures and `project_docs/results.md`, built only from `results/tables/*.csv`; adds the sections of `make_sensitivity_figures.py` and `make_soup_figures.py` when their tables exist. |
 
 The run scripts open target data only as windows; they never open the label file of the target. The table scripts read the target labels, after all training has finished.
 
@@ -49,11 +56,14 @@ Run from the repository root, in this order. Every run script skips finished run
 | 4 | `python run_dsan.py --all --all-variants` | 120 | 122 min (70.4 + 51.6) |
 | 5 | `python make_seed_tables.py`, `python make_dann_tables.py`, `python make_dsan_tables.py` | | under a minute each |
 | 6 | `python make_domain_probe.py --prefix T3 --variants baseline deep_coral lambda0_target_pass dann dann_lambda0_target_pass dsan dsan_lambda0_target_pass` | | about 5 min |
-| 7 | `python make_figures.py` | | seconds |
+| 7 | `python run_paper_convention.py --all`, then `python make_sensitivity_tables.py` and `python make_dev_check.py` | 192 | about 4 h (see `runs_log.md`) |
+| 8 | `python run_soup.py --all` | 240 soups, 120 ensembles | 12 min wall time on MPS (no training) |
+| 9 | `python make_soup_tables.py` | | under a minute |
+| 10 | `python make_figures.py` | | seconds |
 
 Useful options of the run scripts: `--transfer <name>` instead of `--all`, `--seeds 52 100`, `--control` (only a control; see `--help` of each script, Deep CORAL has two controls), `--device cuda`, `--output-dir <folder>` (for tests outside `results/`), `--overwrite`.
 
-Steps 5 to 7 can be repeated at any time. Steps 5 and 6 need the prepared data (labels), step 6 also the checkpoints; step 7 needs only the tables.
+Steps 5, 6, 9 and 10 can be repeated at any time. Steps 5, 6 and 9 need the prepared data (labels); steps 6 and 8 and the criteria of step 7 need the checkpoints; step 10 needs only the tables.
 
 ## Where results are stored
 
@@ -67,8 +77,14 @@ results/
 ├── dann_lambda0_target_pass/seed_<seed>/<transfer>/
 ├── dsan/seed_<seed>/<transfer>/
 ├── dsan_lambda0_target_pass/seed_<seed>/<transfer>/
+├── paper_convention/<method>/x<factor>/seed_52/<transfer>/   alignment-weight sensitivity, and control/seed_52/<transfer>/
+├── soup/<soup_methods|soup_controls>/<bn_avg|bn_target>/seed_<seed>/<transfer>/
+├── ensemble/<methods|controls>/seed_<seed>/<transfer>/
+├── source_val_predictions/<branch>/seed_<seed>/<transfer>/   source-val predictions of the phase-2 branches, for SRC
 └── tables/                                           all CSV tables
 ```
+
+A soup folder holds `model_last.pt` (local only), `config.json` and `predictions/<split>.npz` for `source_val`, `source_test`, `target_train`, `target_val` and `target_test`; `source_val.npz` also holds the logits. An ensemble folder holds the same without a checkpoint; its `source_val.npz` holds the mean probabilities. The `config.json` of a soup lists every ingredient with path, SHA-256, start checkpoint and code commit, the start checkpoint, the averaging rule, the batch-normalisation variant (with batch size, number of batches and order of the re-estimation), the seconds of each step and the code commit.
 
 Every run folder contains:
 
@@ -87,6 +103,7 @@ Fields of `config.json` (the method-specific ones differ in name): method, trans
 - **Clean commit.** Before every run, `clean_commit` checks with `git status --porcelain -- uda/ "*.py"` that the package `uda/` and all Python files match the last commit, including untracked files. Otherwise the run stops. The commit hash is written into `config.json` as `repository_commit`.
 - **Consequence.** While a batch of runs is computing, nothing may be committed and no Python file may be added or changed in the repository; the next run of the batch would stop, or would carry a different commit.
 - **Start checkpoint.** The SHA-256 of the start checkpoint is computed before and after the run and written into `config.json`.
+- **Soups.** `run_soup.py` checks the clean commit before and after the whole batch; `make_soup_tables.py` stops unless all soups, ensembles and source-val predictions carry one commit and every soup's ingredients share its start checkpoint, and writes the commits of the outputs and of the ingredient runs to `results/tables/T8_commits.csv`.
 - **One commit per variant.** `make_dsan_tables.py` stops before writing tables if the runs of a variant carry different code commits, and writes the commit of every variant to `results/tables/T3_commits_per_variant.csv`. The 12 supplied seed-52 baselines were trained by the supervisor and carry no commit of this repository.
 
 ## Resume and overwrite

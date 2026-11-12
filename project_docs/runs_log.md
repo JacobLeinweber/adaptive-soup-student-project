@@ -1,6 +1,6 @@
 # Runs log
 
-One entry per block of runs. "Code commit" is the commit recorded in the `config.json` of every run of the block (`repository_commit`); "results commit" is the commit that added the run folders and tables to the repository. All runs: 30 epochs, last epoch, Apple M1 with MPS, PyTorch 2.14.1. The prefixes of the table names (`T1`, `T5`, `T2`, `T3`) are the internal numbers of the work packages, in the order in which they were done.
+One entry per block of runs. "Code commit" is the commit recorded in the `config.json` of every run of the block (`repository_commit`); "results commit" is the commit that added the run folders and tables to the repository. All runs: 30 epochs, last epoch, Apple M1 with MPS, PyTorch 2.14.1. The prefixes of the table names (`T1`, `T5`, `T2`, `T3`, `T7`, `T8`) are the internal numbers of the work packages, in the order in which they were done.
 
 ## Overview
 
@@ -11,6 +11,8 @@ One entry per block of runs. "Code commit" is the commit recorded in the `config
 | Deep CORAL and its two controls, five seeds | 2026-11-09 | `7db879b` | `cfcdaa4` | 180 | `results/deep_coral/`, `results/lambda0_target_pass/`, `results/source_only_continued/` | `results/tables/T5_summary_target_test.csv` |
 | DANN and its control, five seeds | 2026-11-09 to 2026-11-10 | `d9ca82f` | `b2a6e71`, probe tables `d923183` | 120 | `results/dann/`, `results/dann_lambda0_target_pass/` | `results/tables/T2_summary_target_test.csv` |
 | DSAN and its control, five seeds | 2026-11-10 | `cdef98b` | `8349276` | 120 | `results/dsan/`, `results/dsan_lambda0_target_pass/` | `results/tables/T3_summary_target_test.csv` |
+| Alignment-weight sensitivity in the paper convention, seed 52 | 2026-11-11 to 2026-11-12 | `bd0cd35` | `907631e`, tables script `dad603e` | 192 | `results/paper_convention/` | `results/tables/T7_sensitivity_summary.csv` |
+| Uniform soups (methods, controls; two BatchNorm variants), output ensembles, source-val predictions of the branches; five seeds | 2026-11-12 | `586579f` | `7c5b142`, tables script `6c280b9` | 240 soups, 120 ensembles, 360 source-val predictions | `results/soup/`, `results/ensemble/`, `results/source_val_predictions/` | `results/tables/T8_summary_target_test.csv`, `T8_differences_target_test.csv` |
 
 The supplied source-only models of seed 52 (12 transfers, in `models/`) were trained by the supervisor and carry no commit of this repository.
 
@@ -43,6 +45,22 @@ The supplied source-only models of seed 52 (12 transfers, in `models/`) were tra
 - 120 runs, computed on 2026-11-10 between about 02:25 and 04:28 local time: DSAN 70.4 min, control 51.6 min.
 - All 120 runs were checked without target labels (completeness, configuration, start checkpoint, log length, finite values, prediction shapes, loading of the checkpoint). No deviation.
 - Tables written by `make_dsan_tables.py` (commit `3f5768e`); domain probe for all seven variants with the unchanged `make_domain_probe.py`. The probe values of the five earlier variants are identical to the DANN block.
+
+### Alignment-weight sensitivity (paper convention, seed 52)
+
+- 3 methods × 5 factors × 12 transfers plus 12 runs of the shared control, all from the supplied seed-52 checkpoints. Source weight 1 for every method, λ = factor × (AdaTime alignment weight / AdaTime source weight), factors 0.25, 0.5, 1, 2, 4.
+- The runs save their source-validation predictions as well (for SRC).
+- The batch was stopped once by hand after 131 runs (before a restart of the computer) and continued with the same command; the interrupted run (DANN ×4, RealWorld ≥30 → <30) was recomputed completely. All 192 `config.json` carry `bd0cd35`.
+- Summed training time 254.7 min. These times come from two states of the computer (before and after the restart, part of them next to another job) and are not a cost measure.
+- Tables written by `make_sensitivity_tables.py` and `make_dev_check.py` (commit `dad603e`); figures 7 to 9 and the section in `results.md` by `make_sensitivity_figures.py`.
+
+### Uniform soup (stage 3, averaging at the end)
+
+- No training. Per transfer and seed (12 × 5) the soup of the three methods and the soup of their three controls, each with averaged (`bn_avg`) and re-estimated (`bn_target`) batch-normalisation statistics, and the output ensemble of the same three runs. The averaging step is `create_method_soup.py` of the project partner (Denis Petrov), extended by `average_state_dicts`.
+- Before averaging, every ingredient was checked to have started from the source-only checkpoint of its seed (SHA-256). All 120 checks passed.
+- The source-val predictions of the 360 phase-2 branch runs were computed from their checkpoints (prediction only). The predictions of the branches on the four other splits were recomputed as a check and agreed with the saved ones in every run (agreement 1.0).
+- Computed on Apple MPS in one batch of 12 min wall time, without interruption. Averaging takes about 11 ms per soup, the batch-normalisation re-estimation about 2 s.
+- Tables written by `make_soup_tables.py` (commit `6c280b9`); figures 10 to 12 and the section in `results.md` by `make_soup_figures.py`.
 
 ## Code commit of every variant
 

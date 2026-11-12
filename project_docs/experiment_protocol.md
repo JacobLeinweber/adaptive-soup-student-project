@@ -1,6 +1,6 @@
 # Experiment protocol
 
-This page fixes how every run of phase 2 was set up and evaluated. Numbers of windows are taken from the run configurations and the result tables.
+This page fixes how every run of phase 2, the alignment-weight sensitivity and the uniform soup (stage 3) were set up and evaluated. Numbers of windows are taken from the run configurations and the result tables.
 
 ## Transfers and splits
 
@@ -29,10 +29,11 @@ How the splits are used:
 |---|---|
 | Source train (windows and labels) | training |
 | Target train (windows only) | training of the UDA methods and controls, without labels |
+| Source validation (windows and labels) | label-free criterion SRC only, never for training (see below) |
 | Source test | evaluation |
 | Target train, target validation, target test (labels) | evaluation only, after all training |
 
-Source validation is not used by our runs, because there is no model selection (see below).
+Source validation is not used by the training runs of phase 2. It is used for the label-free criterion SRC (source risk: cross-entropy and macro-F1 of a model on source validation) in two places: in the alignment-weight sensitivity (`T7_*.csv`), where the runs saved their source-validation predictions, and in the soup evaluation (`T8_*.csv`), where it picks the "best branch by SRC" for a comparison. The phase-2 runs saved no source-validation predictions; for the soup evaluation they were computed afterwards from the saved checkpoints of the branches (prediction only, no training, no target data) and stored in `results/source_val_predictions/`.
 
 ## Seeds and start models
 
@@ -72,6 +73,8 @@ A control with target pass differs from its method **only** in the alignment los
 
 None. The model after the **last epoch** is used for every run. No metric on any split decides which epoch, which hyper-parameter or which method is reported. In particular, target labels are not used for selection.
 
+In the soup evaluation, "best branch by SRC" and "best branch by target test (oracle)" are references for a comparison, not a selection of what is reported: all branches, soups and ensembles are reported. The oracle uses target labels and is marked as such wherever it appears.
+
 ## Metrics
 
 Computed by one common module on four splits (source test, target train, target validation, target test): accuracy, macro-F1, weighted F1 and balanced accuracy. Per-class F1 and confusion matrices are stored for target test.
@@ -81,13 +84,21 @@ Computed by one common module on four splits (source test, target train, target 
 - Differences between two variants are paired by seed: mean ± SD of the five per-seed differences and the number of seeds with a positive sign.
 - Costs: training time of the training loop per run.
 
+## Uniform soup (stage 3, averaging at the end)
+
+- **Ingredients.** Per transfer and seed, the three branches of phase 2 (Deep CORAL, DANN, DSAN with the AdaTime weights, last epoch) form `soup_methods`; their three control runs form `soup_controls`. Before averaging, the script checks that all three ingredients started from the source-only checkpoint of that transfer and seed (`init_checkpoint_sha256` in their `config.json`, equal to the file on disk), and stops otherwise.
+- **Averaging.** Every entry of the HAR predictor's `state_dict` with weight 1/3, including the batch-normalisation running statistics; the integer counter `num_batches_tracked` keeps its integer type. The DANN discriminator is not averaged. No training follows.
+- **Two batch-normalisation variants.** `bn_avg` keeps the averaged running statistics. `bn_target` re-estimates them after averaging: the running statistics are reset and recomputed as a cumulative average over one pass over the target-train windows in train mode (batches of 32 in a random order from the run seed, no gradients, weights unchanged). This uses target windows, no target labels.
+- **Output ensemble.** The mean of the softmax outputs of the same three models, each with its own statistics, as a comparison that needs no new weights.
+- **Evaluation.** As for the runs: four splits (plus source validation for SRC), the same metrics, paired differences by transfer and seed. Comparisons: soup minus the mean of its three branches, minus the best branch by SRC, minus the best branch by target test (oracle, marked), minus the baseline, minus the ensemble; soup of the methods minus soup of the controls; `bn_target` minus `bn_avg`.
+
 ## The rule "no target labels in training"
 
 Target labels steer neither the loss, nor the choice of a checkpoint, a hyper-parameter or a method. They appear only in the final evaluation. The code enforces this in three ways:
 
 1. The training functions (`train_continued`, `train_dann`, `train_dsan`) have a parameter for the target windows and **no parameter for target labels**.
 2. The run scripts load the target with `uda.data.load_unlabeled`, which opens only `features.pkl`. They save the predictions and do not score them.
-3. Scoring happens in separate table scripts through `uda.evaluation`, after all runs of a batch have finished.
+3. Scoring happens in separate table scripts through `uda.evaluation`, after all runs of a batch have finished. The soup script (`run_soup.py`) also loads the target with `load_unlabeled`; the table script of the soup computes and applies the label-free criterion before it reads any target label.
 
 For DANN and DSAN this was also checked at run time: a complete run was repeated with a Python audit hook on every file that is opened, and the label file of the target was never opened. The pseudo-labels of DSAN are the model's own predictions.
 

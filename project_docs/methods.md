@@ -89,6 +89,24 @@ Three points about the adoption from AdaTime:
 2. **No rising weight.** In the code of the DSAN authors (<https://github.com/easezyc/deep-transfer-learning>, `UDA/pytorch1.0/DSAN/main.py`, checked on 2026-11-10) the LMMD term is multiplied by a factor that rises from 0 towards 1 during training, and the network is trained with SGD. AdaTime uses a constant weight and Adam. Our DSAN is "DSAN as implemented in AdaTime". TODO (verify): whether the paper text describes the same rising factor as the authors' code; only the code was checked.
 3. **NaN guard.** As in AdaTime, the loss of a step is a constant 0 if the kernel matrix contains NaN. Our loop counts such steps; there was none in any run.
 
+## 4. Uniform soup of the final checkpoints (stage 3)
+
+**Idea.** A model soup averages the weights of several models that were fine-tuned from the same start model, and evaluates the averaged model like a single model (Wortsman et al.). Here the ingredients are the three branches of one transfer and seed: Deep CORAL, DANN and DSAN after their last epoch, all continued from the same source-only checkpoint. "Uniform" means every ingredient has weight 1/3; "at the end" means the branches are trained independently to the end and averaged once.
+
+$$\theta_{soup} = \tfrac{1}{3}\left(\theta_{CORAL} + \theta_{DANN} + \theta_{DSAN}\right)$$
+ight)$$
+
+| | |
+|---|---|
+| What is averaged | every entry of the HAR predictor's `state_dict` (convolutions, batch-normalisation scale and shift, classifier) and the batch-normalisation running statistics; not the DANN discriminator |
+| Precondition | all three ingredients started from the same source-only checkpoint (checked by SHA-256) |
+| Soup of the controls | the same average of the three control runs; it shows what the soup gains without any alignment loss |
+| Batch normalisation | `bn_avg`: the averaged running statistics. `bn_target`: after averaging, the running statistics are reset and re-estimated in one pass over the unlabelled target-train windows (cumulative average over batches of 32, `torch.optim.swa_utils.update_bn`); the weights are not changed |
+| Output ensemble | as a comparison, the mean of the softmax outputs of the three ingredients; three forward passes instead of one |
+| Code | averaging: `create_method_soup.py`, written by the project partner Denis Petrov; extended for the evaluation by `average_state_dicts` (keeps the integer counter `num_batches_tracked`) and by `run_soup.py` (checks, batch-normalisation variants, ensemble, predictions, `config.json`) |
+
+**Why two batch-normalisation variants.** Averaging the running mean and variance of three models does not give the statistics of the averaged model: the averaged weights produce different activations than any ingredient. Re-estimating the statistics after averaging is common practice for weight averaging (for example in stochastic weight averaging). Doing it on target-train windows uses only unlabelled target data, like the target forward pass of the training. Which of the two variants is better is part of the results, not a choice made beforehand.
+
 ## Why these three methods
 
 The plan from the project kickoff is to average branches that were trained with different UDA methods. We chose one method from each of three families, so that the branches differ in how they use the target data:
