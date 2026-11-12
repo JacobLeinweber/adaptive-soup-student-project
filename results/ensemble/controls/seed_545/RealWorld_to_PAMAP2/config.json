@@ -1,0 +1,93 @@
+{
+  "method": "output_ensemble",
+  "ensemble": "controls",
+  "belongs_to_soup": "soup_controls",
+  "transfer": "RealWorld_to_PAMAP2",
+  "family": "cross_dataset",
+  "source": "RealWorld",
+  "target": "PAMAP2",
+  "label_map": {
+    "lying": 0,
+    "sitting": 1,
+    "standing": 2,
+    "walking": 3,
+    "running": 4
+  },
+  "seed": 545,
+  "init_checkpoint": "results/source_only/seed_545/cross_dataset/RealWorld_to_PAMAP2/model_last.pt",
+  "init_checkpoint_sha256": "2cbdef2245e794ef13b0076129f4e528445287063c5b7b365598d44337b58649",
+  "target_labels_used": false,
+  "ingredients": [
+    {
+      "variant": "lambda0_target_pass",
+      "run_dir": "results/lambda0_target_pass/seed_545/RealWorld_to_PAMAP2",
+      "checkpoint": "results/lambda0_target_pass/seed_545/RealWorld_to_PAMAP2/model_last.pt",
+      "checkpoint_sha256": "5aae58f24cad23fbe4909884c07c850b5582793a0d4056676ada33b2113d8db0",
+      "init_checkpoint_sha256": "2cbdef2245e794ef13b0076129f4e528445287063c5b7b365598d44337b58649",
+      "repository_commit": "7db879b34940d78607c5f867ad7ef3a6ba1906d0",
+      "device": "mps",
+      "train_seconds": 115.0,
+      "prediction_agreement_with_saved": {
+        "source_test": 1.0,
+        "target_train": 1.0,
+        "target_val": 1.0,
+        "target_test": 1.0
+      }
+    },
+    {
+      "variant": "dann_lambda0_target_pass",
+      "run_dir": "results/dann_lambda0_target_pass/seed_545/RealWorld_to_PAMAP2",
+      "checkpoint": "results/dann_lambda0_target_pass/seed_545/RealWorld_to_PAMAP2/model_last.pt",
+      "checkpoint_sha256": "441928f3bff3d10f66411bd300fda946be0e66bb36b81f31cd07c99d28b6d0f4",
+      "init_checkpoint_sha256": "2cbdef2245e794ef13b0076129f4e528445287063c5b7b365598d44337b58649",
+      "repository_commit": "d9ca82f4af96cf2141f4cf80d3312bdd1b7c4a10",
+      "device": "mps",
+      "train_seconds": 86.6,
+      "prediction_agreement_with_saved": {
+        "source_test": 1.0,
+        "target_train": 1.0,
+        "target_val": 1.0,
+        "target_test": 1.0
+      }
+    },
+    {
+      "variant": "dsan_lambda0_target_pass",
+      "run_dir": "results/dsan_lambda0_target_pass/seed_545/RealWorld_to_PAMAP2",
+      "checkpoint": "results/dsan_lambda0_target_pass/seed_545/RealWorld_to_PAMAP2/model_last.pt",
+      "checkpoint_sha256": "2b17055a17ec230e4aafe0e47bfdaad226a33b965583205a789462a522e9a5b4",
+      "init_checkpoint_sha256": "2cbdef2245e794ef13b0076129f4e528445287063c5b7b365598d44337b58649",
+      "repository_commit": "cdef98bba18d3b170998d6233e31531a0e0bfbc2",
+      "device": "mps",
+      "train_seconds": 95.1,
+      "prediction_agreement_with_saved": {
+        "source_test": 1.0,
+        "target_train": 1.0,
+        "target_val": 1.0,
+        "target_test": 1.0
+      }
+    }
+  ],
+  "rule": "mean of the softmax outputs of the ingredients (eval mode, each with its own BatchNorm statistics), prediction = argmax",
+  "target_input": "none",
+  "saved_predictions": [
+    "source_val",
+    "source_test",
+    "target_train",
+    "target_val",
+    "target_test"
+  ],
+  "min_prediction_agreement_with_saved": 1.0,
+  "seconds": {
+    "load_ingredients_and_logits": 1.652,
+    "combine": 0.008
+  },
+  "device": "mps",
+  "torch": "2.14.1",
+  "numpy": "2.4.6",
+  "python": "3.13.15",
+  "platform": "macOS-26.5-arm64-arm-64bit-Mach-O",
+  "nondeterminism": "Trained on Apple MPS. PyTorch does not guarantee bitwise reproducible results on MPS; a repeated run with the same seed can differ slightly.",
+  "repository_commit": "586579f9c56f3659564b71337bdc479b5da8d14e",
+  "started_utc": "2026-11-12T00:46:45.884747+00:00",
+  "finished_utc": "2026-11-12T00:46:49.712669+00:00"
+}

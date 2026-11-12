@@ -228,6 +228,105 @@ Baseline (source-only model, seed 52): 42.0 % weighted F1 on target test.
 - If λ = 0 is a candidate, SRC prefers the control over every factor for Deep CORAL with SRC (source-val macro-F1); DANN with SRC (source-val cross-entropy).
 - Paper convention ×1 minus AdaTime weights on target test: Deep CORAL +2.1 ± 8.5 (5/12), DANN +1.2 ± 7.7 (6/12), DSAN +0.2 ± 1.2 (6/12) points.
 
+## Stage 3: uniform soup of the final checkpoints
+
+**Setup.** For every transfer and seed, the three branches of stage 2 (Deep CORAL, DANN, DSAN with the AdaTime weights, last epoch) are averaged with equal weight 1/3 into one model; the same is done with their three control runs. All six runs of a seed start from the same source-only checkpoint, which is checked before averaging. Only the HAR predictor is averaged; the DANN discriminator is not part of the soup. The averaging step is the soup script of the project partner (`create_method_soup.py`). Two BatchNorm variants: *averaged* keeps the averaged running statistics; *re-estimated on target* recomputes them after averaging in one pass over the unlabelled target-train windows (cumulative average over batches of 32, weights unchanged). The output ensemble averages the softmax outputs of the same three models and needs no new weights. No target labels are used for any of this, and no training takes place. Code commit of all soups and ensembles: `586579f`.
+
+**Best branch.** Without target labels, the branch with the lowest cross-entropy or the highest macro-F1 on source validation (SRC) is chosen per transfer and seed. The oracle takes the branch with the highest weighted F1 on target test; **it uses target labels and is shown only as a reference, not as a selection rule.** The source-validation predictions of the branches were computed afterwards from their saved checkpoints (prediction only).
+
+Values are mean ± sample SD over the five seeds in percent; a group value is first averaged over its transfers within each seed. Differences are paired by transfer and seed; in brackets the number of seeds in which the first variant is higher, and for all transfers also the number of the 60 transfer-seed pairs.
+
+**Weighted F1 on target test (%): Soup of the methods (Deep CORAL + DANN + DSAN)**
+
+| Variant | All 12 | Cross-dataset (6) | Cross-gender (4) | Cross-age (2) |
+|---|---:|---:|---:|---:|
+| Baseline | 41.9 ± 1.0 | 25.1 ± 1.6 | 65.2 ± 1.3 | 45.7 ± 3.5 |
+| Mean of the 3 branches | 50.3 ± 1.5 | 35.2 ± 3.4 | 70.0 ± 1.2 | 56.4 ± 1.2 |
+| Best branch by SRC (CE) | 52.4 ± 2.4 | 37.5 ± 5.2 | 71.3 ± 3.2 | 59.6 ± 4.2 |
+| Best branch by SRC (macro-F1) | 52.0 ± 2.3 | 35.9 ± 5.4 | 72.6 ± 2.7 | 58.9 ± 3.5 |
+| Best branch by target test (oracle) | 58.0 ± 1.6 | 44.7 ± 2.7 | 75.6 ± 1.4 | 62.8 ± 2.8 |
+| Output ensemble | 51.8 ± 2.4 | 35.3 ± 5.4 | 72.6 ± 1.5 | 59.4 ± 1.4 |
+| Soup, BN averaged | 43.0 ± 2.7 | 29.5 ± 2.4 | 63.5 ± 3.8 | 42.2 ± 10.1 |
+| Soup, BN re-estimated on target | 42.9 ± 2.4 | 30.7 ± 5.0 | 59.3 ± 2.8 | 46.8 ± 5.2 |
+
+**Weighted F1 on target test (%): Soup of the controls (their three λ = 0 runs)**
+
+| Variant | All 12 | Cross-dataset (6) | Cross-gender (4) | Cross-age (2) |
+|---|---:|---:|---:|---:|
+| Baseline | 41.9 ± 1.0 | 25.1 ± 1.6 | 65.2 ± 1.3 | 45.7 ± 3.5 |
+| Mean of the 3 branches | 44.2 ± 1.3 | 28.6 ± 2.2 | 65.5 ± 1.9 | 48.3 ± 2.4 |
+| Best branch by SRC (CE) | 44.2 ± 2.9 | 27.9 ± 5.5 | 65.6 ± 2.2 | 50.1 ± 4.5 |
+| Best branch by SRC (macro-F1) | 44.9 ± 2.3 | 29.4 ± 3.6 | 65.7 ± 2.1 | 49.8 ± 1.1 |
+| Best branch by target test (oracle) | 48.1 ± 1.7 | 33.1 ± 2.3 | 68.5 ± 1.7 | 52.6 ± 1.3 |
+| Output ensemble | 45.2 ± 1.6 | 29.3 ± 2.4 | 66.7 ± 1.7 | 50.0 ± 1.2 |
+| Soup, BN averaged | 43.3 ± 2.5 | 26.6 ± 4.4 | 66.4 ± 1.8 | 47.4 ± 2.8 |
+| Soup, BN re-estimated on target | 45.8 ± 1.2 | 30.0 ± 1.8 | 67.4 ± 1.9 | 49.9 ± 1.6 |
+
+**Paired differences in weighted F1 on target test (points)**
+
+| Difference | All 12 | Cross-dataset (6) | Cross-gender (4) | Cross-age (2) |
+|---|---:|---:|---:|---:|
+| Methods, BN averaged: Soup − mean of the branches | −7.4 ± 2.2 (0/5) | −5.6 ± 2.9 (0/5) | −6.5 ± 3.9 (0/5) | −14.2 ± 11.1 (1/5) |
+| Methods, BN averaged: Soup − best branch by SRC (CE) | −9.5 ± 2.2 (0/5) | −7.9 ± 3.6 (0/5) | −7.8 ± 5.5 (0/5) | −17.4 ± 13.2 (1/5) |
+| Methods, BN averaged: Soup − best branch by SRC (macro-F1) | −9.0 ± 2.7 (0/5) | −6.3 ± 4.5 (0/5) | −9.1 ± 1.8 (0/5) | −16.7 ± 11.8 (1/5) |
+| Methods, BN averaged: Soup − best branch by target test (oracle, uses target labels) | −15.1 ± 2.8 (0/5) | −15.2 ± 2.2 (0/5) | −12.1 ± 4.2 (0/5) | −20.6 ± 12.0 (0/5) |
+| Methods, BN averaged: Soup − baseline | +1.1 ± 3.0 (3/5) | +4.5 ± 2.3 (5/5) | −1.7 ± 3.1 (2/5) | −3.5 ± 13.0 (2/5) |
+| Methods, BN averaged: Soup − output ensemble | −8.8 ± 2.2 (0/5) | −5.7 ± 4.4 (0/5) | −9.1 ± 3.6 (0/5) | −17.2 ± 10.4 (0/5) |
+| Methods, BN re-estimated on target: Soup − mean of the branches | −7.4 ± 1.0 (0/5) | −4.5 ± 3.6 (0/5) | −10.7 ± 3.0 (0/5) | −9.6 ± 5.8 (1/5) |
+| Methods, BN re-estimated on target: Soup − best branch by SRC (CE) | −9.5 ± 1.2 (0/5) | −6.7 ± 3.1 (0/5) | −12.0 ± 2.0 (0/5) | −12.8 ± 7.0 (0/5) |
+| Methods, BN re-estimated on target: Soup − best branch by SRC (macro-F1) | −9.0 ± 0.6 (0/5) | −5.1 ± 3.8 (0/5) | −13.3 ± 4.6 (0/5) | −12.1 ± 6.2 (0/5) |
+| Methods, BN re-estimated on target: Soup − best branch by target test (oracle, uses target labels) | −15.1 ± 2.0 (0/5) | −14.0 ± 4.1 (0/5) | −16.3 ± 2.2 (0/5) | −16.0 ± 5.9 (0/5) |
+| Methods, BN re-estimated on target: Soup − baseline | +1.0 ± 2.3 (3/5) | +5.7 ± 4.6 (5/5) | −5.9 ± 3.4 (0/5) | +1.1 ± 7.2 (2/5) |
+| Methods, BN re-estimated on target: Soup − output ensemble | −8.8 ± 0.5 (0/5) | −4.6 ± 3.9 (0/5) | −13.3 ± 3.6 (0/5) | −12.7 ± 5.2 (0/5) |
+| Methods: BN re-estimated − BN averaged | −0.1 ± 2.5 (1/5) | +1.2 ± 2.8 (4/5) | −4.2 ± 5.4 (1/5) | +4.6 ± 6.6 (3/5) |
+| Controls, BN averaged: Soup − mean of the branches | −0.9 ± 1.2 (2/5) | −2.1 ± 2.3 (2/5) | +0.9 ± 0.9 (4/5) | −0.9 ± 3.8 (2/5) |
+| Controls, BN averaged: Soup − best branch by SRC (CE) | −0.9 ± 1.3 (1/5) | −1.4 ± 1.6 (2/5) | +0.8 ± 0.7 (5/5) | −2.7 ± 6.6 (2/5) |
+| Controls, BN averaged: Soup − best branch by SRC (macro-F1) | −1.6 ± 1.1 (0/5) | −2.8 ± 1.6 (0/5) | +0.7 ± 0.7 (5/5) | −2.4 ± 2.6 (1/5) |
+| Controls, BN averaged: Soup − best branch by target test (oracle, uses target labels) | −4.8 ± 1.2 (0/5) | −6.5 ± 2.4 (0/5) | −2.1 ± 0.5 (0/5) | −5.2 ± 4.0 (0/5) |
+| Controls, BN averaged: Soup − baseline | +1.4 ± 3.1 (4/5) | +1.5 ± 5.2 (2/5) | +1.2 ± 2.9 (4/5) | +1.7 ± 4.2 (4/5) |
+| Controls, BN averaged: Soup − output ensemble | −1.9 ± 1.1 (0/5) | −2.7 ± 2.3 (0/5) | −0.2 ± 1.3 (1/5) | −2.6 ± 2.6 (1/5) |
+| Controls, BN re-estimated on target: Soup − mean of the branches | +1.6 ± 0.5 (5/5) | +1.3 ± 1.6 (4/5) | +1.8 ± 1.0 (5/5) | +1.6 ± 1.7 (5/5) |
+| Controls, BN re-estimated on target: Soup − best branch by SRC (CE) | +1.6 ± 2.3 (4/5) | +2.0 ± 5.0 (3/5) | +1.8 ± 1.5 (4/5) | −0.1 ± 4.5 (2/5) |
+| Controls, BN re-estimated on target: Soup − best branch by SRC (macro-F1) | +0.9 ± 1.6 (3/5) | +0.6 ± 3.2 (3/5) | +1.6 ± 1.5 (4/5) | +0.2 ± 2.0 (2/5) |
+| Controls, BN re-estimated on target: Soup − best branch by target test (oracle, uses target labels) | −2.4 ± 0.8 (0/5) | −3.1 ± 1.4 (0/5) | −1.1 ± 1.2 (0/5) | −2.6 ± 2.4 (1/5) |
+| Controls, BN re-estimated on target: Soup − baseline | +3.9 ± 1.9 (5/5) | +4.9 ± 2.5 (5/5) | +2.2 ± 3.0 (4/5) | +4.3 ± 2.6 (5/5) |
+| Controls, BN re-estimated on target: Soup − output ensemble | +0.6 ± 0.9 (4/5) | +0.7 ± 1.7 (3/5) | +0.7 ± 0.5 (5/5) | −0.1 ± 0.5 (1/5) |
+| Controls: BN re-estimated − BN averaged | +2.4 ± 1.6 (5/5) | +3.4 ± 3.6 (4/5) | +1.0 ± 1.2 (4/5) | +2.5 ± 2.4 (4/5) |
+| Soup of the methods − soup of the controls, BN averaged | −0.4 ± 4.0 (2/5) | +3.0 ± 6.0 (3/5) | −2.9 ± 4.9 (2/5) | −5.2 ± 10.2 (2/5) |
+| Soup of the methods − soup of the controls, BN re-estimated on target | −2.9 ± 1.9 (1/5) | +0.7 ± 4.5 (3/5) | −8.1 ± 1.6 (0/5) | −3.2 ± 5.9 (1/5) |
+| Context: mean of the method branches − mean of the control branches | +6.1 ± 1.5 (5/5) | +6.6 ± 3.3 (5/5) | +4.5 ± 1.1 (5/5) | +8.0 ± 1.9 (5/5) |
+
+**Costs.** Averaging three checkpoints takes 11 ms per soup; re-estimating the BatchNorm statistics takes 2.0 s per soup (one pass over target train in batches of 32 on MPS). Training the three branches of one soup took 222 s on average. A soup is evaluated at the cost of one model, the ensemble at the cost of three. Details: `results/tables/T8_costs.csv`, `T8_costs_summary.csv`.
+
+**Figure 10.** Weighted F1 on target test per group: the baseline, the mean of the three branches, the output ensemble and the two soups; left the soup of the methods, right the soup of the control runs (hatched). Error bars: SD over the seeds.
+
+![Figure 10](figures/fig10_soup_by_group.png)
+
+**Figure 11.** Soup of the three methods minus its references per transfer, for both BatchNorm variants; points right of zero mean the soup is higher. The fourth panel uses target labels to choose the branch and is a reference only.
+
+![Figure 11](figures/fig11_soup_differences_per_transfer.png)
+
+**Figure 12.** Left: soup of the methods minus soup of the controls (what the alignment losses contribute inside the soup). Middle: re-estimated minus averaged BatchNorm statistics (filled: methods, open: controls). Right: soup minus output ensemble of the same three models.
+
+![Figure 12](figures/fig12_soup_variants_per_transfer.png)
+
+**Observations (soup).** Only statements that follow directly from the T8 tables; no causes are claimed.
+
+- Soup of the methods (Deep CORAL + DANN + DSAN), all 12 transfers: Baseline 41.9 ± 1.0 %, Mean of the 3 branches 50.3 ± 1.5 %, Best branch by SRC (CE) 52.4 ± 2.4 %, Best branch by SRC (macro-F1) 52.0 ± 2.3 %, Best branch by target test (oracle) 58.0 ± 1.6 %, Output ensemble 51.8 ± 2.4 %, Soup, BN averaged 43.0 ± 2.7 %, Soup, BN re-estimated on target 42.9 ± 2.4 %.
+- Soup of the controls (their three λ = 0 runs), all 12 transfers: Baseline 41.9 ± 1.0 %, Mean of the 3 branches 44.2 ± 1.3 %, Best branch by SRC (CE) 44.2 ± 2.9 %, Best branch by SRC (macro-F1) 44.9 ± 2.3 %, Best branch by target test (oracle) 48.1 ± 1.7 %, Output ensemble 45.2 ± 1.6 %, Soup, BN averaged 43.3 ± 2.5 %, Soup, BN re-estimated on target 45.8 ± 1.2 %.
+- Soup, BN averaged (methods), differences over all transfers: mean of the branches −7.4 ± 2.2 (0/5), 18/60 pairs; best branch by SRC (CE) −9.5 ± 2.2 (0/5), 15/60 pairs; best branch by SRC (macro-F1) −9.0 ± 2.7 (0/5), 14/60 pairs; best branch by target test (oracle, uses target labels) −15.1 ± 2.8 (0/5), 7/60 pairs; baseline +1.1 ± 3.0 (3/5), 33/60 pairs; output ensemble −8.8 ± 2.2 (0/5), 17/60 pairs.
+- Soup, BN averaged (methods) minus the mean of its branches by group: Cross-dataset (6) −5.6 ± 2.9 (0/5); Cross-gender (4) −6.5 ± 3.9 (0/5); Cross-age (2) −14.2 ± 11.1 (1/5).
+- Soup, BN re-estimated on target (methods), differences over all transfers: mean of the branches −7.4 ± 1.0 (0/5), 18/60 pairs; best branch by SRC (CE) −9.5 ± 1.2 (0/5), 15/60 pairs; best branch by SRC (macro-F1) −9.0 ± 0.6 (0/5), 17/60 pairs; best branch by target test (oracle, uses target labels) −15.1 ± 2.0 (0/5), 8/60 pairs; baseline +1.0 ± 2.3 (3/5), 29/60 pairs; output ensemble −8.8 ± 0.5 (0/5), 20/60 pairs.
+- Soup, BN re-estimated on target (methods) minus the mean of its branches by group: Cross-dataset (6) −4.5 ± 3.6 (0/5); Cross-gender (4) −10.7 ± 3.0 (0/5); Cross-age (2) −9.6 ± 5.8 (1/5).
+- BN re-estimated minus BN averaged, methods: −0.1 ± 2.5 (1/5), 31/60 pairs; source test weighted F1 66.8 % (averaged) and 66.6 % (re-estimated), mean of the branches 77.6 %.
+- BN re-estimated minus BN averaged, controls: +2.4 ± 1.6 (5/5), 48/60 pairs; source test weighted F1 76.2 % (averaged) and 77.1 % (re-estimated), mean of the branches 75.8 %.
+- Without target labels, on source validation (SRC, mean over transfers and seeds), methods: macro-F1 of the branches 66.1 to 69.0 %, soup 56.4 % (BN averaged) and 53.7 % (re-estimated), ensemble 68.8 %; cross-entropy of the branches 1.31 to 2.24, soup 1.69 and 4.70.
+- Without target labels, on source validation (SRC, mean over transfers and seeds), controls: macro-F1 of the branches 66.0 to 67.5 %, soup 66.6 % (BN averaged) and 68.2 % (re-estimated), ensemble 67.7 %; cross-entropy of the branches 1.48 to 2.27, soup 1.63 and 1.94.
+- Soup of the methods minus soup of the controls (BN averaged): −0.4 ± 4.0 (2/5), 34/60 pairs; the same difference between the means of the branches: +6.1 ± 1.5 (5/5), 45/60 pairs.
+- Soup of the methods minus soup of the controls (BN re-estimated on target): −2.9 ± 1.9 (1/5), 25/60 pairs; the same difference between the means of the branches: +6.1 ± 1.5 (5/5), 45/60 pairs.
+- Transfers on which the soup of the methods is above the best branch by target test (oracle) in the mean over seeds: Soup, BN averaged: MHEALTH → PAMAP2; Soup, BN re-estimated on target: PAMAP2 female → male.
+- Branch chosen per transfer and seed (60 cases) among Deep CORAL / DANN / DSAN: Best branch by SRC (CE): deep_coral 18, dann 3, dsan 39; Best branch by SRC (macro-F1): deep_coral 8, dann 21, dsan 31; Best branch by target test (oracle): deep_coral 9, dann 23, dsan 28.
+
 ## Limitations
 
 Five seeds, the last epoch without model selection, loss weights taken over from another benchmark without tuning, and small target test sets on some transfers limit what these numbers show. See [limitations.md](limitations.md).

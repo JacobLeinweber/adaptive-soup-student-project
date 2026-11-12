@@ -1,0 +1,115 @@
+{
+  "method": "uniform_soup",
+  "soup": "soup_methods",
+  "bn_variant": "bn_avg",
+  "transfer": "MHEALTH_to_PAMAP2",
+  "family": "cross_dataset",
+  "source": "MHEALTH",
+  "target": "PAMAP2",
+  "label_map": {
+    "lying": 0,
+    "sitting": 1,
+    "standing": 2,
+    "walking": 3,
+    "running": 4
+  },
+  "seed": 881,
+  "init_checkpoint": "results/source_only/seed_881/cross_dataset/MHEALTH_to_PAMAP2/model_last.pt",
+  "init_checkpoint_sha256": "a5fdc6ae4fedbfc700f3a2d476e77f47dc6ffc0d19f336b39a83b2e2d5c3d395",
+  "target_labels_used": false,
+  "ingredients": [
+    {
+      "variant": "deep_coral",
+      "run_dir": "results/deep_coral/seed_881/MHEALTH_to_PAMAP2",
+      "checkpoint": "results/deep_coral/seed_881/MHEALTH_to_PAMAP2/model_last.pt",
+      "checkpoint_sha256": "8ddaf1cced1f20d19357a7aa515c173e84d50afc53a06280e002d5a3577494c9",
+      "init_checkpoint_sha256": "a5fdc6ae4fedbfc700f3a2d476e77f47dc6ffc0d19f336b39a83b2e2d5c3d395",
+      "repository_commit": "7db879b34940d78607c5f867ad7ef3a6ba1906d0",
+      "device": "mps",
+      "train_seconds": 15.9,
+      "prediction_agreement_with_saved": {
+        "source_test": 1.0,
+        "target_train": 1.0,
+        "target_val": 1.0,
+        "target_test": 1.0
+      }
+    },
+    {
+      "variant": "dann",
+      "run_dir": "results/dann/seed_881/MHEALTH_to_PAMAP2",
+      "checkpoint": "results/dann/seed_881/MHEALTH_to_PAMAP2/model_last.pt",
+      "checkpoint_sha256": "c8b7ea4d889246133b543ac00074575d2c7c738fb4655a714ffe5f95e0ac9303",
+      "init_checkpoint_sha256": "a5fdc6ae4fedbfc700f3a2d476e77f47dc6ffc0d19f336b39a83b2e2d5c3d395",
+      "repository_commit": "d9ca82f4af96cf2141f4cf80d3312bdd1b7c4a10",
+      "device": "mps",
+      "train_seconds": 15.5,
+      "prediction_agreement_with_saved": {
+        "source_test": 1.0,
+        "target_train": 1.0,
+        "target_val": 1.0,
+        "target_test": 1.0
+      }
+    },
+    {
+      "variant": "dsan",
+      "run_dir": "results/dsan/seed_881/MHEALTH_to_PAMAP2",
+      "checkpoint": "results/dsan/seed_881/MHEALTH_to_PAMAP2/model_last.pt",
+      "checkpoint_sha256": "25c3ef61d3f17776229dc008fb0d2a7d4fdfb354633dfa8c4fb8a2dc794e6255",
+      "init_checkpoint_sha256": "a5fdc6ae4fedbfc700f3a2d476e77f47dc6ffc0d19f336b39a83b2e2d5c3d395",
+      "repository_commit": "cdef98bba18d3b170998d6233e31531a0e0bfbc2",
+      "device": "mps",
+      "train_seconds": 17.3,
+      "prediction_agreement_with_saved": {
+        "source_test": 1.0,
+        "target_train": 1.0,
+        "target_val": 1.0,
+        "target_test": 1.0
+      }
+    }
+  ],
+  "ingredient_weights": [
+    0.3333333333333333,
+    0.3333333333333333,
+    0.3333333333333333
+  ],
+  "averaging": {
+    "code": "create_method_soup.py by the project partner (Denis Petrov), averaging step average_state_dicts",
+    "rule": "arithmetic mean of every floating-point state_dict entry in float32 (weights, biases, BatchNorm affine parameters and running statistics); integer entries (num_batches_tracked) by integer division, dtype kept",
+    "num_batches_tracked_of_ingredients": {
+      "features.1.num_batches_tracked": [
+        3330
+      ],
+      "features.5.num_batches_tracked": [
+        3330
+      ],
+      "features.9.num_batches_tracked": [
+        3330
+      ]
+    }
+  },
+  "batchnorm": "running statistics averaged like the weights (1/3 each)",
+  "averaged_part": "HAR predictor only (features + classifier); no discriminator",
+  "target_input": "none",
+  "saved_predictions": [
+    "source_val",
+    "source_test",
+    "target_train",
+    "target_val",
+    "target_test"
+  ],
+  "seconds": {
+    "load_ingredients_and_logits": 1.086,
+    "average": 0.0012,
+    "bn_recompute": 0.0,
+    "predict": 0.338
+  },
+  "device": "mps",
+  "torch": "2.14.1",
+  "numpy": "2.4.6",
+  "python": "3.13.15",
+  "platform": "macOS-26.5-arm64-arm-64bit-Mach-O",
+  "nondeterminism": "Trained on Apple MPS. PyTorch does not guarantee bitwise reproducible results on MPS; a repeated run with the same seed can differ slightly.",
+  "repository_commit": "586579f9c56f3659564b71337bdc479b5da8d14e",
+  "started_utc": "2026-11-12T00:49:25.767273+00:00",
+  "finished_utc": "2026-11-12T00:49:27.338759+00:00"
+}

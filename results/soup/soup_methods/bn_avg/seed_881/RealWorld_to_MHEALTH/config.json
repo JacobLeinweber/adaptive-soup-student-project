@@ -1,0 +1,115 @@
+{
+  "method": "uniform_soup",
+  "soup": "soup_methods",
+  "bn_variant": "bn_avg",
+  "transfer": "RealWorld_to_MHEALTH",
+  "family": "cross_dataset",
+  "source": "RealWorld",
+  "target": "MHEALTH",
+  "label_map": {
+    "lying": 0,
+    "sitting": 1,
+    "standing": 2,
+    "walking": 3,
+    "running": 4
+  },
+  "seed": 881,
+  "init_checkpoint": "results/source_only/seed_881/cross_dataset/RealWorld_to_MHEALTH/model_last.pt",
+  "init_checkpoint_sha256": "9718efe6fe1e57c2817a168ecc9f2df0b6b32da1a7e9be97ef0db9d6d327eadd",
+  "target_labels_used": false,
+  "ingredients": [
+    {
+      "variant": "deep_coral",
+      "run_dir": "results/deep_coral/seed_881/RealWorld_to_MHEALTH",
+      "checkpoint": "results/deep_coral/seed_881/RealWorld_to_MHEALTH/model_last.pt",
+      "checkpoint_sha256": "87f497a706c83b3e1b570427e9a8084f78b49875461dff459cfac4f5a964be5a",
+      "init_checkpoint_sha256": "9718efe6fe1e57c2817a168ecc9f2df0b6b32da1a7e9be97ef0db9d6d327eadd",
+      "repository_commit": "7db879b34940d78607c5f867ad7ef3a6ba1906d0",
+      "device": "mps",
+      "train_seconds": 114.6,
+      "prediction_agreement_with_saved": {
+        "source_test": 1.0,
+        "target_train": 1.0,
+        "target_val": 1.0,
+        "target_test": 1.0
+      }
+    },
+    {
+      "variant": "dann",
+      "run_dir": "results/dann/seed_881/RealWorld_to_MHEALTH",
+      "checkpoint": "results/dann/seed_881/RealWorld_to_MHEALTH/model_last.pt",
+      "checkpoint_sha256": "f6e94c7e8ef04aea562551d14097feebfe262eefc216a143522eea36496f212f",
+      "init_checkpoint_sha256": "9718efe6fe1e57c2817a168ecc9f2df0b6b32da1a7e9be97ef0db9d6d327eadd",
+      "repository_commit": "d9ca82f4af96cf2141f4cf80d3312bdd1b7c4a10",
+      "device": "mps",
+      "train_seconds": 127.2,
+      "prediction_agreement_with_saved": {
+        "source_test": 1.0,
+        "target_train": 1.0,
+        "target_val": 1.0,
+        "target_test": 1.0
+      }
+    },
+    {
+      "variant": "dsan",
+      "run_dir": "results/dsan/seed_881/RealWorld_to_MHEALTH",
+      "checkpoint": "results/dsan/seed_881/RealWorld_to_MHEALTH/model_last.pt",
+      "checkpoint_sha256": "184945d6c197b1d184f960c9d88e9cc18008a8baa87d01158aaf4ce95ec50372",
+      "init_checkpoint_sha256": "9718efe6fe1e57c2817a168ecc9f2df0b6b32da1a7e9be97ef0db9d6d327eadd",
+      "repository_commit": "cdef98bba18d3b170998d6233e31531a0e0bfbc2",
+      "device": "mps",
+      "train_seconds": 131.8,
+      "prediction_agreement_with_saved": {
+        "source_test": 1.0,
+        "target_train": 1.0,
+        "target_val": 1.0,
+        "target_test": 1.0
+      }
+    }
+  ],
+  "ingredient_weights": [
+    0.3333333333333333,
+    0.3333333333333333,
+    0.3333333333333333
+  ],
+  "averaging": {
+    "code": "create_method_soup.py by the project partner (Denis Petrov), averaging step average_state_dicts",
+    "rule": "arithmetic mean of every floating-point state_dict entry in float32 (weights, biases, BatchNorm affine parameters and running statistics); integer entries (num_batches_tracked) by integer division, dtype kept",
+    "num_batches_tracked_of_ingredients": {
+      "features.1.num_batches_tracked": [
+        27270
+      ],
+      "features.5.num_batches_tracked": [
+        27270
+      ],
+      "features.9.num_batches_tracked": [
+        27270
+      ]
+    }
+  },
+  "batchnorm": "running statistics averaged like the weights (1/3 each)",
+  "averaged_part": "HAR predictor only (features + classifier); no discriminator",
+  "target_input": "none",
+  "saved_predictions": [
+    "source_val",
+    "source_test",
+    "target_train",
+    "target_val",
+    "target_test"
+  ],
+  "seconds": {
+    "load_ingredients_and_logits": 1.034,
+    "average": 0.0009,
+    "bn_recompute": 0.0,
+    "predict": 0.367
+  },
+  "device": "mps",
+  "torch": "2.14.1",
+  "numpy": "2.4.6",
+  "python": "3.13.15",
+  "platform": "macOS-26.5-arm64-arm-64bit-Mach-O",
+  "nondeterminism": "Trained on Apple MPS. PyTorch does not guarantee bitwise reproducible results on MPS; a repeated run with the same seed can differ slightly.",
+  "repository_commit": "586579f9c56f3659564b71337bdc479b5da8d14e",
+  "started_utc": "2026-11-12T00:49:30.832436+00:00",
+  "finished_utc": "2026-11-12T00:49:32.412681+00:00"
+}

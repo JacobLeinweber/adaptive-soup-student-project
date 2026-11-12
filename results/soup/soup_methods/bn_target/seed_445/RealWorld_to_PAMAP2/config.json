@@ -1,0 +1,124 @@
+{
+  "method": "uniform_soup",
+  "soup": "soup_methods",
+  "bn_variant": "bn_target",
+  "transfer": "RealWorld_to_PAMAP2",
+  "family": "cross_dataset",
+  "source": "RealWorld",
+  "target": "PAMAP2",
+  "label_map": {
+    "lying": 0,
+    "sitting": 1,
+    "standing": 2,
+    "walking": 3,
+    "running": 4
+  },
+  "seed": 445,
+  "init_checkpoint": "results/source_only/seed_445/cross_dataset/RealWorld_to_PAMAP2/model_last.pt",
+  "init_checkpoint_sha256": "7a0d06f56bd28f41251f14227800d19487724db19264e4d5582bee8f62bcd816",
+  "target_labels_used": false,
+  "ingredients": [
+    {
+      "variant": "deep_coral",
+      "run_dir": "results/deep_coral/seed_445/RealWorld_to_PAMAP2",
+      "checkpoint": "results/deep_coral/seed_445/RealWorld_to_PAMAP2/model_last.pt",
+      "checkpoint_sha256": "9ae1cfed487b66ea469f0209cd224e3d2c96c50262bd70df7bca5c5b09973a19",
+      "init_checkpoint_sha256": "7a0d06f56bd28f41251f14227800d19487724db19264e4d5582bee8f62bcd816",
+      "repository_commit": "7db879b34940d78607c5f867ad7ef3a6ba1906d0",
+      "device": "mps",
+      "train_seconds": 114.6,
+      "prediction_agreement_with_saved": {
+        "source_test": 1.0,
+        "target_train": 1.0,
+        "target_val": 1.0,
+        "target_test": 1.0
+      }
+    },
+    {
+      "variant": "dann",
+      "run_dir": "results/dann/seed_445/RealWorld_to_PAMAP2",
+      "checkpoint": "results/dann/seed_445/RealWorld_to_PAMAP2/model_last.pt",
+      "checkpoint_sha256": "5dcc882dce9a03982abf3aa59f57ac0a1c0963623f45cd0d372d822b3da537e1",
+      "init_checkpoint_sha256": "7a0d06f56bd28f41251f14227800d19487724db19264e4d5582bee8f62bcd816",
+      "repository_commit": "d9ca82f4af96cf2141f4cf80d3312bdd1b7c4a10",
+      "device": "mps",
+      "train_seconds": 197.2,
+      "prediction_agreement_with_saved": {
+        "source_test": 1.0,
+        "target_train": 1.0,
+        "target_val": 1.0,
+        "target_test": 1.0
+      }
+    },
+    {
+      "variant": "dsan",
+      "run_dir": "results/dsan/seed_445/RealWorld_to_PAMAP2",
+      "checkpoint": "results/dsan/seed_445/RealWorld_to_PAMAP2/model_last.pt",
+      "checkpoint_sha256": "55fe09f5ae2278018e3c95071a92a15f1af1148949f40a85954f9638c853bf66",
+      "init_checkpoint_sha256": "7a0d06f56bd28f41251f14227800d19487724db19264e4d5582bee8f62bcd816",
+      "repository_commit": "cdef98bba18d3b170998d6233e31531a0e0bfbc2",
+      "device": "mps",
+      "train_seconds": 135.5,
+      "prediction_agreement_with_saved": {
+        "source_test": 1.0,
+        "target_train": 1.0,
+        "target_val": 1.0,
+        "target_test": 1.0
+      }
+    }
+  ],
+  "ingredient_weights": [
+    0.3333333333333333,
+    0.3333333333333333,
+    0.3333333333333333
+  ],
+  "averaging": {
+    "code": "create_method_soup.py by the project partner (Denis Petrov), averaging step average_state_dicts",
+    "rule": "arithmetic mean of every floating-point state_dict entry in float32 (weights, biases, BatchNorm affine parameters and running statistics); integer entries (num_batches_tracked) by integer division, dtype kept",
+    "num_batches_tracked_of_ingredients": {
+      "features.1.num_batches_tracked": [
+        27270
+      ],
+      "features.5.num_batches_tracked": [
+        27270
+      ],
+      "features.9.num_batches_tracked": [
+        27270
+      ]
+    }
+  },
+  "batchnorm": "running statistics re-estimated on target train after averaging; weights unchanged",
+  "bn_recompute": {
+    "data": "target train windows (features.pkl), no labels",
+    "procedure": "torch.optim.swa_utils.update_bn: reset running_mean/running_var/num_batches_tracked, momentum None (cumulative average over the batches), one pass in train mode without gradients (dropout active)",
+    "batch_size": 32,
+    "n_batches": 114,
+    "n_windows": 3646,
+    "order": "random permutation from torch.Generator().manual_seed(445)",
+    "dropout_seed": 445
+  },
+  "averaged_part": "HAR predictor only (features + classifier); no discriminator",
+  "target_input": "target train windows only (features.pkl), no labels",
+  "saved_predictions": [
+    "source_val",
+    "source_test",
+    "target_train",
+    "target_val",
+    "target_test"
+  ],
+  "seconds": {
+    "load_ingredients_and_logits": 1.718,
+    "average": 0.0055,
+    "bn_recompute": 0.793,
+    "predict": 0.578
+  },
+  "device": "mps",
+  "torch": "2.14.1",
+  "numpy": "2.4.6",
+  "python": "3.13.15",
+  "platform": "macOS-26.5-arm64-arm-64bit-Mach-O",
+  "nondeterminism": "Trained on Apple MPS. PyTorch does not guarantee bitwise reproducible results on MPS; a repeated run with the same seed can differ slightly.",
+  "repository_commit": "586579f9c56f3659564b71337bdc479b5da8d14e",
+  "started_utc": "2026-11-12T00:43:53.994698+00:00",
+  "finished_utc": "2026-11-12T00:43:57.966942+00:00"
+}

@@ -1,0 +1,93 @@
+{
+  "method": "output_ensemble",
+  "ensemble": "controls",
+  "belongs_to_soup": "soup_controls",
+  "transfer": "MHEALTH_to_RealWorld",
+  "family": "cross_dataset",
+  "source": "MHEALTH",
+  "target": "RealWorld",
+  "label_map": {
+    "lying": 0,
+    "sitting": 1,
+    "standing": 2,
+    "walking": 3,
+    "running": 4
+  },
+  "seed": 52,
+  "init_checkpoint": "models/cross_dataset/MHEALTH_to_RealWorld/model_last.pt",
+  "init_checkpoint_sha256": "caf0fdc34fed46f17e3c2e7fdabf9ae2a86897ebb5bc60a8fdd568e76429848b",
+  "target_labels_used": false,
+  "ingredients": [
+    {
+      "variant": "lambda0_target_pass",
+      "run_dir": "results/lambda0_target_pass/seed_52/MHEALTH_to_RealWorld",
+      "checkpoint": "results/lambda0_target_pass/seed_52/MHEALTH_to_RealWorld/model_last.pt",
+      "checkpoint_sha256": "c0c2a16faedeb1440e1e280f23b65020d030d61f9d58370c474f5d668d9cbdf4",
+      "init_checkpoint_sha256": "caf0fdc34fed46f17e3c2e7fdabf9ae2a86897ebb5bc60a8fdd568e76429848b",
+      "repository_commit": "7db879b34940d78607c5f867ad7ef3a6ba1906d0",
+      "device": "mps",
+      "train_seconds": 14.7,
+      "prediction_agreement_with_saved": {
+        "source_test": 1.0,
+        "target_train": 1.0,
+        "target_val": 1.0,
+        "target_test": 1.0
+      }
+    },
+    {
+      "variant": "dann_lambda0_target_pass",
+      "run_dir": "results/dann_lambda0_target_pass/seed_52/MHEALTH_to_RealWorld",
+      "checkpoint": "results/dann_lambda0_target_pass/seed_52/MHEALTH_to_RealWorld/model_last.pt",
+      "checkpoint_sha256": "6369cddd0f51e923816663ef5f3de9b5594010447f06bb5675c8103f08cd8d0e",
+      "init_checkpoint_sha256": "caf0fdc34fed46f17e3c2e7fdabf9ae2a86897ebb5bc60a8fdd568e76429848b",
+      "repository_commit": "d9ca82f4af96cf2141f4cf80d3312bdd1b7c4a10",
+      "device": "mps",
+      "train_seconds": 25.8,
+      "prediction_agreement_with_saved": {
+        "source_test": 1.0,
+        "target_train": 1.0,
+        "target_val": 1.0,
+        "target_test": 1.0
+      }
+    },
+    {
+      "variant": "dsan_lambda0_target_pass",
+      "run_dir": "results/dsan_lambda0_target_pass/seed_52/MHEALTH_to_RealWorld",
+      "checkpoint": "results/dsan_lambda0_target_pass/seed_52/MHEALTH_to_RealWorld/model_last.pt",
+      "checkpoint_sha256": "da811eea71181cbae5819bb9ce91f6cd1ae96166dca6b12925852e357b43681f",
+      "init_checkpoint_sha256": "caf0fdc34fed46f17e3c2e7fdabf9ae2a86897ebb5bc60a8fdd568e76429848b",
+      "repository_commit": "cdef98bba18d3b170998d6233e31531a0e0bfbc2",
+      "device": "mps",
+      "train_seconds": 14.9,
+      "prediction_agreement_with_saved": {
+        "source_test": 1.0,
+        "target_train": 1.0,
+        "target_val": 1.0,
+        "target_test": 1.0
+      }
+    }
+  ],
+  "rule": "mean of the softmax outputs of the ingredients (eval mode, each with its own BatchNorm statistics), prediction = argmax",
+  "target_input": "none",
+  "saved_predictions": [
+    "source_val",
+    "source_test",
+    "target_train",
+    "target_val",
+    "target_test"
+  ],
+  "min_prediction_agreement_with_saved": 1.0,
+  "seconds": {
+    "load_ingredients_and_logits": 2.695,
+    "combine": 0.05
+  },
+  "device": "mps",
+  "torch": "2.14.1",
+  "numpy": "2.4.6",
+  "python": "3.13.15",
+  "platform": "macOS-26.5-arm64-arm-64bit-Mach-O",
+  "nondeterminism": "Trained on Apple MPS. PyTorch does not guarantee bitwise reproducible results on MPS; a repeated run with the same seed can differ slightly.",
+  "repository_commit": "586579f9c56f3659564b71337bdc479b5da8d14e",
+  "started_utc": "2026-11-12T00:40:07.272164+00:00",
+  "finished_utc": "2026-11-12T00:40:19.988708+00:00"
+}

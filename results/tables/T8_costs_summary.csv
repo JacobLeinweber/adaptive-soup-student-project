@@ -1,0 +1,7 @@
+variant,outputs,total_seconds_average,total_seconds_bn_recompute,total_seconds_own_steps,mean_seconds_own_steps,total_minutes_training_of_ingredients,own_steps_percent_of_training
+soup_methods_bn_avg,60,0.76,0.0,37.9,0.63,222.0,0.284
+soup_methods_bn_target,60,0.76,136.6,186.6,3.11,222.0,1.401
+soup_controls_bn_avg,60,0.59,0.0,37.2,0.62,172.2,0.360
+soup_controls_bn_target,60,0.59,104.5,151.1,2.52,172.2,1.462
+ensemble_methods,60,0.00,0.0,1.4,0.02,222.0,0.011
+ensemble_controls,60,0.00,0.0,1.4,0.02,172.2,0.013
