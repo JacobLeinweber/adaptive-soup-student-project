@@ -3,13 +3,13 @@
 For a given seed and transfer, initializes three models from the same source-only checkpoint
 (one each for Deep CORAL, DANN, and DSAN). In each epoch:
 1. Trains each model for 1 epoch using its respective loss/algorithm.
-2. Creates an arithmetic mean soup of the three model state_dicts (using average_state_dicts).
+2. Creates an arithmetic mean (or weighted) soup of the three model state_dicts.
 3. Updates all three models with the new soup weights.
 4. Continues to the next epoch until the final epoch, where the final soup is saved as model_last.pt.
 
 Examples:
     python run_iterative_soup.py --transfer PAMAP2_to_RealWorld --seeds 52
-    python run_iterative_soup.py --all --seeds 52
+    python run_iterative_soup.py --transfer PAMAP2_to_RealWorld --seeds 52 --weights 0.5 0.3 0.2
 """
 from __future__ import annotations
 
@@ -21,7 +21,6 @@ from pathlib import Path
 import numpy as np
 import torch
 
-from create_method_soup import average_state_dicts
 from src.training.experiments import TRANSFERS, Transfer
 from src.training.train_transfer import ROOT
 from src.training.utils import write_json
@@ -35,7 +34,7 @@ from uda.dsan import lmmd_loss
 ADATIME = {
     "repository": "https://github.com/emadeldeen24/AdaTime",
     "commit": "2d9be6bd0542e150518afaf8aa0c6ea0823b4a3d",
-    "description": "Iterative multi-method soup (Deep CORAL + DANN + DSAN) updated per epoch",
+    "description": "Iterative multi-method soup (Deep CORAL + DANN + DSAN) updated per epoch with optional custom weights",
 }
 
 # Hyperparameters derived from individual method scripts
@@ -49,13 +48,29 @@ DSAN_LMMD_WEIGHT = 1.59
 DSAN_CE_WEIGHT = 1.8744909939900247
 
 
+def weighted_average_state_dicts(states: list[dict], weights: list[float]) -> dict:
+    """Compute a weighted average (soup) of a list of state_dicts."""
+    weights = [w / sum(weights) for w in weights]  # Normalize weights to sum to 1
+    soup_state = {}
+    for key in states[0].keys():
+        val = states[0][key]
+        if isinstance(val, torch.Tensor) and torch.is_floating_point(val):
+            soup_state[key] = sum(state[key].float() * w for state, w in zip(states, weights)).to(val.dtype)
+        elif isinstance(val, torch.Tensor) and val.is_floating_point() is False and val.dtype in (torch.int32, torch.int64):
+            # For integer tracking tensors (like num_batches_tracked), use integer division on weighted sum or keep first
+            soup_state[key] = states[0][key].clone()
+        else:
+            soup_state[key] = states[0][key].clone()
+    return soup_state
+
+
 def train_epoch_coral(model, optimizer, x_source, y_source, x_target, coral_weight, source_ce_weight, batch_size, source_generator, target_sampler, device):
     model.train()
     xs = torch.as_tensor(x_source, dtype=torch.float32, device=device)
     ys = torch.as_tensor(y_source, dtype=torch.long, device=device)
     xt = torch.as_tensor(x_target, dtype=torch.float32, device=device)
     
-    ce_sum, total_sum, steps = 0.0, 0.0, 0
+    total_sum, steps = 0.0, 0
     for order in torch.randperm(len(xs), generator=source_generator).split(batch_size):
         index = order.to(device)
         source_features = extract_features(model, xs[index])
@@ -71,7 +86,6 @@ def train_epoch_coral(model, optimizer, x_source, y_source, x_target, coral_weig
         loss.backward()
         optimizer.step()
         
-        ce_sum += ce.item()
         total_sum += loss.item()
         steps += 1
     return total_sum / steps
@@ -142,14 +156,14 @@ def train_epoch_dsan(model, optimizer, x_source, y_source, x_target, lmmd_weight
     return total_sum / steps
 
 
-def run_iterative_soup_one(transfer: Transfer, seed: int, results_root: Path, device: torch.device, overwrite: bool) -> None:
+def run_iterative_soup_one(transfer: Transfer, seed: int, weights: list[float], results_root: Path, device: torch.device, overwrite: bool) -> None:
     out = results_root / "iterative_soup" / f"seed_{seed}" / transfer.name
     if is_complete(out, SPLITS) and not overwrite:
         print(f"skip iterative_soup seed {seed} {transfer.name}: finished run in {out}", flush=True)
         return
 
     commit = clean_commit()
-    print(f"=== Iterative Soup (Deep CORAL + DANN + DSAN), seed {seed}: {transfer.name}", flush=True)
+    print(f"=== Iterative Soup (Weights: {weights}), seed {seed}: {transfer.name}", flush=True)
     (out / "config.json").unlink(missing_ok=True)
     started = datetime.now(timezone.utc)
 
@@ -162,7 +176,6 @@ def run_iterative_soup_one(transfer: Transfer, seed: int, results_root: Path, de
         raise ValueError(f"Source label map does not match the checkpoint: {transfer.name}")
     target_x = load_unlabeled(transfer.family, transfer.target)
 
-    # Initialize separate models for each method starting from the same source-only checkpoint
     model_coral = load_source_only_model(transfer, checkpoint).to(device)
     model_dann = load_source_only_model(transfer, checkpoint).to(device)
     model_dsan = load_source_only_model(transfer, checkpoint).to(device)
@@ -191,7 +204,6 @@ def run_iterative_soup_one(transfer: Transfer, seed: int, results_root: Path, de
     tic = time.perf_counter()
 
     for epoch in range(epochs):
-        # 1. Train each model for 1 epoch
         loss_coral = train_epoch_coral(
             model_coral, opt_coral, source_x["train"], source_y["train"], target_x["train"],
             CORAL_WEIGHT, CORAL_CE_WEIGHT, batch_size, source_gen_coral, target_sampler_coral, device
@@ -205,15 +217,13 @@ def run_iterative_soup_one(transfer: Transfer, seed: int, results_root: Path, de
             DSAN_LMMD_WEIGHT, DSAN_CE_WEIGHT, batch_size, source_gen_dsan, target_sampler_dsan, device
         )
 
-        # 2. Create soup of the 3 model state dictionaries
         states = [
             {k: v.cpu() for k, v in model_coral.state_dict().items()},
             {k: v.cpu() for k, v in model_dann.state_dict().items()},
             {k: v.cpu() for k, v in model_dsan.state_dict().items()}
         ]
-        soup_state = average_state_dicts(states)
+        soup_state = weighted_average_state_dicts(states, weights)
 
-        # 3. Update all three models with the soup weights
         model_coral.load_state_dict(soup_state, strict=True)
         model_dann.load_state_dict(soup_state, strict=True)
         model_dsan.load_state_dict(soup_state, strict=True)
@@ -225,10 +235,10 @@ def run_iterative_soup_one(transfer: Transfer, seed: int, results_root: Path, de
             "loss_dsan": loss_dsan,
             "steps": len(source_x["train"]) // batch_size
         })
-        print(f"Epoch {epoch + 1}/{epochs} completed and merged via soup.", flush=True)
+        print(f"Epoch {epoch + 1}/{epochs} completed and merged via weighted soup.", flush=True)
 
     train_seconds = time.perf_counter() - tic
-    final_model = model_coral  # Shares identical weights with dann and dsan post-merge
+    final_model = model_coral
 
     (out / "predictions").mkdir(parents=True, exist_ok=True)
     torch.save({k: v.detach().cpu() for k, v in final_model.state_dict().items()}, out / "model_last.pt")
@@ -240,11 +250,12 @@ def run_iterative_soup_one(transfer: Transfer, seed: int, results_root: Path, de
         np.savez_compressed(out / "predictions" / f"{split}.npz", y_pred=predict(final_model, x, device))
 
     write_json(out / "config.json", {
-        "method": "iterative_method_soup",
+        "method": "iterative_weighted_soup",
         "transfer": transfer.name, "family": transfer.family,
         "source": transfer.source, "target": transfer.target, "label_map": label_map, "seed": seed,
         "init_checkpoint": str(checkpoint.relative_to(ROOT)), "init_checkpoint_sha256": checkpoint_hash,
         "ingredients": ["deep_coral", "dann", "dsan"],
+        "ingredient_weights": weights,
         "merging_frequency": "every epoch",
         "optimizer": "Adam (torch.optim.Adam, L2 weight decay)", **BASELINE,
         "model_selection": "last epoch", "adatime": ADATIME,
@@ -261,6 +272,8 @@ def main() -> None:
     which.add_argument("--transfer", nargs="+", choices=[t.name for t in TRANSFERS])
     which.add_argument("--all", action="store_true", help="all 12 transfers")
     parser.add_argument("--seeds", type=int, nargs="+", choices=SEEDS, default=list(SEEDS))
+    parser.add_argument("--weights", type=float, nargs=3, default=[1/3, 1/3, 1/3], 
+                        help="Relative blending weights for [deep_coral, dann, dsan]. Default: uniform (1/3, 1/3, 1/3)")
     parser.add_argument("--output-dir", type=Path, help="default: results/")
     parser.add_argument("--device", default="mps")
     parser.add_argument("--overwrite", action="store_true", help="retrain even if a finished run exists")
@@ -274,7 +287,7 @@ def main() -> None:
 
     for seed in args.seeds:
         for transfer in transfers:
-            run_iterative_soup_one(transfer, seed, results_root, torch.device(args.device), args.overwrite)
+            run_iterative_soup_one(transfer, seed, args.weights, results_root, torch.device(args.device), args.overwrite)
 
 
 if __name__ == "__main__":
