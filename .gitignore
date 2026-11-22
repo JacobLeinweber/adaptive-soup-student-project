@@ -14,5 +14,10 @@ logs/
 # Model checkpoints of experiment runs are kept locally for now (not via Git LFS).
 results/**/*.pt
 
+# Hyperparameter search: archives for the transfer to and from another machine, unfinished temporary files.
+/hp_search_*.zip
+/hp_search_*.zip.tmp
+results/hp_search/**/*.tmp.*
+
 # macOS folder metadata
 .DS_Store

@@ -1,0 +1,2625 @@
+{
+ "name": "hp_search_cross_dataset_seed52",
+ "description": "Pre-experiment: random hyperparameter search following AdaTime's sweep, cross-dataset transfers, seed 52, every run starting from the supplied seed-52 source-only checkpoint.",
+ "family": "cross_dataset",
+ "transfers": [
+  "PAMAP2_to_RealWorld",
+  "RealWorld_to_PAMAP2",
+  "PAMAP2_to_MHEALTH",
+  "MHEALTH_to_PAMAP2",
+  "RealWorld_to_MHEALTH",
+  "MHEALTH_to_RealWorld"
+ ],
+ "methods": [
+  "deep_coral",
+  "dann",
+  "dsan"
+ ],
+ "seed": 52,
+ "start_model": "supplied source-only checkpoint of the transfer: models/cross_dataset/<transfer>/model_last.pt",
+ "fixed": {
+  "epochs": 30,
+  "batch_size": 32,
+  "weight_decay": 0.0001,
+  "optimizer": "Adam (L2 weight decay, default betas)",
+  "model_selection": "model after the last epoch",
+  "pipeline": "as Stage 2: supervisor data IO and splits, separate source and target passes in train mode, epoch = source batches, target cycled"
+ },
+ "order": "combination by combination: combination k for all transfers x methods, then k + 1",
+ "sampling": {
+  "strategy": "random",
+  "n_combinations": 100,
+  "reference_ids": [
+   0,
+   1
+  ],
+  "random_ids": [
+   2,
+   99
+  ],
+  "seed": 52,
+  "generator": "numpy default_rng([seed, index of the method in methods]); per combination in this order: learning rate, source weight, alignment weight",
+  "same_combinations_for_all_transfers": true
+ },
+ "space": {
+  "deep_coral": {
+   "learning_rate": {
+    "values": [
+     0.01,
+     0.005,
+     0.001,
+     0.0005
+    ],
+    "adatime_name": "learning_rate",
+    "source": "configs/sweep_params.py:38"
+   },
+   "source_ce_weight": {
+    "distribution": "uniform",
+    "min": 0.1,
+    "max": 10.0,
+    "adatime_name": "src_cls_loss_wt",
+    "source": "configs/sweep_params.py:39"
+   },
+   "alignment_weight": {
+    "distribution": "uniform",
+    "min": 0.1,
+    "max": 10.0,
+    "adatime_name": "coral_wt",
+    "source": "configs/sweep_params.py:40"
+   }
+  },
+  "dann": {
+   "learning_rate": {
+    "values": [
+     0.01,
+     0.005,
+     0.001,
+     0.0005
+    ],
+    "adatime_name": "learning_rate",
+    "source": "configs/sweep_params.py:13"
+   },
+   "source_ce_weight": {
+    "distribution": "uniform",
+    "min": 0.1,
+    "max": 10.0,
+    "adatime_name": "src_cls_loss_wt",
+    "source": "configs/sweep_params.py:14"
+   },
+   "alignment_weight": {
+    "distribution": "uniform",
+    "min": 0.01,
+    "max": 10.0,
+    "adatime_name": "domain_loss_wt",
+    "source": "configs/sweep_params.py:15"
+   }
+  },
+  "dsan": {
+   "learning_rate": {
+    "values": [
+     0.01,
+     0.005,
+     0.001,
+     0.0005
+    ],
+    "adatime_name": "learning_rate",
+    "source": "configs/sweep_params.py:66"
+   },
+   "source_ce_weight": {
+    "distribution": "uniform",
+    "min": 0.1,
+    "max": 10.0,
+    "adatime_name": "src_cls_loss_wt",
+    "source": "configs/sweep_params.py:67"
+   },
+   "alignment_weight": {
+    "distribution": "uniform",
+    "min": 0.01,
+    "max": 10.0,
+    "adatime_name": "domain_loss_wt",
+    "source": "configs/sweep_params.py:68 (given there as mmd_wt)",
+    "note": "AdaTime's sweep varies mmd_wt for DSAN, but its DSAN loss reads domain_loss_wt (algorithms/algorithms.py:624; fixed at 1.59 in configs/hparams.py:60), so in AdaTime the LMMD weight is never searched. The range given for mmd_wt is applied to the weight the loss uses (our lmmd_weight = AdaTime domain_loss_wt)."
+   }
+  }
+ },
+ "alignment_loss": {
+  "deep_coral": "CORAL",
+  "dann": "domain loss (discriminator, gradient reversal)",
+  "dsan": "LMMD"
+ },
+ "reference_combinations": {
+  "0": "stage2: AdaTime loss weights for HAR with learning rate 3e-4, exactly the Stage-2 setting (device check against the Stage-2 runs of seed 52)",
+  "1": "adatime_hparams: AdaTime configs/hparams.py for HAR including its learning rate",
+  "weights": {
+   "deep_coral": {
+    "source_ce_weight": 0.1013209750429822,
+    "alignment_weight": 4.23035475456397,
+    "adatime_learning_rate": 0.0005,
+    "hparams": "configs/hparams.py:71-76"
+   },
+   "dann": {
+    "source_ce_weight": 5.1390077646202,
+    "alignment_weight": 2.943729820531079,
+    "adatime_learning_rate": 0.001,
+    "hparams": "configs/hparams.py:42-47"
+   },
+   "dsan": {
+    "source_ce_weight": 1.8744909939900247,
+    "alignment_weight": 1.59,
+    "adatime_learning_rate": 0.001,
+    "hparams": "configs/hparams.py:56-62 (domain_loss_wt 1.59; mmd_wt 2.087 is not read)"
+   }
+  }
+ },
+ "adatime": {
+  "repository": "https://github.com/emadeldeen24/AdaTime",
+  "commit": "2d9be6bd0542e150518afaf8aa0c6ea0823b4a3d",
+  "sweep_space": "configs/sweep_params.py:11-92 (sweep_alg_hparams); DANN 12-16, Deep_Coral 37-41, DSAN 65-69",
+  "sweep_uses_only_alg_space": "trainers/sweep.py:51-56: the wandb sweep gets sweep_alg_hparams[da_method] only",
+  "unused_train_space": "configs/sweep_params.py:1-10 (sweep_train_hparams: num_epochs, batch_size, learning_rate, disc_lr, weight_decay, step_size, gamma, optimizer) is defined but not used by the sweep",
+  "strategy_and_metric": "main_sweep.py:32 (hp_search_strategy 'random'), main_sweep.py:34 (metric_to_minimize 'src_risk')",
+  "one_setting_for_all_scenarios": "trainers/sweep.py:71-96: every sweep run trains all scenarios of the dataset with the same hyperparameters",
+  "hparams_har": "configs/hparams.py:12-18 (train_params: num_epochs 40, batch_size 32, weight_decay 1e-4, step_size 50, lr_decay 0.5), 42-47 (DANN), 56-62 (DSAN), 71-76 (Deep_Coral)",
+  "losses_read": "algorithms/algorithms.py:200-201 (Deep_Coral: coral_wt, src_cls_loss_wt), 359-360 (DANN: src_cls_loss_wt, domain_loss_wt), 624-625 (DSAN: domain_loss_wt, src_cls_loss_wt)",
+  "discriminator_optimizer": "algorithms/algorithms.py:306-310: same learning_rate and weight_decay as the network, betas (0.5, 0.99)",
+  "few_shot": "trainers/abstract_trainer.py:147-148 and dataloader/dataloader.py:106-128: 5 windows per class from the target test split, drawn with torch.randperm"
+ },
+ "deviations_from_adatime": [
+  "Epochs fixed at 30 (Stage 2) instead of AdaTime's 40 (configs/hparams.py:13): the runs continue training the source-only model instead of training from scratch. AdaTime's sweep does not vary the epochs or the batch size either: sweep_train_hparams (configs/sweep_params.py:1-10) is not passed to the sweep (trainers/sweep.py:55).",
+  "Batch size fixed at 32 (Stage 2 = AdaTime HAR, configs/hparams.py:14); weight decay fixed at 1e-4 (AdaTime HAR alg_hparams, not part of AdaTime's alg sweep).",
+  "No learning-rate scheduler. AdaTime builds StepLR(step_size 50, gamma 0.5), which never steps within 40 epochs.",
+  "DSAN: the range AdaTime gives for mmd_wt is applied to domain_loss_wt, the weight the DSAN loss reads.",
+  "Combination 0 is the Stage-2 setting: AdaTime's loss weights with learning rate 3e-4 (the learning rate of the supplied source-only training) instead of AdaTime's 5e-4 (Deep CORAL) or 1e-3 (DANN, DSAN). Stage 2 ran with 3e-4. Combination 1 is AdaTime hparams.py including its learning rate.",
+  "Random draws use numpy instead of wandb; as in wandb's random search, every parameter is drawn independently (values: uniform over the list; uniform: U(min, max)).",
+  "SRC is computed on source val (AdaTime: source test, trainers/abstract_trainer.py:246), so that source test stays untouched by any selection.",
+  "FST uses 5 windows per class from target val (AdaTime: from target test, trainers/abstract_trainer.py:147), drawn once with a fixed seed and the same for every run; target test is never used for a selection.",
+  "One seed (52) and one setting for all six transfers, as AdaTime uses one setting for all scenarios of a dataset."
+ ],
+ "few_shot": {
+  "split": "target_val",
+  "per_class": 5,
+  "seed": 52,
+  "note": "uses target labels (few-shot); the same windows for every run with this target",
+  "selection": {
+   "MHEALTH": {
+    "n_target_val": 468,
+    "class_counts_target_val": [
+     78,
+     78,
+     78,
+     78,
+     156
+    ],
+    "taken_per_class": [
+     5,
+     5,
+     5,
+     5,
+     5
+    ],
+    "indices": [
+     110,
+     209,
+     260,
+     264,
+     419,
+     111,
+     198,
+     238,
+     392,
+     429,
+     31,
+     256,
+     416,
+     418,
+     436,
+     25,
+     232,
+     343,
+     446,
+     466,
+     17,
+     46,
+     163,
+     351,
+     369
+    ],
+    "labels": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     1,
+     1,
+     1,
+     1,
+     1,
+     2,
+     2,
+     2,
+     2,
+     2,
+     3,
+     3,
+     3,
+     3,
+     3,
+     4,
+     4,
+     4,
+     4,
+     4
+    ]
+   },
+   "PAMAP2": {
+    "n_target_val": 849,
+    "class_counts_target_val": [
+     156,
+     175,
+     146,
+     209,
+     163
+    ],
+    "taken_per_class": [
+     5,
+     5,
+     5,
+     5,
+     5
+    ],
+    "indices": [
+     172,
+     350,
+     468,
+     500,
+     780,
+     196,
+     315,
+     437,
+     757,
+     809,
+     58,
+     472,
+     727,
+     775,
+     845,
+     51,
+     72,
+     454,
+     627,
+     827,
+     37,
+     56,
+     299,
+     620,
+     637
+    ],
+    "labels": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     1,
+     1,
+     1,
+     1,
+     1,
+     2,
+     2,
+     2,
+     2,
+     2,
+     3,
+     3,
+     3,
+     3,
+     3,
+     4,
+     4,
+     4,
+     4,
+     4
+    ]
+   },
+   "RealWorld": {
+    "n_target_val": 2084,
+    "class_counts_target_val": [
+     475,
+     360,
+     354,
+     407,
+     488
+    ],
+    "taken_per_class": [
+     5,
+     5,
+     5,
+     5,
+     5
+    ],
+    "indices": [
+     499,
+     885,
+     1073,
+     1147,
+     1987,
+     519,
+     847,
+     1181,
+     1868,
+     1982,
+     91,
+     1297,
+     1908,
+     1918,
+     1993,
+     203,
+     224,
+     1155,
+     1512,
+     2051,
+     58,
+     114,
+     609,
+     1434,
+     1489
+    ],
+    "labels": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     1,
+     1,
+     1,
+     1,
+     1,
+     2,
+     2,
+     2,
+     2,
+     2,
+     3,
+     3,
+     3,
+     3,
+     3,
+     4,
+     4,
+     4,
+     4,
+     4
+    ]
+   }
+  }
+ },
+ "dev": {
+  "seed": 52,
+  "implementation": "uda.criteria.dev_weights and dev_value, as uda.criteria.dev_risk",
+  "domain_data": "96-dim eval-mode features: source train (label 1) vs target train (label 0)",
+  "validation": "source val; errors = cross-entropy per window",
+  "raw_quantities": "outputs.npz of every run: source_val_ce and dev_weights per source-val window"
+ },
+ "inputs_zip": "hp_search_inputs_cross_dataset_seed52.zip",
+ "inputs": [
+  {
+   "path": "data/prepared/cross_dataset/MHEALTH/features.pkl",
+   "stored": "git-lfs",
+   "bytes": 25272630,
+   "sha256": "d9f5aecc3db29c26314c8f35eaf27301abf9ef72852085f996e2092e042f2199"
+  },
+  {
+   "path": "data/prepared/cross_dataset/MHEALTH/evaluation_labels.pkl",
+   "stored": "git-lfs",
+   "bytes": 19389,
+   "sha256": "8a4d7a68cb0b5616c6bd354d24aa75d73d8a608751f5e4b07acc6f68cc2e6678"
+  },
+  {
+   "path": "data/prepared/cross_dataset/PAMAP2/features.pkl",
+   "stored": "git-lfs",
+   "bytes": 63947354,
+   "sha256": "75542add91725f2f4d2a33ab54020f6590279a5585476c9459be11b4832c40af"
+  },
+  {
+   "path": "data/prepared/cross_dataset/PAMAP2/evaluation_labels.pkl",
+   "stored": "git-lfs",
+   "bytes": 47987,
+   "sha256": "3929136fb20c60ae3533528507a5cb6dcff46bcb1cf6a75c5ed9c74473840073"
+  },
+  {
+   "path": "data/prepared/cross_dataset/RealWorld/features.pkl",
+   "stored": "git-lfs",
+   "bytes": 158361295,
+   "sha256": "94a98b4d682e801637d02e19f4098ee39825791c7c8ab20550a3cc4175a52829"
+  },
+  {
+   "path": "data/prepared/cross_dataset/RealWorld/evaluation_labels.pkl",
+   "stored": "git-lfs",
+   "bytes": 118182,
+   "sha256": "d77c02d25bb3c156a804b16d75987af5706af78819aefdbd5e7f6b71b036df36"
+  },
+  {
+   "path": "data/prepared/cross_dataset/metadata/MHEALTH.json",
+   "stored": "git"
+  },
+  {
+   "path": "data/prepared/cross_dataset/metadata/PAMAP2.json",
+   "stored": "git"
+  },
+  {
+   "path": "data/prepared/cross_dataset/metadata/RealWorld.json",
+   "stored": "git"
+  },
+  {
+   "path": "models/cross_dataset/PAMAP2_to_RealWorld/model_last.pt",
+   "stored": "git-lfs",
+   "bytes": 862690,
+   "sha256": "4d79188fca981a9fe665584f98d12a7672c89da9c8faf08a4db00622cf59c76c"
+  },
+  {
+   "path": "models/cross_dataset/PAMAP2_to_RealWorld/config.json",
+   "stored": "git"
+  },
+  {
+   "path": "models/cross_dataset/RealWorld_to_PAMAP2/model_last.pt",
+   "stored": "git-lfs",
+   "bytes": 862690,
+   "sha256": "3514c610d1f0fe93e59c528003e918866205cce345b70ee70733755496c76287"
+  },
+  {
+   "path": "models/cross_dataset/RealWorld_to_PAMAP2/config.json",
+   "stored": "git"
+  },
+  {
+   "path": "models/cross_dataset/PAMAP2_to_MHEALTH/model_last.pt",
+   "stored": "git-lfs",
+   "bytes": 862690,
+   "sha256": "52953aab71c1cbc4ff52354b189992050d056a4c248cc770c1a8095c76f074ad"
+  },
+  {
+   "path": "models/cross_dataset/PAMAP2_to_MHEALTH/config.json",
+   "stored": "git"
+  },
+  {
+   "path": "models/cross_dataset/MHEALTH_to_PAMAP2/model_last.pt",
+   "stored": "git-lfs",
+   "bytes": 862690,
+   "sha256": "e7a15d378ca5e11fa01a9ea131ba08d1681d303c9adb608b5f263ec4fcbbd003"
+  },
+  {
+   "path": "models/cross_dataset/MHEALTH_to_PAMAP2/config.json",
+   "stored": "git"
+  },
+  {
+   "path": "models/cross_dataset/RealWorld_to_MHEALTH/model_last.pt",
+   "stored": "git-lfs",
+   "bytes": 862690,
+   "sha256": "05b71a9547152d7b756dfc7d6e8a6ca268409877acb73579d1abe1b8e18a18de"
+  },
+  {
+   "path": "models/cross_dataset/RealWorld_to_MHEALTH/config.json",
+   "stored": "git"
+  },
+  {
+   "path": "models/cross_dataset/MHEALTH_to_RealWorld/model_last.pt",
+   "stored": "git-lfs",
+   "bytes": 862690,
+   "sha256": "caf0fdc34fed46f17e3c2e7fdabf9ae2a86897ebb5bc60a8fdd568e76429848b"
+  },
+  {
+   "path": "models/cross_dataset/MHEALTH_to_RealWorld/config.json",
+   "stored": "git"
+  }
+ ],
+ "combinations": {
+  "deep_coral": [
+   {
+    "id": 0,
+    "origin": "stage2",
+    "learning_rate": 0.0003,
+    "source_ce_weight": 0.1013209750429822,
+    "alignment_weight": 4.23035475456397
+   },
+   {
+    "id": 1,
+    "origin": "adatime_hparams",
+    "learning_rate": 0.0005,
+    "source_ce_weight": 0.1013209750429822,
+    "alignment_weight": 4.23035475456397
+   },
+   {
+    "id": 2,
+    "origin": "random",
+    "learning_rate": 0.0005,
+    "source_ce_weight": 5.78484032678939,
+    "alignment_weight": 5.243481433980293
+   },
+   {
+    "id": 3,
+    "origin": "random",
+    "learning_rate": 0.001,
+    "source_ce_weight": 0.16325646088121984,
+    "alignment_weight": 5.547894686490452
+   },
+   {
+    "id": 4,
+    "origin": "random",
+    "learning_rate": 0.01,
+    "source_ce_weight": 4.0407909943733715,
+    "alignment_weight": 0.2567903016188101
+   },
+   {
+    "id": 5,
+    "origin": "random",
+    "learning_rate": 0.0005,
+    "source_ce_weight": 2.513148886664384,
+    "alignment_weight": 9.46985793570915
+   },
+   {
+    "id": 6,
+    "origin": "random",
+    "learning_rate": 0.001,
+    "source_ce_weight": 4.790490179284529,
+    "alignment_weight": 1.259853799212981
+   },
+   {
+    "id": 7,
+    "origin": "random",
+    "learning_rate": 0.0005,
+    "source_ce_weight": 0.8801964443941431,
+    "alignment_weight": 9.829596628715885
+   },
+   {
+    "id": 8,
+    "origin": "random",
+    "learning_rate": 0.001,
+    "source_ce_weight": 4.945884176780721,
+    "alignment_weight": 4.149166677330018
+   },
+   {
+    "id": 9,
+    "origin": "random",
+    "learning_rate": 0.01,
+    "source_ce_weight": 7.674521513299171,
+    "alignment_weight": 0.8178930805954063
+   },
+   {
+    "id": 10,
+    "origin": "random",
+    "learning_rate": 0.01,
+    "source_ce_weight": 8.639702671846878,
+    "alignment_weight": 4.178546512532583
+   },
+   {
+    "id": 11,
+    "origin": "random",
+    "learning_rate": 0.005,
+    "source_ce_weight": 7.790430884455055,
+    "alignment_weight": 5.492622696437139
+   },
+   {
+    "id": 12,
+    "origin": "random",
+    "learning_rate": 0.01,
+    "source_ce_weight": 7.755047518952632,
+    "alignment_weight": 2.59080543956553
+   },
+   {
+    "id": 13,
+    "origin": "random",
+    "learning_rate": 0.01,
+    "source_ce_weight": 6.098335839515977,
+    "alignment_weight": 2.8722197365756212
+   },
+   {
+    "id": 14,
+    "origin": "random",
+    "learning_rate": 0.001,
+    "source_ce_weight": 3.2376109418399204,
+    "alignment_weight": 3.1827165166643283
+   },
+   {
+    "id": 15,
+    "origin": "random",
+    "learning_rate": 0.0005,
+    "source_ce_weight": 4.8080460157066875,
+    "alignment_weight": 3.8040205016535666
+   },
+   {
+    "id": 16,
+    "origin": "random",
+    "learning_rate": 0.0005,
+    "source_ce_weight": 5.770422782582411,
+    "alignment_weight": 4.223905151271748
+   },
+   {
+    "id": 17,
+    "origin": "random",
+    "learning_rate": 0.001,
+    "source_ce_weight": 1.8024719072598203,
+    "alignment_weight": 1.540743122028735
+   },
+   {
+    "id": 18,
+    "origin": "random",
+    "learning_rate": 0.005,
+    "source_ce_weight": 9.631838328287541,
+    "alignment_weight": 4.888162895809792
+   },
+   {
+    "id": 19,
+    "origin": "random",
+    "learning_rate": 0.005,
+    "source_ce_weight": 4.6519203201241535,
+    "alignment_weight": 6.482053032130026
+   },
+   {
+    "id": 20,
+    "origin": "random",
+    "learning_rate": 0.01,
+    "source_ce_weight": 6.446576995533538,
+    "alignment_weight": 9.846882931856351
+   },
+   {
+    "id": 21,
+    "origin": "random",
+    "learning_rate": 0.005,
+    "source_ce_weight": 5.373819298833526,
+    "alignment_weight": 3.6297141083176783
+   },
+   {
+    "id": 22,
+    "origin": "random",
+    "learning_rate": 0.001,
+    "source_ce_weight": 5.102180703635359,
+    "alignment_weight": 2.9907181370242917
+   },
+   {
+    "id": 23,
+    "origin": "random",
+    "learning_rate": 0.001,
+    "source_ce_weight": 1.986024482672765,
+    "alignment_weight": 7.154367405476586
+   },
+   {
+    "id": 24,
+    "origin": "random",
+    "learning_rate": 0.001,
+    "source_ce_weight": 2.6296911485259566,
+    "alignment_weight": 7.686057356784198
+   },
+   {
+    "id": 25,
+    "origin": "random",
+    "learning_rate": 0.005,
+    "source_ce_weight": 9.179689889756109,
+    "alignment_weight": 5.878712067828514
+   },
+   {
+    "id": 26,
+    "origin": "random",
+    "learning_rate": 0.01,
+    "source_ce_weight": 5.539405327675542,
+    "alignment_weight": 6.494267725989768
+   },
+   {
+    "id": 27,
+    "origin": "random",
+    "learning_rate": 0.01,
+    "source_ce_weight": 8.139516686576137,
+    "alignment_weight": 1.5810757606803172
+   },
+   {
+    "id": 28,
+    "origin": "random",
+    "learning_rate": 0.0005,
+    "source_ce_weight": 5.679544393209368,
+    "alignment_weight": 4.454419820898223
+   },
+   {
+    "id": 29,
+    "origin": "random",
+    "learning_rate": 0.0005,
+    "source_ce_weight": 0.20222261664825178,
+    "alignment_weight": 1.9154166716144463
+   },
+   {
+    "id": 30,
+    "origin": "random",
+    "learning_rate": 0.005,
+    "source_ce_weight": 9.290965937574603,
+    "alignment_weight": 3.9101837484970003
+   },
+   {
+    "id": 31,
+    "origin": "random",
+    "learning_rate": 0.005,
+    "source_ce_weight": 5.459797776359144,
+    "alignment_weight": 6.379503557073438
+   },
+   {
+    "id": 32,
+    "origin": "random",
+    "learning_rate": 0.005,
+    "source_ce_weight": 1.6757076260490347,
+    "alignment_weight": 1.3503659916691622
+   },
+   {
+    "id": 33,
+    "origin": "random",
+    "learning_rate": 0.0005,
+    "source_ce_weight": 6.752089962803357,
+    "alignment_weight": 1.7333685172525268
+   },
+   {
+    "id": 34,
+    "origin": "random",
+    "learning_rate": 0.01,
+    "source_ce_weight": 3.884952638512423,
+    "alignment_weight": 7.4085995755935
+   },
+   {
+    "id": 35,
+    "origin": "random",
+    "learning_rate": 0.0005,
+    "source_ce_weight": 2.296643094726997,
+    "alignment_weight": 2.973137001247131
+   },
+   {
+    "id": 36,
+    "origin": "random",
+    "learning_rate": 0.01,
+    "source_ce_weight": 1.8888822044692444,
+    "alignment_weight": 4.284921919682278
+   },
+   {
+    "id": 37,
+    "origin": "random",
+    "learning_rate": 0.0005,
+    "source_ce_weight": 9.26931441929559,
+    "alignment_weight": 2.386318680414533
+   },
+   {
+    "id": 38,
+    "origin": "random",
+    "learning_rate": 0.0005,
+    "source_ce_weight": 1.7626764704129365,
+    "alignment_weight": 2.123132020146991
+   },
+   {
+    "id": 39,
+    "origin": "random",
+    "learning_rate": 0.001,
+    "source_ce_weight": 2.4577067407415907,
+    "alignment_weight": 9.165672269379057
+   },
+   {
+    "id": 40,
+    "origin": "random",
+    "learning_rate": 0.005,
+    "source_ce_weight": 5.163019453057513,
+    "alignment_weight": 1.8755528307675884
+   },
+   {
+    "id": 41,
+    "origin": "random",
+    "learning_rate": 0.01,
+    "source_ce_weight": 2.1976456969480576,
+    "alignment_weight": 0.618777991475624
+   },
+   {
+    "id": 42,
+    "origin": "random",
+    "learning_rate": 0.005,
+    "source_ce_weight": 0.4514959846579334,
+    "alignment_weight": 1.4152014098252563
+   },
+   {
+    "id": 43,
+    "origin": "random",
+    "learning_rate": 0.005,
+    "source_ce_weight": 3.4272876430657933,
+    "alignment_weight": 6.718722532270329
+   },
+   {
+    "id": 44,
+    "origin": "random",
+    "learning_rate": 0.005,
+    "source_ce_weight": 2.1797924239297544,
+    "alignment_weight": 8.314950453444954
+   },
+   {
+    "id": 45,
+    "origin": "random",
+    "learning_rate": 0.01,
+    "source_ce_weight": 7.750335418192939,
+    "alignment_weight": 6.335785062899328
+   },
+   {
+    "id": 46,
+    "origin": "random",
+    "learning_rate": 0.01,
+    "source_ce_weight": 2.6558510116933367,
+    "alignment_weight": 8.165534303856267
+   },
+   {
+    "id": 47,
+    "origin": "random",
+    "learning_rate": 0.005,
+    "source_ce_weight": 6.336885648435814,
+    "alignment_weight": 1.2137543797272794
+   },
+   {
+    "id": 48,
+    "origin": "random",
+    "learning_rate": 0.01,
+    "source_ce_weight": 0.5320415500949089,
+    "alignment_weight": 3.0118333802390245
+   },
+   {
+    "id": 49,
+    "origin": "random",
+    "learning_rate": 0.01,
+    "source_ce_weight": 6.512501496631136,
+    "alignment_weight": 3.1791173689021344
+   },
+   {
+    "id": 50,
+    "origin": "random",
+    "learning_rate": 0.005,
+    "source_ce_weight": 4.125400903216524,
+    "alignment_weight": 9.667304993011518
+   },
+   {
+    "id": 51,
+    "origin": "random",
+    "learning_rate": 0.0005,
+    "source_ce_weight": 8.238462063996657,
+    "alignment_weight": 2.603293505336396
+   },
+   {
+    "id": 52,
+    "origin": "random",
+    "learning_rate": 0.01,
+    "source_ce_weight": 1.807494520751406,
+    "alignment_weight": 7.051520335837692
+   },
+   {
+    "id": 53,
+    "origin": "random",
+    "learning_rate": 0.001,
+    "source_ce_weight": 1.0184918302425705,
+    "alignment_weight": 7.260080094251645
+   },
+   {
+    "id": 54,
+    "origin": "random",
+    "learning_rate": 0.0005,
+    "source_ce_weight": 6.734492666066122,
+    "alignment_weight": 0.7481301546865617
+   },
+   {
+    "id": 55,
+    "origin": "random",
+    "learning_rate": 0.0005,
+    "source_ce_weight": 2.1329927521229584,
+    "alignment_weight": 0.6989738192852519
+   },
+   {
+    "id": 56,
+    "origin": "random",
+    "learning_rate": 0.005,
+    "source_ce_weight": 0.11593870822212145,
+    "alignment_weight": 4.35131721462806
+   },
+   {
+    "id": 57,
+    "origin": "random",
+    "learning_rate": 0.0005,
+    "source_ce_weight": 3.603833459415539,
+    "alignment_weight": 1.9705326419132514
+   },
+   {
+    "id": 58,
+    "origin": "random",
+    "learning_rate": 0.005,
+    "source_ce_weight": 9.361892869518408,
+    "alignment_weight": 1.0288788786422474
+   },
+   {
+    "id": 59,
+    "origin": "random",
+    "learning_rate": 0.001,
+    "source_ce_weight": 3.632224943229895,
+    "alignment_weight": 5.94689737254027
+   },
+   {
+    "id": 60,
+    "origin": "random",
+    "learning_rate": 0.005,
+    "source_ce_weight": 0.6096400079921901,
+    "alignment_weight": 6.8505107703327175
+   },
+   {
+    "id": 61,
+    "origin": "random",
+    "learning_rate": 0.0005,
+    "source_ce_weight": 4.0952121847738745,
+    "alignment_weight": 6.500877293701441
+   },
+   {
+    "id": 62,
+    "origin": "random",
+    "learning_rate": 0.01,
+    "source_ce_weight": 9.679632536599817,
+    "alignment_weight": 5.086223849407642
+   },
+   {
+    "id": 63,
+    "origin": "random",
+    "learning_rate": 0.0005,
+    "source_ce_weight": 6.42989399565508,
+    "alignment_weight": 6.706338361453009
+   },
+   {
+    "id": 64,
+    "origin": "random",
+    "learning_rate": 0.0005,
+    "source_ce_weight": 0.10846912438265541,
+    "alignment_weight": 9.76050913448788
+   },
+   {
+    "id": 65,
+    "origin": "random",
+    "learning_rate": 0.0005,
+    "source_ce_weight": 0.506863939604281,
+    "alignment_weight": 9.153595702862562
+   },
+   {
+    "id": 66,
+    "origin": "random",
+    "learning_rate": 0.0005,
+    "source_ce_weight": 1.5790943429188047,
+    "alignment_weight": 9.074705719110085
+   },
+   {
+    "id": 67,
+    "origin": "random",
+    "learning_rate": 0.0005,
+    "source_ce_weight": 3.282546068946912,
+    "alignment_weight": 1.1714442626548192
+   },
+   {
+    "id": 68,
+    "origin": "random",
+    "learning_rate": 0.01,
+    "source_ce_weight": 0.4242068966006446,
+    "alignment_weight": 5.080318461111025
+   },
+   {
+    "id": 69,
+    "origin": "random",
+    "learning_rate": 0.01,
+    "source_ce_weight": 1.575694678379326,
+    "alignment_weight": 4.229248527465592
+   },
+   {
+    "id": 70,
+    "origin": "random",
+    "learning_rate": 0.01,
+    "source_ce_weight": 1.6743831172358583,
+    "alignment_weight": 1.6206004174954605
+   },
+   {
+    "id": 71,
+    "origin": "random",
+    "learning_rate": 0.005,
+    "source_ce_weight": 5.846895126357207,
+    "alignment_weight": 0.5812282230462615
+   },
+   {
+    "id": 72,
+    "origin": "random",
+    "learning_rate": 0.001,
+    "source_ce_weight": 7.487894519450519,
+    "alignment_weight": 6.808723003349261
+   },
+   {
+    "id": 73,
+    "origin": "random",
+    "learning_rate": 0.001,
+    "source_ce_weight": 3.945924996328309,
+    "alignment_weight": 0.4011226465655544
+   },
+   {
+    "id": 74,
+    "origin": "random",
+    "learning_rate": 0.005,
+    "source_ce_weight": 2.031301459162255,
+    "alignment_weight": 3.0458056853881037
+   },
+   {
+    "id": 75,
+    "origin": "random",
+    "learning_rate": 0.01,
+    "source_ce_weight": 0.9283131971373758,
+    "alignment_weight": 2.135484595812262
+   },
+   {
+    "id": 76,
+    "origin": "random",
+    "learning_rate": 0.0005,
+    "source_ce_weight": 5.447974599195054,
+    "alignment_weight": 9.480650421508761
+   },
+   {
+    "id": 77,
+    "origin": "random",
+    "learning_rate": 0.005,
+    "source_ce_weight": 2.8089255028651787,
+    "alignment_weight": 1.2281163268463169
+   },
+   {
+    "id": 78,
+    "origin": "random",
+    "learning_rate": 0.005,
+    "source_ce_weight": 6.702792081260411,
+    "alignment_weight": 4.64601017346221
+   },
+   {
+    "id": 79,
+    "origin": "random",
+    "learning_rate": 0.001,
+    "source_ce_weight": 5.243253817693493,
+    "alignment_weight": 9.103362167375202
+   },
+   {
+    "id": 80,
+    "origin": "random",
+    "learning_rate": 0.005,
+    "source_ce_weight": 8.43619419007048,
+    "alignment_weight": 2.529700912468332
+   },
+   {
+    "id": 81,
+    "origin": "random",
+    "learning_rate": 0.005,
+    "source_ce_weight": 7.673677323854674,
+    "alignment_weight": 3.559190119472814
+   },
+   {
+    "id": 82,
+    "origin": "random",
+    "learning_rate": 0.001,
+    "source_ce_weight": 6.870647691573057,
+    "alignment_weight": 4.661979969524862
+   },
+   {
+    "id": 83,
+    "origin": "random",
+    "learning_rate": 0.001,
+    "source_ce_weight": 0.42349459146712626,
+    "alignment_weight": 8.319077191873111
+   },
+   {
+    "id": 84,
+    "origin": "random",
+    "learning_rate": 0.0005,
+    "source_ce_weight": 5.81130065945811,
+    "alignment_weight": 3.2997894833440435
+   },
+   {
+    "id": 85,
+    "origin": "random",
+    "learning_rate": 0.01,
+    "source_ce_weight": 4.550269753267734,
+    "alignment_weight": 6.176148683004121
+   },
+   {
+    "id": 86,
+    "origin": "random",
+    "learning_rate": 0.0005,
+    "source_ce_weight": 1.7658996543527865,
+    "alignment_weight": 2.57592114467161
+   },
+   {
+    "id": 87,
+    "origin": "random",
+    "learning_rate": 0.005,
+    "source_ce_weight": 5.686208938234644,
+    "alignment_weight": 0.5371703971186678
+   },
+   {
+    "id": 88,
+    "origin": "random",
+    "learning_rate": 0.01,
+    "source_ce_weight": 1.7885763595664845,
+    "alignment_weight": 1.0793816061551103
+   },
+   {
+    "id": 89,
+    "origin": "random",
+    "learning_rate": 0.001,
+    "source_ce_weight": 1.7281406174304776,
+    "alignment_weight": 9.594068843805337
+   },
+   {
+    "id": 90,
+    "origin": "random",
+    "learning_rate": 0.001,
+    "source_ce_weight": 0.9813395729574143,
+    "alignment_weight": 6.105427356477831
+   },
+   {
+    "id": 91,
+    "origin": "random",
+    "learning_rate": 0.001,
+    "source_ce_weight": 9.922891669311873,
+    "alignment_weight": 7.756267953382944
+   },
+   {
+    "id": 92,
+    "origin": "random",
+    "learning_rate": 0.0005,
+    "source_ce_weight": 4.565752215523166,
+    "alignment_weight": 7.7761463915235955
+   },
+   {
+    "id": 93,
+    "origin": "random",
+    "learning_rate": 0.001,
+    "source_ce_weight": 0.8937414428137641,
+    "alignment_weight": 1.013614162597653
+   },
+   {
+    "id": 94,
+    "origin": "random",
+    "learning_rate": 0.01,
+    "source_ce_weight": 5.185247188508002,
+    "alignment_weight": 2.893648427066056
+   },
+   {
+    "id": 95,
+    "origin": "random",
+    "learning_rate": 0.001,
+    "source_ce_weight": 4.171073070400211,
+    "alignment_weight": 8.645168434807841
+   },
+   {
+    "id": 96,
+    "origin": "random",
+    "learning_rate": 0.001,
+    "source_ce_weight": 7.346944427661227,
+    "alignment_weight": 1.1757730258943349
+   },
+   {
+    "id": 97,
+    "origin": "random",
+    "learning_rate": 0.001,
+    "source_ce_weight": 2.4909441878732537,
+    "alignment_weight": 8.359753980095661
+   },
+   {
+    "id": 98,
+    "origin": "random",
+    "learning_rate": 0.005,
+    "source_ce_weight": 0.5879320852435636,
+    "alignment_weight": 5.836038643969129
+   },
+   {
+    "id": 99,
+    "origin": "random",
+    "learning_rate": 0.001,
+    "source_ce_weight": 8.825681511671743,
+    "alignment_weight": 1.5776451724939173
+   }
+  ],
+  "dann": [
+   {
+    "id": 0,
+    "origin": "stage2",
+    "learning_rate": 0.0003,
+    "source_ce_weight": 5.1390077646202,
+    "alignment_weight": 2.943729820531079
+   },
+   {
+    "id": 1,
+    "origin": "adatime_hparams",
+    "learning_rate": 0.001,
+    "source_ce_weight": 5.1390077646202,
+    "alignment_weight": 2.943729820531079
+   },
+   {
+    "id": 2,
+    "origin": "random",
+    "learning_rate": 0.0005,
+    "source_ce_weight": 5.206861672476688,
+    "alignment_weight": 1.678295647233139
+   },
+   {
+    "id": 3,
+    "origin": "random",
+    "learning_rate": 0.01,
+    "source_ce_weight": 9.989607549305797,
+    "alignment_weight": 5.169915562412591
+   },
+   {
+    "id": 4,
+    "origin": "random",
+    "learning_rate": 0.005,
+    "source_ce_weight": 0.8048380763181514,
+    "alignment_weight": 2.5465468271989793
+   },
+   {
+    "id": 5,
+    "origin": "random",
+    "learning_rate": 0.001,
+    "source_ce_weight": 3.1241655332417353,
+    "alignment_weight": 8.850597672731823
+   },
+   {
+    "id": 6,
+    "origin": "random",
+    "learning_rate": 0.001,
+    "source_ce_weight": 0.6545696994861058,
+    "alignment_weight": 2.0777733502613396
+   },
+   {
+    "id": 7,
+    "origin": "random",
+    "learning_rate": 0.0005,
+    "source_ce_weight": 4.377223515123958,
+    "alignment_weight": 2.466155525278881
+   },
+   {
+    "id": 8,
+    "origin": "random",
+    "learning_rate": 0.001,
+    "source_ce_weight": 2.0701048468146523,
+    "alignment_weight": 3.3102040284137995
+   },
+   {
+    "id": 9,
+    "origin": "random",
+    "learning_rate": 0.005,
+    "source_ce_weight": 6.1687272970152005,
+    "alignment_weight": 3.4515144336832737
+   },
+   {
+    "id": 10,
+    "origin": "random",
+    "learning_rate": 0.005,
+    "source_ce_weight": 1.284283026148072,
+    "alignment_weight": 3.177935819572936
+   },
+   {
+    "id": 11,
+    "origin": "random",
+    "learning_rate": 0.0005,
+    "source_ce_weight": 6.3062589981988575,
+    "alignment_weight": 2.6645898091843665
+   },
+   {
+    "id": 12,
+    "origin": "random",
+    "learning_rate": 0.0005,
+    "source_ce_weight": 9.348611912336375,
+    "alignment_weight": 9.860024780977291
+   },
+   {
+    "id": 13,
+    "origin": "random",
+    "learning_rate": 0.005,
+    "source_ce_weight": 3.2331425077299034,
+    "alignment_weight": 9.066530775497814
+   },
+   {
+    "id": 14,
+    "origin": "random",
+    "learning_rate": 0.01,
+    "source_ce_weight": 7.837892957786482,
+    "alignment_weight": 7.8844992139334
+   },
+   {
+    "id": 15,
+    "origin": "random",
+    "learning_rate": 0.005,
+    "source_ce_weight": 9.79249538643323,
+    "alignment_weight": 7.169989129312987
+   },
+   {
+    "id": 16,
+    "origin": "random",
+    "learning_rate": 0.001,
+    "source_ce_weight": 0.8244376245370503,
+    "alignment_weight": 3.572526901130071
+   },
+   {
+    "id": 17,
+    "origin": "random",
+    "learning_rate": 0.001,
+    "source_ce_weight": 2.046906448967,
+    "alignment_weight": 3.1621403124521867
+   },
+   {
+    "id": 18,
+    "origin": "random",
+    "learning_rate": 0.01,
+    "source_ce_weight": 1.7347194544249798,
+    "alignment_weight": 7.678652536254328
+   },
+   {
+    "id": 19,
+    "origin": "random",
+    "learning_rate": 0.001,
+    "source_ce_weight": 4.738994143790309,
+    "alignment_weight": 5.172109342799863
+   },
+   {
+    "id": 20,
+    "origin": "random",
+    "learning_rate": 0.005,
+    "source_ce_weight": 7.485428513170553,
+    "alignment_weight": 2.7988169691536813
+   },
+   {
+    "id": 21,
+    "origin": "random",
+    "learning_rate": 0.0005,
+    "source_ce_weight": 4.3851609438764525,
+    "alignment_weight": 5.431922608949631
+   },
+   {
+    "id": 22,
+    "origin": "random",
+    "learning_rate": 0.0005,
+    "source_ce_weight": 3.727284369677251,
+    "alignment_weight": 7.271795080763838
+   },
+   {
+    "id": 23,
+    "origin": "random",
+    "learning_rate": 0.0005,
+    "source_ce_weight": 0.41645926529056027,
+    "alignment_weight": 8.022647613289436
+   },
+   {
+    "id": 24,
+    "origin": "random",
+    "learning_rate": 0.01,
+    "source_ce_weight": 1.7752576488034821,
+    "alignment_weight": 2.581779256385834
+   },
+   {
+    "id": 25,
+    "origin": "random",
+    "learning_rate": 0.0005,
+    "source_ce_weight": 5.097994841536977,
+    "alignment_weight": 1.062753960094407
+   },
+   {
+    "id": 26,
+    "origin": "random",
+    "learning_rate": 0.005,
+    "source_ce_weight": 9.601692860355495,
+    "alignment_weight": 2.131956814353925
+   },
+   {
+    "id": 27,
+    "origin": "random",
+    "learning_rate": 0.005,
+    "source_ce_weight": 7.056567992383476,
+    "alignment_weight": 8.038162144699232
+   },
+   {
+    "id": 28,
+    "origin": "random",
+    "learning_rate": 0.01,
+    "source_ce_weight": 6.386653192890373,
+    "alignment_weight": 1.0106707979812117
+   },
+   {
+    "id": 29,
+    "origin": "random",
+    "learning_rate": 0.001,
+    "source_ce_weight": 8.530742432647905,
+    "alignment_weight": 8.811910560357285
+   },
+   {
+    "id": 30,
+    "origin": "random",
+    "learning_rate": 0.01,
+    "source_ce_weight": 1.0595865505695483,
+    "alignment_weight": 0.12798860185003436
+   },
+   {
+    "id": 31,
+    "origin": "random",
+    "learning_rate": 0.001,
+    "source_ce_weight": 8.257041817148593,
+    "alignment_weight": 3.0523598015871225
+   },
+   {
+    "id": 32,
+    "origin": "random",
+    "learning_rate": 0.01,
+    "source_ce_weight": 7.258367357067672,
+    "alignment_weight": 3.499455801570087
+   },
+   {
+    "id": 33,
+    "origin": "random",
+    "learning_rate": 0.001,
+    "source_ce_weight": 2.3319460906362983,
+    "alignment_weight": 0.6368426079514223
+   },
+   {
+    "id": 34,
+    "origin": "random",
+    "learning_rate": 0.0005,
+    "source_ce_weight": 2.2370968214368,
+    "alignment_weight": 7.142538526121348
+   },
+   {
+    "id": 35,
+    "origin": "random",
+    "learning_rate": 0.005,
+    "source_ce_weight": 1.1778081294967215,
+    "alignment_weight": 0.9012665543079087
+   },
+   {
+    "id": 36,
+    "origin": "random",
+    "learning_rate": 0.001,
+    "source_ce_weight": 8.648281401465564,
+    "alignment_weight": 4.716420649129098
+   },
+   {
+    "id": 37,
+    "origin": "random",
+    "learning_rate": 0.005,
+    "source_ce_weight": 9.206809042554264,
+    "alignment_weight": 5.481228683322222
+   },
+   {
+    "id": 38,
+    "origin": "random",
+    "learning_rate": 0.001,
+    "source_ce_weight": 6.675923498891029,
+    "alignment_weight": 6.392384788493068
+   },
+   {
+    "id": 39,
+    "origin": "random",
+    "learning_rate": 0.005,
+    "source_ce_weight": 8.970064599419102,
+    "alignment_weight": 8.883292395230647
+   },
+   {
+    "id": 40,
+    "origin": "random",
+    "learning_rate": 0.0005,
+    "source_ce_weight": 4.102409707863284,
+    "alignment_weight": 5.63886605213521
+   },
+   {
+    "id": 41,
+    "origin": "random",
+    "learning_rate": 0.01,
+    "source_ce_weight": 7.801040154810151,
+    "alignment_weight": 7.536449704108889
+   },
+   {
+    "id": 42,
+    "origin": "random",
+    "learning_rate": 0.0005,
+    "source_ce_weight": 7.281967801129459,
+    "alignment_weight": 2.706165014600066
+   },
+   {
+    "id": 43,
+    "origin": "random",
+    "learning_rate": 0.005,
+    "source_ce_weight": 5.498710287781895,
+    "alignment_weight": 8.668489241130878
+   },
+   {
+    "id": 44,
+    "origin": "random",
+    "learning_rate": 0.0005,
+    "source_ce_weight": 4.587986924512823,
+    "alignment_weight": 3.590481223545318
+   },
+   {
+    "id": 45,
+    "origin": "random",
+    "learning_rate": 0.01,
+    "source_ce_weight": 8.23131735123916,
+    "alignment_weight": 5.3197503588243
+   },
+   {
+    "id": 46,
+    "origin": "random",
+    "learning_rate": 0.005,
+    "source_ce_weight": 2.8233005328524174,
+    "alignment_weight": 0.4647401677877933
+   },
+   {
+    "id": 47,
+    "origin": "random",
+    "learning_rate": 0.005,
+    "source_ce_weight": 7.2967021791565845,
+    "alignment_weight": 5.679522018463162
+   },
+   {
+    "id": 48,
+    "origin": "random",
+    "learning_rate": 0.001,
+    "source_ce_weight": 5.893685712507749,
+    "alignment_weight": 8.115062986806386
+   },
+   {
+    "id": 49,
+    "origin": "random",
+    "learning_rate": 0.01,
+    "source_ce_weight": 6.301730095260109,
+    "alignment_weight": 8.02840436631236
+   },
+   {
+    "id": 50,
+    "origin": "random",
+    "learning_rate": 0.005,
+    "source_ce_weight": 3.8567277673803115,
+    "alignment_weight": 6.243496010520082
+   },
+   {
+    "id": 51,
+    "origin": "random",
+    "learning_rate": 0.01,
+    "source_ce_weight": 8.52896705691931,
+    "alignment_weight": 9.97214724549206
+   },
+   {
+    "id": 52,
+    "origin": "random",
+    "learning_rate": 0.01,
+    "source_ce_weight": 9.40218451384924,
+    "alignment_weight": 1.5730132966719834
+   },
+   {
+    "id": 53,
+    "origin": "random",
+    "learning_rate": 0.001,
+    "source_ce_weight": 4.3672046560771065,
+    "alignment_weight": 8.287572124902988
+   },
+   {
+    "id": 54,
+    "origin": "random",
+    "learning_rate": 0.001,
+    "source_ce_weight": 6.060672468845741,
+    "alignment_weight": 9.661456191396908
+   },
+   {
+    "id": 55,
+    "origin": "random",
+    "learning_rate": 0.01,
+    "source_ce_weight": 2.245549616571427,
+    "alignment_weight": 2.917585277011028
+   },
+   {
+    "id": 56,
+    "origin": "random",
+    "learning_rate": 0.0005,
+    "source_ce_weight": 7.800592857443628,
+    "alignment_weight": 0.5802293855511714
+   },
+   {
+    "id": 57,
+    "origin": "random",
+    "learning_rate": 0.005,
+    "source_ce_weight": 7.988387842637994,
+    "alignment_weight": 6.501574259174215
+   },
+   {
+    "id": 58,
+    "origin": "random",
+    "learning_rate": 0.01,
+    "source_ce_weight": 6.113948381141319,
+    "alignment_weight": 1.4295951566116905
+   },
+   {
+    "id": 59,
+    "origin": "random",
+    "learning_rate": 0.01,
+    "source_ce_weight": 7.395645438603662,
+    "alignment_weight": 8.859455630735052
+   },
+   {
+    "id": 60,
+    "origin": "random",
+    "learning_rate": 0.005,
+    "source_ce_weight": 3.0819923985715576,
+    "alignment_weight": 1.7451803167285946
+   },
+   {
+    "id": 61,
+    "origin": "random",
+    "learning_rate": 0.005,
+    "source_ce_weight": 8.07764028283217,
+    "alignment_weight": 4.140811945499185
+   },
+   {
+    "id": 62,
+    "origin": "random",
+    "learning_rate": 0.0005,
+    "source_ce_weight": 6.566598983477152,
+    "alignment_weight": 8.57431358065699
+   },
+   {
+    "id": 63,
+    "origin": "random",
+    "learning_rate": 0.001,
+    "source_ce_weight": 9.301451765578411,
+    "alignment_weight": 7.104344971358901
+   },
+   {
+    "id": 64,
+    "origin": "random",
+    "learning_rate": 0.0005,
+    "source_ce_weight": 0.7494441776731664,
+    "alignment_weight": 6.166816428355018
+   },
+   {
+    "id": 65,
+    "origin": "random",
+    "learning_rate": 0.005,
+    "source_ce_weight": 0.38072298745742766,
+    "alignment_weight": 9.456242241427542
+   },
+   {
+    "id": 66,
+    "origin": "random",
+    "learning_rate": 0.001,
+    "source_ce_weight": 6.122227473303927,
+    "alignment_weight": 1.8460714576310693
+   },
+   {
+    "id": 67,
+    "origin": "random",
+    "learning_rate": 0.001,
+    "source_ce_weight": 5.263529009515098,
+    "alignment_weight": 1.3200041560374658
+   },
+   {
+    "id": 68,
+    "origin": "random",
+    "learning_rate": 0.01,
+    "source_ce_weight": 4.863912356361036,
+    "alignment_weight": 1.1854596937601414
+   },
+   {
+    "id": 69,
+    "origin": "random",
+    "learning_rate": 0.001,
+    "source_ce_weight": 7.82864624809755,
+    "alignment_weight": 6.4369636021979595
+   },
+   {
+    "id": 70,
+    "origin": "random",
+    "learning_rate": 0.0005,
+    "source_ce_weight": 1.5003893172331209,
+    "alignment_weight": 9.418968961159313
+   },
+   {
+    "id": 71,
+    "origin": "random",
+    "learning_rate": 0.001,
+    "source_ce_weight": 3.7552395004869457,
+    "alignment_weight": 4.559937051793391
+   },
+   {
+    "id": 72,
+    "origin": "random",
+    "learning_rate": 0.005,
+    "source_ce_weight": 5.3266794068644545,
+    "alignment_weight": 8.858758354817237
+   },
+   {
+    "id": 73,
+    "origin": "random",
+    "learning_rate": 0.01,
+    "source_ce_weight": 6.262551778052727,
+    "alignment_weight": 1.802438172811335
+   },
+   {
+    "id": 74,
+    "origin": "random",
+    "learning_rate": 0.005,
+    "source_ce_weight": 3.920947671220002,
+    "alignment_weight": 2.82363638502623
+   },
+   {
+    "id": 75,
+    "origin": "random",
+    "learning_rate": 0.0005,
+    "source_ce_weight": 1.1843403024039123,
+    "alignment_weight": 8.689199934180984
+   },
+   {
+    "id": 76,
+    "origin": "random",
+    "learning_rate": 0.001,
+    "source_ce_weight": 8.862549743907245,
+    "alignment_weight": 4.895858882698934
+   },
+   {
+    "id": 77,
+    "origin": "random",
+    "learning_rate": 0.0005,
+    "source_ce_weight": 2.482608275813292,
+    "alignment_weight": 8.610324779687549
+   },
+   {
+    "id": 78,
+    "origin": "random",
+    "learning_rate": 0.0005,
+    "source_ce_weight": 8.037922459905678,
+    "alignment_weight": 6.750418186192424
+   },
+   {
+    "id": 79,
+    "origin": "random",
+    "learning_rate": 0.001,
+    "source_ce_weight": 3.4608370170062894,
+    "alignment_weight": 1.2565845552575938
+   },
+   {
+    "id": 80,
+    "origin": "random",
+    "learning_rate": 0.005,
+    "source_ce_weight": 0.6646655451458363,
+    "alignment_weight": 3.4519032491239487
+   },
+   {
+    "id": 81,
+    "origin": "random",
+    "learning_rate": 0.01,
+    "source_ce_weight": 5.988146518678234,
+    "alignment_weight": 4.836144130881494
+   },
+   {
+    "id": 82,
+    "origin": "random",
+    "learning_rate": 0.001,
+    "source_ce_weight": 7.700238196659018,
+    "alignment_weight": 2.329802434542075
+   },
+   {
+    "id": 83,
+    "origin": "random",
+    "learning_rate": 0.01,
+    "source_ce_weight": 1.4502451702108472,
+    "alignment_weight": 5.05882164246079
+   },
+   {
+    "id": 84,
+    "origin": "random",
+    "learning_rate": 0.001,
+    "source_ce_weight": 4.787202803652618,
+    "alignment_weight": 7.2708358050968185
+   },
+   {
+    "id": 85,
+    "origin": "random",
+    "learning_rate": 0.005,
+    "source_ce_weight": 7.540828469660686,
+    "alignment_weight": 7.196908909600507
+   },
+   {
+    "id": 86,
+    "origin": "random",
+    "learning_rate": 0.0005,
+    "source_ce_weight": 6.900846707761887,
+    "alignment_weight": 0.8623666751563378
+   },
+   {
+    "id": 87,
+    "origin": "random",
+    "learning_rate": 0.001,
+    "source_ce_weight": 5.974441477048376,
+    "alignment_weight": 8.095675557064004
+   },
+   {
+    "id": 88,
+    "origin": "random",
+    "learning_rate": 0.01,
+    "source_ce_weight": 6.88705176155882,
+    "alignment_weight": 7.470184563547054
+   },
+   {
+    "id": 89,
+    "origin": "random",
+    "learning_rate": 0.0005,
+    "source_ce_weight": 8.728803565050832,
+    "alignment_weight": 5.5740845817470115
+   },
+   {
+    "id": 90,
+    "origin": "random",
+    "learning_rate": 0.005,
+    "source_ce_weight": 2.1266494839361116,
+    "alignment_weight": 1.3569465671210152
+   },
+   {
+    "id": 91,
+    "origin": "random",
+    "learning_rate": 0.01,
+    "source_ce_weight": 1.8190924913660542,
+    "alignment_weight": 3.512039153038357
+   },
+   {
+    "id": 92,
+    "origin": "random",
+    "learning_rate": 0.005,
+    "source_ce_weight": 7.128845614119151,
+    "alignment_weight": 0.06506378224093844
+   },
+   {
+    "id": 93,
+    "origin": "random",
+    "learning_rate": 0.0005,
+    "source_ce_weight": 0.6657329535966692,
+    "alignment_weight": 3.9637443270222086
+   },
+   {
+    "id": 94,
+    "origin": "random",
+    "learning_rate": 0.005,
+    "source_ce_weight": 6.870683789275671,
+    "alignment_weight": 1.2452718666000988
+   },
+   {
+    "id": 95,
+    "origin": "random",
+    "learning_rate": 0.01,
+    "source_ce_weight": 4.510257370653612,
+    "alignment_weight": 9.258488874004502
+   },
+   {
+    "id": 96,
+    "origin": "random",
+    "learning_rate": 0.01,
+    "source_ce_weight": 9.447704746968594,
+    "alignment_weight": 6.963792876160584
+   },
+   {
+    "id": 97,
+    "origin": "random",
+    "learning_rate": 0.01,
+    "source_ce_weight": 6.891686311827159,
+    "alignment_weight": 7.953197810252656
+   },
+   {
+    "id": 98,
+    "origin": "random",
+    "learning_rate": 0.01,
+    "source_ce_weight": 4.043323291945995,
+    "alignment_weight": 6.787937480201716
+   },
+   {
+    "id": 99,
+    "origin": "random",
+    "learning_rate": 0.005,
+    "source_ce_weight": 0.4604199436546656,
+    "alignment_weight": 5.794067735223968
+   }
+  ],
+  "dsan": [
+   {
+    "id": 0,
+    "origin": "stage2",
+    "learning_rate": 0.0003,
+    "source_ce_weight": 1.8744909939900247,
+    "alignment_weight": 1.59
+   },
+   {
+    "id": 1,
+    "origin": "adatime_hparams",
+    "learning_rate": 0.001,
+    "source_ce_weight": 1.8744909939900247,
+    "alignment_weight": 1.59
+   },
+   {
+    "id": 2,
+    "origin": "random",
+    "learning_rate": 0.001,
+    "source_ce_weight": 5.163971085509357,
+    "alignment_weight": 2.686226874372384
+   },
+   {
+    "id": 3,
+    "origin": "random",
+    "learning_rate": 0.01,
+    "source_ce_weight": 8.112242555365444,
+    "alignment_weight": 5.092094317732807
+   },
+   {
+    "id": 4,
+    "origin": "random",
+    "learning_rate": 0.0005,
+    "source_ce_weight": 1.6999921961105515,
+    "alignment_weight": 7.0643165712164375
+   },
+   {
+    "id": 5,
+    "origin": "random",
+    "learning_rate": 0.0005,
+    "source_ce_weight": 0.5430205444116585,
+    "alignment_weight": 8.891552943586843
+   },
+   {
+    "id": 6,
+    "origin": "random",
+    "learning_rate": 0.001,
+    "source_ce_weight": 5.42369552456093,
+    "alignment_weight": 9.32278242550091
+   },
+   {
+    "id": 7,
+    "origin": "random",
+    "learning_rate": 0.0005,
+    "source_ce_weight": 5.803496032305735,
+    "alignment_weight": 3.8687574258905904
+   },
+   {
+    "id": 8,
+    "origin": "random",
+    "learning_rate": 0.0005,
+    "source_ce_weight": 9.76054423461916,
+    "alignment_weight": 3.054680129902797
+   },
+   {
+    "id": 9,
+    "origin": "random",
+    "learning_rate": 0.005,
+    "source_ce_weight": 5.844371231145931,
+    "alignment_weight": 5.063438570999249
+   },
+   {
+    "id": 10,
+    "origin": "random",
+    "learning_rate": 0.01,
+    "source_ce_weight": 1.9454497161253832,
+    "alignment_weight": 4.593793079767371
+   },
+   {
+    "id": 11,
+    "origin": "random",
+    "learning_rate": 0.001,
+    "source_ce_weight": 8.259664413111768,
+    "alignment_weight": 8.124688708611716
+   },
+   {
+    "id": 12,
+    "origin": "random",
+    "learning_rate": 0.0005,
+    "source_ce_weight": 9.157242338194596,
+    "alignment_weight": 6.6399781879977215
+   },
+   {
+    "id": 13,
+    "origin": "random",
+    "learning_rate": 0.005,
+    "source_ce_weight": 5.48964271293941,
+    "alignment_weight": 3.2506241631114037
+   },
+   {
+    "id": 14,
+    "origin": "random",
+    "learning_rate": 0.01,
+    "source_ce_weight": 8.159253046338709,
+    "alignment_weight": 8.732826349783702
+   },
+   {
+    "id": 15,
+    "origin": "random",
+    "learning_rate": 0.005,
+    "source_ce_weight": 0.8674164941196832,
+    "alignment_weight": 5.180906748699641
+   },
+   {
+    "id": 16,
+    "origin": "random",
+    "learning_rate": 0.01,
+    "source_ce_weight": 6.136525448098459,
+    "alignment_weight": 5.505671924972334
+   },
+   {
+    "id": 17,
+    "origin": "random",
+    "learning_rate": 0.0005,
+    "source_ce_weight": 4.183037608947274,
+    "alignment_weight": 0.579606369853745
+   },
+   {
+    "id": 18,
+    "origin": "random",
+    "learning_rate": 0.005,
+    "source_ce_weight": 6.447507042557158,
+    "alignment_weight": 9.402112845439184
+   },
+   {
+    "id": 19,
+    "origin": "random",
+    "learning_rate": 0.005,
+    "source_ce_weight": 7.644262503308489,
+    "alignment_weight": 5.923917058075662
+   },
+   {
+    "id": 20,
+    "origin": "random",
+    "learning_rate": 0.01,
+    "source_ce_weight": 1.8237935511682084,
+    "alignment_weight": 6.46626525729087
+   },
+   {
+    "id": 21,
+    "origin": "random",
+    "learning_rate": 0.0005,
+    "source_ce_weight": 3.5223059384238393,
+    "alignment_weight": 3.9581113229322153
+   },
+   {
+    "id": 22,
+    "origin": "random",
+    "learning_rate": 0.0005,
+    "source_ce_weight": 4.014398018268757,
+    "alignment_weight": 2.6788861977629237
+   },
+   {
+    "id": 23,
+    "origin": "random",
+    "learning_rate": 0.0005,
+    "source_ce_weight": 8.83217003943499,
+    "alignment_weight": 5.613313078839734
+   },
+   {
+    "id": 24,
+    "origin": "random",
+    "learning_rate": 0.001,
+    "source_ce_weight": 0.4163273113934153,
+    "alignment_weight": 6.5350674116791705
+   },
+   {
+    "id": 25,
+    "origin": "random",
+    "learning_rate": 0.005,
+    "source_ce_weight": 2.54698003934023,
+    "alignment_weight": 1.1735492167530746
+   },
+   {
+    "id": 26,
+    "origin": "random",
+    "learning_rate": 0.001,
+    "source_ce_weight": 7.942301954819486,
+    "alignment_weight": 6.239251645664167
+   },
+   {
+    "id": 27,
+    "origin": "random",
+    "learning_rate": 0.001,
+    "source_ce_weight": 1.68075649352086,
+    "alignment_weight": 9.901458100538473
+   },
+   {
+    "id": 28,
+    "origin": "random",
+    "learning_rate": 0.005,
+    "source_ce_weight": 0.8182835320439328,
+    "alignment_weight": 6.760332184853086
+   },
+   {
+    "id": 29,
+    "origin": "random",
+    "learning_rate": 0.001,
+    "source_ce_weight": 6.02946298670348,
+    "alignment_weight": 1.9771118696393999
+   },
+   {
+    "id": 30,
+    "origin": "random",
+    "learning_rate": 0.0005,
+    "source_ce_weight": 7.4288613721349845,
+    "alignment_weight": 3.9102018657100546
+   },
+   {
+    "id": 31,
+    "origin": "random",
+    "learning_rate": 0.001,
+    "source_ce_weight": 8.489059405431405,
+    "alignment_weight": 2.5792860009200345
+   },
+   {
+    "id": 32,
+    "origin": "random",
+    "learning_rate": 0.01,
+    "source_ce_weight": 9.319097997120249,
+    "alignment_weight": 9.112073398475305
+   },
+   {
+    "id": 33,
+    "origin": "random",
+    "learning_rate": 0.0005,
+    "source_ce_weight": 4.082422059223142,
+    "alignment_weight": 7.934530219993191
+   },
+   {
+    "id": 34,
+    "origin": "random",
+    "learning_rate": 0.0005,
+    "source_ce_weight": 8.145674821398787,
+    "alignment_weight": 6.084869408387926
+   },
+   {
+    "id": 35,
+    "origin": "random",
+    "learning_rate": 0.005,
+    "source_ce_weight": 1.183724297106544,
+    "alignment_weight": 1.0735129472488554
+   },
+   {
+    "id": 36,
+    "origin": "random",
+    "learning_rate": 0.0005,
+    "source_ce_weight": 9.520157491424039,
+    "alignment_weight": 9.770468935949605
+   },
+   {
+    "id": 37,
+    "origin": "random",
+    "learning_rate": 0.001,
+    "source_ce_weight": 9.538694840140671,
+    "alignment_weight": 4.384048466708779
+   },
+   {
+    "id": 38,
+    "origin": "random",
+    "learning_rate": 0.001,
+    "source_ce_weight": 0.15063823112074776,
+    "alignment_weight": 8.688069200817159
+   },
+   {
+    "id": 39,
+    "origin": "random",
+    "learning_rate": 0.0005,
+    "source_ce_weight": 7.8967373509723,
+    "alignment_weight": 1.1056589805884456
+   },
+   {
+    "id": 40,
+    "origin": "random",
+    "learning_rate": 0.01,
+    "source_ce_weight": 6.106397931856718,
+    "alignment_weight": 2.989910703237471
+   },
+   {
+    "id": 41,
+    "origin": "random",
+    "learning_rate": 0.001,
+    "source_ce_weight": 7.681611886516181,
+    "alignment_weight": 8.619493582616142
+   },
+   {
+    "id": 42,
+    "origin": "random",
+    "learning_rate": 0.0005,
+    "source_ce_weight": 2.620796982939161,
+    "alignment_weight": 1.208129718406183
+   },
+   {
+    "id": 43,
+    "origin": "random",
+    "learning_rate": 0.0005,
+    "source_ce_weight": 0.8262163713011055,
+    "alignment_weight": 9.69895672895595
+   },
+   {
+    "id": 44,
+    "origin": "random",
+    "learning_rate": 0.001,
+    "source_ce_weight": 5.6192320636292985,
+    "alignment_weight": 4.1041931101332665
+   },
+   {
+    "id": 45,
+    "origin": "random",
+    "learning_rate": 0.0005,
+    "source_ce_weight": 4.123409897208397,
+    "alignment_weight": 1.1876780659626285
+   },
+   {
+    "id": 46,
+    "origin": "random",
+    "learning_rate": 0.01,
+    "source_ce_weight": 8.739499235020723,
+    "alignment_weight": 8.729269750830213
+   },
+   {
+    "id": 47,
+    "origin": "random",
+    "learning_rate": 0.0005,
+    "source_ce_weight": 6.339253339391895,
+    "alignment_weight": 7.7049913673335135
+   },
+   {
+    "id": 48,
+    "origin": "random",
+    "learning_rate": 0.0005,
+    "source_ce_weight": 8.875519171876752,
+    "alignment_weight": 5.850199423974465
+   },
+   {
+    "id": 49,
+    "origin": "random",
+    "learning_rate": 0.005,
+    "source_ce_weight": 8.429764338252017,
+    "alignment_weight": 6.233280748035902
+   },
+   {
+    "id": 50,
+    "origin": "random",
+    "learning_rate": 0.005,
+    "source_ce_weight": 6.434043161963387,
+    "alignment_weight": 3.3460337709679657
+   },
+   {
+    "id": 51,
+    "origin": "random",
+    "learning_rate": 0.0005,
+    "source_ce_weight": 0.23496778829784432,
+    "alignment_weight": 6.05997381777277
+   },
+   {
+    "id": 52,
+    "origin": "random",
+    "learning_rate": 0.0005,
+    "source_ce_weight": 9.819867772299313,
+    "alignment_weight": 9.457573486901508
+   },
+   {
+    "id": 53,
+    "origin": "random",
+    "learning_rate": 0.0005,
+    "source_ce_weight": 9.3139587889219,
+    "alignment_weight": 7.007832018817792
+   },
+   {
+    "id": 54,
+    "origin": "random",
+    "learning_rate": 0.0005,
+    "source_ce_weight": 5.938295896675438,
+    "alignment_weight": 3.1311568359004815
+   },
+   {
+    "id": 55,
+    "origin": "random",
+    "learning_rate": 0.01,
+    "source_ce_weight": 7.211971148487455,
+    "alignment_weight": 0.8494115137841469
+   },
+   {
+    "id": 56,
+    "origin": "random",
+    "learning_rate": 0.001,
+    "source_ce_weight": 7.499189216646867,
+    "alignment_weight": 9.170110405998706
+   },
+   {
+    "id": 57,
+    "origin": "random",
+    "learning_rate": 0.001,
+    "source_ce_weight": 9.125926492933477,
+    "alignment_weight": 3.848962642820527
+   },
+   {
+    "id": 58,
+    "origin": "random",
+    "learning_rate": 0.001,
+    "source_ce_weight": 8.439692295602597,
+    "alignment_weight": 8.527232124566314
+   },
+   {
+    "id": 59,
+    "origin": "random",
+    "learning_rate": 0.01,
+    "source_ce_weight": 2.971042414986918,
+    "alignment_weight": 0.8145760950146094
+   },
+   {
+    "id": 60,
+    "origin": "random",
+    "learning_rate": 0.01,
+    "source_ce_weight": 4.13987563204457,
+    "alignment_weight": 5.743308223846475
+   },
+   {
+    "id": 61,
+    "origin": "random",
+    "learning_rate": 0.005,
+    "source_ce_weight": 3.948755378641438,
+    "alignment_weight": 5.806862299636845
+   },
+   {
+    "id": 62,
+    "origin": "random",
+    "learning_rate": 0.01,
+    "source_ce_weight": 5.0908791877248065,
+    "alignment_weight": 3.6597483641809387
+   },
+   {
+    "id": 63,
+    "origin": "random",
+    "learning_rate": 0.0005,
+    "source_ce_weight": 1.2029934335375037,
+    "alignment_weight": 6.853456340012359
+   },
+   {
+    "id": 64,
+    "origin": "random",
+    "learning_rate": 0.0005,
+    "source_ce_weight": 8.837779610650523,
+    "alignment_weight": 1.4008705694616828
+   },
+   {
+    "id": 65,
+    "origin": "random",
+    "learning_rate": 0.0005,
+    "source_ce_weight": 1.9048696710811661,
+    "alignment_weight": 1.8566653376684508
+   },
+   {
+    "id": 66,
+    "origin": "random",
+    "learning_rate": 0.01,
+    "source_ce_weight": 2.8703350679395596,
+    "alignment_weight": 3.856462208069296
+   },
+   {
+    "id": 67,
+    "origin": "random",
+    "learning_rate": 0.001,
+    "source_ce_weight": 4.735635424522314,
+    "alignment_weight": 5.721182647692591
+   },
+   {
+    "id": 68,
+    "origin": "random",
+    "learning_rate": 0.005,
+    "source_ce_weight": 3.8324977697132008,
+    "alignment_weight": 7.444179243203991
+   },
+   {
+    "id": 69,
+    "origin": "random",
+    "learning_rate": 0.01,
+    "source_ce_weight": 3.4882554927809757,
+    "alignment_weight": 1.6727446708452858
+   },
+   {
+    "id": 70,
+    "origin": "random",
+    "learning_rate": 0.01,
+    "source_ce_weight": 5.145632862398153,
+    "alignment_weight": 0.02790675432823014
+   },
+   {
+    "id": 71,
+    "origin": "random",
+    "learning_rate": 0.001,
+    "source_ce_weight": 5.784557398822669,
+    "alignment_weight": 8.95969185552406
+   },
+   {
+    "id": 72,
+    "origin": "random",
+    "learning_rate": 0.01,
+    "source_ce_weight": 8.02773020191691,
+    "alignment_weight": 3.7110762054835322
+   },
+   {
+    "id": 73,
+    "origin": "random",
+    "learning_rate": 0.005,
+    "source_ce_weight": 1.643916063463931,
+    "alignment_weight": 1.074286936103376
+   },
+   {
+    "id": 74,
+    "origin": "random",
+    "learning_rate": 0.01,
+    "source_ce_weight": 0.5297837331055909,
+    "alignment_weight": 0.6794101742297057
+   },
+   {
+    "id": 75,
+    "origin": "random",
+    "learning_rate": 0.005,
+    "source_ce_weight": 3.8253456439355613,
+    "alignment_weight": 9.874485999960426
+   },
+   {
+    "id": 76,
+    "origin": "random",
+    "learning_rate": 0.005,
+    "source_ce_weight": 8.343048586847418,
+    "alignment_weight": 0.9245627157315232
+   },
+   {
+    "id": 77,
+    "origin": "random",
+    "learning_rate": 0.0005,
+    "source_ce_weight": 1.2026775458388086,
+    "alignment_weight": 0.3054287258482671
+   },
+   {
+    "id": 78,
+    "origin": "random",
+    "learning_rate": 0.001,
+    "source_ce_weight": 3.1122902065368705,
+    "alignment_weight": 4.680321607887516
+   },
+   {
+    "id": 79,
+    "origin": "random",
+    "learning_rate": 0.01,
+    "source_ce_weight": 0.46448963705384533,
+    "alignment_weight": 7.432183160059086
+   },
+   {
+    "id": 80,
+    "origin": "random",
+    "learning_rate": 0.01,
+    "source_ce_weight": 6.152556071875207,
+    "alignment_weight": 8.232857212031337
+   },
+   {
+    "id": 81,
+    "origin": "random",
+    "learning_rate": 0.0005,
+    "source_ce_weight": 9.514670081664894,
+    "alignment_weight": 8.633997114300785
+   },
+   {
+    "id": 82,
+    "origin": "random",
+    "learning_rate": 0.001,
+    "source_ce_weight": 3.9101118416011738,
+    "alignment_weight": 1.9656031266285754
+   },
+   {
+    "id": 83,
+    "origin": "random",
+    "learning_rate": 0.01,
+    "source_ce_weight": 9.765515142221524,
+    "alignment_weight": 3.2849397176449626
+   },
+   {
+    "id": 84,
+    "origin": "random",
+    "learning_rate": 0.005,
+    "source_ce_weight": 3.1601842966934433,
+    "alignment_weight": 3.4915879716225047
+   },
+   {
+    "id": 85,
+    "origin": "random",
+    "learning_rate": 0.01,
+    "source_ce_weight": 8.00973949955487,
+    "alignment_weight": 2.2172724264521606
+   },
+   {
+    "id": 86,
+    "origin": "random",
+    "learning_rate": 0.0005,
+    "source_ce_weight": 2.9526014019696705,
+    "alignment_weight": 7.284435624214807
+   },
+   {
+    "id": 87,
+    "origin": "random",
+    "learning_rate": 0.0005,
+    "source_ce_weight": 5.173318337325697,
+    "alignment_weight": 5.583356099813569
+   },
+   {
+    "id": 88,
+    "origin": "random",
+    "learning_rate": 0.0005,
+    "source_ce_weight": 7.538024739891013,
+    "alignment_weight": 2.4995258675796017
+   },
+   {
+    "id": 89,
+    "origin": "random",
+    "learning_rate": 0.001,
+    "source_ce_weight": 7.010646076938217,
+    "alignment_weight": 1.8963851819861333
+   },
+   {
+    "id": 90,
+    "origin": "random",
+    "learning_rate": 0.0005,
+    "source_ce_weight": 9.125059807942282,
+    "alignment_weight": 5.462595161345445
+   },
+   {
+    "id": 91,
+    "origin": "random",
+    "learning_rate": 0.0005,
+    "source_ce_weight": 9.838965565743207,
+    "alignment_weight": 8.655329127063554
+   },
+   {
+    "id": 92,
+    "origin": "random",
+    "learning_rate": 0.01,
+    "source_ce_weight": 5.2458066101322975,
+    "alignment_weight": 2.269319576666687
+   },
+   {
+    "id": 93,
+    "origin": "random",
+    "learning_rate": 0.005,
+    "source_ce_weight": 6.816710449121969,
+    "alignment_weight": 5.262156548698931
+   },
+   {
+    "id": 94,
+    "origin": "random",
+    "learning_rate": 0.01,
+    "source_ce_weight": 8.65190491171313,
+    "alignment_weight": 5.17666796266753
+   },
+   {
+    "id": 95,
+    "origin": "random",
+    "learning_rate": 0.0005,
+    "source_ce_weight": 0.2623690693077225,
+    "alignment_weight": 3.866001138045798
+   },
+   {
+    "id": 96,
+    "origin": "random",
+    "learning_rate": 0.005,
+    "source_ce_weight": 0.11285126081634149,
+    "alignment_weight": 1.5243577796276182
+   },
+   {
+    "id": 97,
+    "origin": "random",
+    "learning_rate": 0.01,
+    "source_ce_weight": 6.642570912286824,
+    "alignment_weight": 6.935988711314694
+   },
+   {
+    "id": 98,
+    "origin": "random",
+    "learning_rate": 0.01,
+    "source_ce_weight": 4.918672277228981,
+    "alignment_weight": 3.8521171881952023
+   },
+   {
+    "id": 99,
+    "origin": "random",
+    "learning_rate": 0.01,
+    "source_ce_weight": 5.687949672272056,
+    "alignment_weight": 7.122646270466511
+   }
+  ]
+ }
+}
