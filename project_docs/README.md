@@ -63,4 +63,6 @@ A download through a fork counts against the LFS quota of the supervisor's repos
 | [decisions.md](decisions.md) | The main decisions and their reasons |
 | [limitations.md](limitations.md) | What the results do not show |
 | [runs_log.md](runs_log.md) | Per block of runs: date, code commit, results commit, number of runs, location, main table |
+| [hp_search_protocol.md](hp_search_protocol.md) | Hyperparameter search (pre-experiment, cross-dataset, seed 52): search space with AdaTime sources, deviations, criteria, stored files |
+| [hp_search_run_guide.md](hp_search_run_guide.md) | Start card for running the search on another machine |
 | `figures/` | The figures used in `results.md` |
