@@ -13,7 +13,8 @@ agree, and writes:
     project_docs/results.md
 
 If the tables of the alignment-weight sensitivity (T7_*.csv) exist, make_sensitivity_figures.py adds
-figures 7 to 9 and its own section to the results page.
+figures 7 to 9 and its own section to the results page. If the T11 tables of the shared starting point
+exist, make_shared_init_figures.py adds figures 13 to 15 and its section.
 
 All values are on the target test split unless stated otherwise. A group value (for example
 "Cross-dataset") is first averaged over the transfers of the group within each seed; mean and
@@ -493,6 +494,9 @@ def main() -> None:
     if (TABLES / "T8_summary_target_test.csv").is_file():
         from make_soup_figures import soup_section  # imports helpers of this module
         extra = [*extra, *soup_section(first_figure=len(figures) + 4)]
+    if (TABLES / "T11_branches_old_vs_new.csv").is_file():
+        from make_shared_init_figures import shared_init_section  # imports helpers of this module
+        extra = [*extra, *shared_init_section(first_figure=len(figures) + 7)]
     results_page(results, figures, confusion_variants, extra)
 
 
