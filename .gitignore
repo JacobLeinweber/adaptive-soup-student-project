@@ -21,3 +21,6 @@ results/hp_search/**/*.tmp.*
 
 # macOS folder metadata
 .DS_Store
+
+# Temporary folders of unfinished runs (written there, renamed when complete).
+results/**/*.tmp/

@@ -28,7 +28,8 @@ from src.training.utils import write_json
 from uda.dann import DISCRIMINATOR_BETAS, DISCRIMINATOR_HIDDEN, train_dann
 from uda.data import check_output_dir, get_transfer, load_label_map, load_labeled, load_source_only_model, load_unlabeled, sha256
 from uda.evaluation import SPLITS, predict
-from uda.runs import BASELINE, SEEDS, clean_commit, environment, is_complete, source_only_checkpoint, write_train_log
+from uda.runs import (BASELINE, INITS, SEEDS, SHARED_INIT_ROOT, clean_commit, environment, init_checkpoint, is_complete,
+                      publish_run, staging_dir, write_train_log)
 
 ADATIME = {
     "repository": "https://github.com/emadeldeen24/AdaTime",
@@ -54,16 +55,17 @@ def is_finished(out: Path, mode: dict) -> bool:
     return is_complete(out, SPLITS) and (mode["domain_weight"] == 0 or (out / "discriminator_last.pt").is_file())
 
 
-def run_one(transfer: Transfer, mode: dict, seed: int, results_root: Path, device: torch.device, overwrite: bool) -> None:
+def run_one(transfer: Transfer, mode: dict, seed: int, results_root: Path, device: torch.device, overwrite: bool,
+            init: str = "per_seed") -> None:
     out = results_root / mode["folder"] / f"seed_{seed}" / transfer.name
     if is_finished(out, mode) and not overwrite:
         print(f"skip {mode['folder']} seed {seed} {transfer.name}: finished run in {out}", flush=True)
         return
     commit = clean_commit()
-    print(f"=== {mode['method']}, seed {seed}: {transfer.name}", flush=True)
-    (out / "config.json").unlink(missing_ok=True)
+    print(f"=== {mode['method']}, seed {seed}, init {init}: {transfer.name}", flush=True)
+    work = staging_dir(out)  # all files are written here and moved to `out` in one rename at the end
     started = datetime.now(timezone.utc)
-    checkpoint = source_only_checkpoint(transfer, seed)
+    checkpoint = init_checkpoint(transfer, seed, init)
     checkpoint_hash = sha256(checkpoint)
     label_map = load_label_map(transfer)
     model = load_source_only_model(transfer, checkpoint)
@@ -81,25 +83,25 @@ def run_one(transfer: Transfer, mode: dict, seed: int, results_root: Path, devic
     )
     train_seconds = time.perf_counter() - tic
 
-    (out / "predictions").mkdir(parents=True, exist_ok=True)
+    (work / "predictions").mkdir(parents=True, exist_ok=True)
     # model_last.pt holds only the HAR predictor (features + classifier); the discriminator stays
     # in its own file, because UDA-specific heads are not part of a later soup.
-    torch.save({k: v.detach().cpu() for k, v in model.state_dict().items()}, out / "model_last.pt")
+    torch.save({k: v.detach().cpu() for k, v in model.state_dict().items()}, work / "model_last.pt")
     if discriminator is not None:
-        torch.save({k: v.detach().cpu() for k, v in discriminator.state_dict().items()}, out / "discriminator_last.pt")
-    write_train_log(out / "train_log.csv", history)
+        torch.save({k: v.detach().cpu() for k, v in discriminator.state_dict().items()}, work / "discriminator_last.pt")
+    write_train_log(work / "train_log.csv", history)
     for split in SPLITS:
         domain, part = split.split("_")
         x = source_x[part] if domain == "source" else target_x[part]
-        np.savez_compressed(out / "predictions" / f"{split}.npz", y_pred=predict(model, x, device))
+        np.savez_compressed(work / "predictions" / f"{split}.npz", y_pred=predict(model, x, device))
 
     if sha256(checkpoint) != checkpoint_hash:
         raise RuntimeError(f"The source-only checkpoint changed: {checkpoint}")
-    write_json(out / "config.json", {
+    write_json(work / "config.json", {
         "method": mode["method"],
         "transfer": transfer.name, "family": transfer.family,
         "source": transfer.source, "target": transfer.target, "label_map": label_map, "seed": seed,
-        "init_checkpoint": str(checkpoint.relative_to(ROOT)), "init_checkpoint_sha256": checkpoint_hash,
+        "init": init, "init_checkpoint": str(checkpoint.relative_to(ROOT)), "init_checkpoint_sha256": checkpoint_hash,
         "domain_weight": mode["domain_weight"], "source_ce_weight": SOURCE_CE_WEIGHT,
         "optimizer": "Adam (torch.optim.Adam, L2 weight decay, default betas)", **BASELINE,
         "discriminator": None if discriminator is None else {
@@ -116,6 +118,7 @@ def run_one(transfer: Transfer, mode: dict, seed: int, results_root: Path, devic
         "started_utc": started.isoformat(), "finished_utc": datetime.now(timezone.utc).isoformat(),
         "train_seconds": round(train_seconds, 1),
     })
+    publish_run(work, out)
     print(f"saved {out} ({train_seconds:.0f}s training)", flush=True)
 
 
@@ -128,19 +131,22 @@ def main() -> None:
     variant.add_argument("--control", action="store_true", help="only the control dann_lambda0_target_pass")
     variant.add_argument("--all-variants", action="store_true", help="DANN and the control")
     parser.add_argument("--seeds", type=int, nargs="+", choices=SEEDS, default=list(SEEDS))
-    parser.add_argument("--output-dir", type=Path, help="default: results/")
+    parser.add_argument("--init", choices=INITS, default="per_seed",
+                        help="per_seed: start from the source-only model of each seed (stage 2); shared: every seed "
+                             "starts from the seed-52 source-only model (T11)")
+    parser.add_argument("--output-dir", type=Path, help="default: results/, with --init shared results/shared_init/")
     parser.add_argument("--device", default="mps")
     parser.add_argument("--overwrite", action="store_true", help="retrain even if a finished run exists")
     args = parser.parse_args()
     if args.device == "mps" and not torch.backends.mps.is_available():
         parser.error("MPS is not available")
     modes = list(MODES.values()) if args.all_variants else [MODES["control" if args.control else "dann"]]
-    results_root = check_output_dir(args.output_dir or ROOT / "results")
+    results_root = check_output_dir(args.output_dir or (SHARED_INIT_ROOT if args.init == "shared" else ROOT / "results"))
     transfers = TRANSFERS if args.all else [get_transfer(name) for name in args.transfer]
     for seed in args.seeds:
         for mode in modes:
             for transfer in transfers:
-                run_one(transfer, mode, seed, results_root, torch.device(args.device), args.overwrite)
+                run_one(transfer, mode, seed, results_root, torch.device(args.device), args.overwrite, args.init)
 
 
 if __name__ == "__main__":

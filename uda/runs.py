@@ -3,7 +3,9 @@ from __future__ import annotations
 
 import csv
 import json
+import os
 import platform
+import shutil
 import subprocess
 from pathlib import Path
 
@@ -20,6 +22,11 @@ SEEDS = (SEED, 100, 445, 545, 881)
 # Defaults of run_transfer, identical in all supplied config.json files.
 BASELINE = {"epochs": 30, "batch_size": 32, "lr": 3e-4, "weight_decay": 1e-4}
 SOURCE_ONLY_ROOT = ROOT / "results" / "source_only"
+# Starting point of an adaptation run. per_seed: the source-only model of the run's own seed (stage 2 so far).
+# shared: the supplied seed-52 source-only model for every seed, so the seed only steers the adaptation
+# (batch order, dropout, new heads such as the DANN discriminator); results go to SHARED_INIT_ROOT.
+INITS = ("per_seed", "shared")
+SHARED_INIT_ROOT = ROOT / "results" / "shared_init"
 SOURCE_ONLY_SPLITS = ("source_train", "source_val", "source_test", "target_train", "target_val", "target_test")
 NONDETERMINISM = ("Trained on Apple MPS. PyTorch does not guarantee bitwise reproducible results on MPS; "
                   "a repeated run with the same seed can differ slightly.")
@@ -31,7 +38,9 @@ def clean_commit() -> str:
     Stops on staged, unstaged and untracked changes, so that the commit written into the
     config.json of a run really describes the code of that run.
     """
-    status = subprocess.check_output(["git", "status", "--porcelain", "--", "uda/", "*.py"], cwd=ROOT, text=True)
+    # core.trustctime=false: iCloud changes the ctime of files it offloads, which would make git rehash them.
+    status = subprocess.check_output(["git", "-c", "core.trustctime=false", "status", "--porcelain", "--", "uda/", "*.py"],
+                                     cwd=ROOT, text=True)
     if status:
         raise RuntimeError(f"Code differs from the last commit, refusing to start a run:\n{status}")
     return subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=ROOT, text=True).strip()
@@ -67,6 +76,29 @@ def source_only_checkpoint(transfer: Transfer, seed: int) -> Path:
         if recorded != seed:
             raise ValueError(f"{folder} was trained with seed {recorded}, expected {seed}")
     return folder / "model_last.pt"
+
+
+def init_checkpoint(transfer: Transfer, seed: int, init: str) -> Path:
+    """Checkpoint an adaptation run starts from, see INITS."""
+    if init not in INITS:
+        raise ValueError(f"init must be one of {INITS}, got {init!r}")
+    return source_only_checkpoint(transfer, SEED if init == "shared" else seed)
+
+
+def staging_dir(run_dir: Path) -> Path:
+    """Fresh, empty folder next to run_dir. A run writes all its files there; publish_run moves it into place."""
+    work = run_dir.with_name(run_dir.name + ".tmp")
+    if work.exists():
+        shutil.rmtree(work)  # left over from an interrupted run
+    work.mkdir(parents=True)
+    return work
+
+
+def publish_run(work: Path, run_dir: Path) -> None:
+    """Move a finished run into place with one rename, so run_dir is either complete or absent."""
+    if run_dir.exists():
+        shutil.rmtree(run_dir)  # unfinished run of the old writing scheme, or --overwrite
+    os.replace(work, run_dir)
 
 
 def environment(device: torch.device) -> dict:
