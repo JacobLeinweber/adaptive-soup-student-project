@@ -27,9 +27,14 @@ Every predictions file holds y_pred; source_val.npz also holds the logits (soups
 probabilities (ensembles), from which SRC is computed. Finished outputs are skipped, so an interrupted call
 can simply be repeated.
 
+With --init shared (T11) the ingredients are the runs with the shared starting point (seeds 100, 445, 545, 881 from
+results/shared_init/, seed 52 from the stage-2 runs), every seed must have started from the supplied seed-52
+checkpoint, and all outputs go to results/shared_init/ (soup/, ensemble/, source_val_predictions/).
+
 Examples:
     python run_soup.py --all
     python run_soup.py --transfer PAMAP2_to_RealWorld --seeds 52 --soups soup_methods
+    python run_soup.py --all --init shared
 """
 from __future__ import annotations
 
@@ -49,12 +54,17 @@ from src.training.train_transfer import ROOT
 from src.training.utils import write_json
 from uda.data import check_output_dir, get_transfer, load_label_map, load_labeled, load_unlabeled, sha256
 from uda.evaluation import SPLITS
-from uda.runs import SEEDS, clean_commit, environment, is_complete, source_only_checkpoint
+from uda.runs import INITS, SEEDS, SHARED_INIT_ROOT, clean_commit, environment, init_checkpoint, is_complete, runs_root
 from uda.soup import BN_BATCH_SIZE, BN_VARIANTS, ENSEMBLES, SOUPS, logits, recompute_bn, softmax
 
 RESULTS = ROOT / "results"
 PREDICTION_SPLITS = ("source_val", *SPLITS)
 AVERAGING_AUTHOR = "create_method_soup.py by the project partner (Denis Petrov), averaging step average_state_dicts"
+
+
+def output_root(init: str = "per_seed") -> Path:
+    """Folder of the soups, ensembles and source-val predictions: results/, or results/shared_init/ (T11)."""
+    return SHARED_INIT_ROOT if init == "shared" else RESULTS
 
 
 def soup_dir(root: Path, soup: str, bn: str, seed: int, transfer: Transfer) -> Path:
@@ -86,9 +96,10 @@ def finished(root: Path, soup: str, seed: int, transfer: Transfer) -> bool:
         (folder / "model_last.pt").is_file() for folder in folders[:len(BN_VARIANTS)])
 
 
-def ingredient_info(ingredient: str, seed: int, transfer: Transfer, init_hash: str) -> tuple[Path, dict]:
+def ingredient_info(ingredient: str, seed: int, transfer: Transfer, init_hash: str,
+                    init: str = "per_seed") -> tuple[Path, dict]:
     """Folder and provenance of a finished ingredient run; stops if it started from another checkpoint."""
-    folder = RESULTS / ingredient / f"seed_{seed}" / transfer.name
+    folder = runs_root(init, seed) / ingredient / f"seed_{seed}" / transfer.name
     if not is_complete(folder, SPLITS):
         raise FileNotFoundError(f"Ingredient run not finished: {folder}")
     config = json.loads((folder / "config.json").read_text(encoding="utf-8"))
@@ -122,35 +133,36 @@ def save_predictions(folder: Path, outputs: dict[str, np.ndarray], kind: str) ->
         np.savez_compressed(folder / "predictions" / f"{split}.npz", y_pred=values.argmax(1), **extra)
 
 
-def common_config(transfer: Transfer, seed: int, label_map: dict, checkpoint: Path, init_hash: str) -> dict:
+def common_config(transfer: Transfer, seed: int, label_map: dict, checkpoint: Path, init_hash: str, init: str) -> dict:
     return {"transfer": transfer.name, "family": transfer.family, "source": transfer.source, "target": transfer.target,
-            "label_map": label_map, "seed": seed,
+            "label_map": label_map, "seed": seed, "init": init,
             "init_checkpoint": str(checkpoint.relative_to(ROOT)), "init_checkpoint_sha256": init_hash}
 
 
-def run_one(transfer: Transfer, seed: int, soup: str, root: Path, device: torch.device, commit: str, overwrite: bool) -> None:
+def run_one(transfer: Transfer, seed: int, soup: str, root: Path, device: torch.device, commit: str, overwrite: bool,
+            init: str = "per_seed") -> None:
     if finished(root, soup, seed, transfer) and not overwrite:
         print(f"skip {soup} seed {seed} {transfer.name}: finished", flush=True)
         return
-    print(f"=== {soup}, seed {seed}: {transfer.name}", flush=True)
+    print(f"=== {soup}, seed {seed}, init {init}: {transfer.name}", flush=True)
     started = datetime.now(timezone.utc)
     label_map = load_label_map(transfer)
     num_classes = len(label_map)
-    checkpoint = source_only_checkpoint(transfer, seed)
+    checkpoint = init_checkpoint(transfer, seed, init)
     init_hash = sha256(checkpoint)
     source_x, _, source_meta = load_labeled(transfer.family, transfer.source)  # source labels are not used here
     if source_meta["label_map"] != label_map:
         raise ValueError(f"Source label map does not match the checkpoint: {transfer.name}")
     target_x = load_unlabeled(transfer.family, transfer.target)  # windows only, no labels
     windows = split_windows(source_x, target_x)
-    base = {**common_config(transfer, seed, label_map, checkpoint, init_hash), "target_labels_used": False}
+    base = {**common_config(transfer, seed, label_map, checkpoint, init_hash, init), "target_labels_used": False}
     env = {**environment(device), "repository_commit": commit}
 
     # 1. Ingredients: provenance, start checkpoint, logits from the saved checkpoints.
     infos, states, outputs, agreement = [], [], [], []
     tic = time.perf_counter()
     for ingredient in SOUPS[soup]:
-        folder, info = ingredient_info(ingredient, seed, transfer, init_hash)
+        folder, info = ingredient_info(ingredient, seed, transfer, init_hash, init)
         state = torch.load(folder / "model_last.pt", map_location="cpu", weights_only=True)
         model = build_model(state, num_classes).to(device)
         output = {split: logits(model, windows[split], device) for split in PREDICTION_SPLITS}
@@ -251,20 +263,22 @@ def main() -> None:
     which.add_argument("--all", action="store_true", help="all 12 transfers")
     parser.add_argument("--seeds", type=int, nargs="+", choices=SEEDS, default=list(SEEDS))
     parser.add_argument("--soups", nargs="+", choices=list(SOUPS), default=list(SOUPS))
-    parser.add_argument("--output-dir", type=Path, help="default: results/")
+    parser.add_argument("--init", choices=INITS, default="per_seed",
+                        help="per_seed: ingredients of stage 2 as run so far; shared: shared starting point (T11)")
+    parser.add_argument("--output-dir", type=Path, help="default: results/, with --init shared results/shared_init/")
     parser.add_argument("--device", default="mps")
     parser.add_argument("--overwrite", action="store_true", help="recompute even if finished outputs exist")
     args = parser.parse_args()
     if args.device == "mps" and not torch.backends.mps.is_available():
         parser.error("MPS is not available")
-    root = check_output_dir(args.output_dir or RESULTS)
+    root = check_output_dir(args.output_dir or output_root(args.init))
     commit = clean_commit()
     device = torch.device(args.device)
     transfers = TRANSFERS if args.all else [get_transfer(name) for name in args.transfer]
     for seed in args.seeds:
         for transfer in transfers:
             for soup in args.soups:
-                run_one(transfer, seed, soup, root, device, commit, args.overwrite)
+                run_one(transfer, seed, soup, root, device, commit, args.overwrite, args.init)
     if clean_commit() != commit:
         raise RuntimeError("The code commit changed while the soups were computed (E34)")
 

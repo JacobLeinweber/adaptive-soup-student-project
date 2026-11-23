@@ -14,22 +14,28 @@ Tables:
     T3_costs_per_variant.csv                  training time summed over each variant
     T3_commits_per_variant.csv                the code commit of every variant
 
-Example: python make_dsan_tables.py
+With --init shared (T11) the same tables are written for the shared starting point into results/shared_init/tables/:
+the runs of seeds 100, 445, 545, 881 come from results/shared_init/, the seed-52 runs are the stage-2 runs, and the
+baseline of every seed is the supplied seed-52 source-only model.
+
+Examples:
+    python make_dsan_tables.py
+    python make_dsan_tables.py --init shared
 """
 from __future__ import annotations
 
+import argparse
 import json
 
 import numpy as np
 
 from make_dann_tables import per_seed, scopes
 from make_results_tables import write_csv
-from make_seed_tables import SUMMARY_METRICS, TABLES, run_dir
+from make_seed_tables import SUMMARY_METRICS, run_commits, run_dir, supplied_baseline, tables_dir
 from src.training.experiments import TRANSFERS
-from src.training.utils import SEED
 from uda.data import check_output_dir, load_label_map
 from uda.evaluation import METRICS, SPLITS, per_class_f1_and_confusion, score_baseline, score_run, true_labels
-from uda.runs import SEEDS
+from uda.runs import INITS, SEEDS
 
 # Every method with its own control: weight of the alignment loss 0, target windows still pass through the model.
 CONTROLS = {"deep_coral": "lambda0_target_pass", "dann": "dann_lambda0_target_pass", "dsan": "dsan_lambda0_target_pass"}
@@ -67,31 +73,28 @@ def difference_rows(scores: dict) -> list[list]:
     return rows
 
 
-def commit_rows() -> list[list]:
-    """Stop unless all runs of a variant carry one code commit; return one row per variant.
-
-    The supplied seed-52 baselines were trained outside this repository and carry no commit.
-    """
+def commit_rows(init: str = "per_seed") -> list[list]:
+    """Stop unless all runs of a variant carry one code commit (make_seed_tables.run_commits); one row per variant."""
     rows = []
     for variant in VARIANTS:
-        commits = [json.loads((run_dir(variant, t, s) / "config.json").read_text(encoding="utf-8")).get("repository_commit")
-                   for t in TRANSFERS for s in SEEDS]
-        found = sorted({commit for commit in commits if commit})
-        if len(found) != 1:
-            raise SystemExit(f"{variant}: expected one code commit, found {found}")
-        rows.append([variant, found[0], len(commits) - commits.count(None), commits.count(None)])
-        print(f"{variant}: commit {found[0]}, {rows[-1][2]} runs, {rows[-1][3]} supplied runs without commit")
+        commit, with_commit, without = run_commits(variant, init)
+        rows.append([variant, commit, with_commit, without])
+        print(f"{variant}: commit {commit}, {with_commit} runs, {without} supplied runs without commit")
     return rows
 
 
 def main() -> None:
-    tables = check_output_dir(TABLES)
+    parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
+    parser.add_argument("--init", choices=INITS, default="per_seed",
+                        help="per_seed: stage 2 as run so far; shared: shared starting point (T11)")
+    init = parser.parse_args().init
+    tables = check_output_dir(tables_dir(init))
     tables.mkdir(parents=True, exist_ok=True)
-    missing = [str(run_dir(v, t, s)) for t in TRANSFERS for s in SEEDS for v in VARIANTS
-               if not (run_dir(v, t, s) / "config.json").is_file()]
+    missing = [str(run_dir(v, t, s, init)) for t in TRANSFERS for s in SEEDS for v in VARIANTS
+               if not (run_dir(v, t, s, init) / "config.json").is_file()]
     if missing:
         raise SystemExit("Missing runs, no tables written:\n" + "\n".join(missing))
-    commits = commit_rows()
+    commits = commit_rows(init)
 
     scores, all_splits, per_class, confusion, costs = {}, [], [], [], []
     for transfer in TRANSFERS:
@@ -100,8 +103,8 @@ def main() -> None:
         names = sorted(label_map, key=label_map.get)
         for seed in SEEDS:
             for variant in VARIANTS:
-                directory = run_dir(variant, transfer, seed)
-                supplied = variant == "baseline" and seed == SEED
+                directory = run_dir(variant, transfer, seed, init)
+                supplied = supplied_baseline(variant, seed, init)
                 result = score_baseline(transfer, labels) if supplied else score_run(directory, transfer, labels)
                 scores[transfer.name, seed, variant] = result
                 config = json.loads((directory / "config.json").read_text(encoding="utf-8"))

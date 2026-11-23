@@ -78,11 +78,27 @@ def source_only_checkpoint(transfer: Transfer, seed: int) -> Path:
     return folder / "model_last.pt"
 
 
-def init_checkpoint(transfer: Transfer, seed: int, init: str) -> Path:
-    """Checkpoint an adaptation run starts from, see INITS."""
+def init_seed(seed: int, init: str) -> int:
+    """Seed of the source-only model the runs of `seed` start from, see INITS."""
     if init not in INITS:
         raise ValueError(f"init must be one of {INITS}, got {init!r}")
-    return source_only_checkpoint(transfer, SEED if init == "shared" else seed)
+    return SEED if init == "shared" else seed
+
+
+def init_checkpoint(transfer: Transfer, seed: int, init: str) -> Path:
+    """Checkpoint an adaptation run starts from, see INITS."""
+    return source_only_checkpoint(transfer, init_seed(seed, init))
+
+
+def runs_root(init: str, seed: int) -> Path:
+    """Folder that holds the adaptation runs of a seed.
+
+    With the shared start the seed-52 runs are the stage-2 runs in results/ (they started from the supplied
+    checkpoint already); the runs of the other seeds are in SHARED_INIT_ROOT.
+    """
+    if init_seed(seed, init) == seed:  # per_seed, or seed 52 with the shared start
+        return ROOT / "results"
+    return SHARED_INIT_ROOT
 
 
 def staging_dir(run_dir: Path) -> Path:

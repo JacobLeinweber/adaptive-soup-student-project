@@ -25,10 +25,18 @@ Tables (names chosen so that make_figures.py does not merge them into the stage-
     T8_costs_summary.csv                 the same summed per variant, next to the training time of the ingredients
     T8_commits.csv                       code commit of every kind of output, and of the ingredient runs
 
-Example: python make_soup_tables.py
+With --init shared (T11) the same tables are written for the shared starting point into results/shared_init/tables/:
+soups, ensembles and source-val predictions from results/shared_init/, ingredients of seeds 100, 445, 545, 881 from
+results/shared_init/ and of seed 52 from stage 2, the baseline of every seed is the supplied seed-52 model, and in
+addition every seed of a transfer must have started from the same checkpoint.
+
+Examples:
+    python make_soup_tables.py
+    python make_soup_tables.py --init shared
 """
 from __future__ import annotations
 
+import argparse
 import json
 from pathlib import Path
 
@@ -36,14 +44,13 @@ import numpy as np
 
 from make_dann_tables import scopes
 from make_results_tables import write_csv
-from make_seed_tables import SUMMARY_METRICS, TABLES, run_dir
-from run_soup import RESULTS, ensemble_dir, soup_dir, source_val_dir
+from make_seed_tables import SUMMARY_METRICS, run_commits, run_dir, supplied_baseline, tables_dir
+from run_soup import ensemble_dir, output_root, soup_dir, source_val_dir
 from src.training.experiments import TRANSFERS, Transfer
-from src.training.utils import SEED
 from uda.criteria import source_risk
 from uda.data import check_output_dir, load_label_map, load_labeled
 from uda.evaluation import METRICS, SPLITS, compute_metrics, per_class_f1_and_confusion, score_baseline, score_run, true_labels
-from uda.runs import SEEDS
+from uda.runs import INITS, SEEDS
 from uda.soup import BN_VARIANTS, ENSEMBLES, SOUPS
 
 ALL_SPLITS = ("source_val", *SPLITS)
@@ -56,67 +63,69 @@ OUTPUTS = ["baseline", *BRANCHES, *SOUP_VARIANTS, *ENSEMBLE_VARIANTS]
 DERIVED = [f"{kind}_{group}" for group in GROUPS for kind in ("branch_mean", "best_src_ce", "best_src_macro_f1", "oracle")]
 
 
-def output_dir(variant: str, transfer: Transfer, seed: int) -> Path:
+def output_dir(variant: str, transfer: Transfer, seed: int, init: str = "per_seed") -> Path:
     if variant in SOUP_VARIANTS:
         soup, bn = variant.rsplit("_bn_", 1)
-        return soup_dir(RESULTS, soup, f"bn_{bn}", seed, transfer)
+        return soup_dir(output_root(init), soup, f"bn_{bn}", seed, transfer)
     if variant in ENSEMBLE_VARIANTS:
-        return ensemble_dir(RESULTS, GROUPS[variant.removeprefix("ensemble_")], seed, transfer)
-    return run_dir(variant, transfer, seed)
+        return ensemble_dir(output_root(init), GROUPS[variant.removeprefix("ensemble_")], seed, transfer)
+    return run_dir(variant, transfer, seed, init)
 
 
-def prediction_file(variant: str, transfer: Transfer, seed: int, split: str) -> Path:
+def prediction_file(variant: str, transfer: Transfer, seed: int, split: str, init: str = "per_seed") -> Path:
     """The branches saved no source-val predictions; run_soup.py computed them from their checkpoints (D5)."""
     if variant in BRANCHES and split == "source_val":
-        return source_val_dir(RESULTS, variant, seed, transfer) / "source_val.npz"
-    return output_dir(variant, transfer, seed) / "predictions" / f"{split}.npz"
+        return source_val_dir(output_root(init), variant, seed, transfer) / "source_val.npz"
+    return output_dir(variant, transfer, seed, init) / "predictions" / f"{split}.npz"
 
 
 def config(folder: Path) -> dict:
     return json.loads((folder / "config.json").read_text(encoding="utf-8"))
 
 
-def check_outputs() -> list[list]:
+def check_outputs(init: str = "per_seed") -> list[list]:
     """Stop unless every output exists, has the start checkpoint of its seed and one code commit per kind."""
-    missing = [str(prediction_file(v, t, s, "source_val")) for t in TRANSFERS for s in SEEDS for v in [*BRANCHES, *SOUP_VARIANTS, *ENSEMBLE_VARIANTS]
-               if not prediction_file(v, t, s, "source_val").is_file()]
+    missing = [str(prediction_file(v, t, s, "source_val", init)) for t in TRANSFERS for s in SEEDS
+               for v in [*BRANCHES, *SOUP_VARIANTS, *ENSEMBLE_VARIANTS] if not prediction_file(v, t, s, "source_val", init).is_file()]
     if missing:
         raise SystemExit("Missing outputs, no tables written:\n" + "\n".join(missing[:20]))
     kinds = {"soup": SOUP_VARIANTS, "ensemble": ENSEMBLE_VARIANTS}
     rows = []
     for kind, variants in kinds.items():
-        configs = [config(output_dir(v, t, s)) for v in variants for t in TRANSFERS for s in SEEDS]
+        configs = [config(output_dir(v, t, s, init)) for v in variants for t in TRANSFERS for s in SEEDS]
         commits = sorted({c["repository_commit"] for c in configs})
         if len(commits) != 1:
             raise SystemExit(f"{kind}: expected one code commit, found {commits}")
         for c in configs:
             if c["target_labels_used"] or len({i["init_checkpoint_sha256"] for i in c["ingredients"]} | {c["init_checkpoint_sha256"]}) != 1:
                 raise SystemExit(f"{kind}: start checkpoints differ or target labels flagged in {c['transfer']} seed {c['seed']}")
+        if init == "shared":  # shared start (T11): all seeds of a transfer started from the same checkpoint
+            for t in TRANSFERS:
+                if len({c["init_checkpoint_sha256"] for c in configs if c["transfer"] == t.name}) != 1:
+                    raise SystemExit(f"{kind}: the seeds of {t.name} started from different checkpoints")
         rows.append([kind, commits[0], len(configs)])
-    source_val = [config(source_val_dir(RESULTS, b, s, t)) for b in BRANCHES for t in TRANSFERS for s in SEEDS]
+    source_val = [config(source_val_dir(output_root(init), b, s, t)) for b in BRANCHES for t in TRANSFERS for s in SEEDS]
     commits = sorted({c["repository_commit"] for c in source_val})
     if len(commits) != 1:
         raise SystemExit(f"source-val predictions: expected one code commit, found {commits}")
     rows.append(["source_val_predictions", commits[0], len(source_val)])
     for branch in BRANCHES:
-        found = sorted({config(run_dir(branch, t, s))["repository_commit"] for t in TRANSFERS for s in SEEDS})
-        if len(found) != 1:
-            raise SystemExit(f"{branch}: expected one code commit, found {found}")
-        rows.append([f"ingredient {branch}", found[0], len(TRANSFERS) * len(SEEDS)])
+        commit, with_commit, _ = run_commits(branch, init)
+        rows.append([f"ingredient {branch}", commit, with_commit])
     for row in rows:
         print(f"{row[0]}: commit {row[1]}, {row[2]} outputs")
     return rows
 
 
-def source_val_outputs(variant: str, transfer: Transfer, seed: int) -> np.ndarray:
+def source_val_outputs(variant: str, transfer: Transfer, seed: int, init: str = "per_seed") -> np.ndarray:
     """Logits (soups, branches) or log-probabilities (ensembles) on source val; both give SRC through a softmax."""
-    with np.load(prediction_file(variant, transfer, seed, "source_val")) as stored:
+    with np.load(prediction_file(variant, transfer, seed, "source_val", init)) as stored:
         if "logits" in stored:
             return stored["logits"].astype(np.float64)
         return np.log(np.clip(stored["prob"].astype(np.float64), 1e-12, None))
 
 
-def criteria_and_selection() -> tuple[list[list], dict]:
+def criteria_and_selection(init: str = "per_seed") -> tuple[list[list], dict]:
     """Steps 1 and 2: reads source windows' labels only, nothing of the target."""
     criteria, chosen = [], {}
     for transfer in TRANSFERS:
@@ -125,7 +134,7 @@ def criteria_and_selection() -> tuple[list[list], dict]:
         for seed in SEEDS:
             src = {}
             for variant in [*BRANCHES, *SOUP_VARIANTS, *ENSEMBLE_VARIANTS]:
-                src[variant] = source_risk(source_val_outputs(variant, transfer, seed), source_y["val"], num_classes)
+                src[variant] = source_risk(source_val_outputs(variant, transfer, seed, init), source_y["val"], num_classes)
                 criteria.append([transfer.family, transfer.name, seed, variant, len(source_y["val"]),
                                  *(f"{src[variant][key]:.6f}" for key in ("ce", "macro_f1", "accuracy", "weighted_f1"))])
             for group, soup in GROUPS.items():
@@ -136,13 +145,15 @@ def criteria_and_selection() -> tuple[list[list], dict]:
     return criteria, chosen
 
 
-def score(variant: str, transfer: Transfer, seed: int, labels: dict, num_classes: int) -> dict:
+def score(variant: str, transfer: Transfer, seed: int, labels: dict, num_classes: int, init: str = "per_seed") -> dict:
     """Metrics of one output from its label-free predictions; the baseline on the four splits only."""
     if variant == "baseline":
-        return score_baseline(transfer, labels) if seed == SEED else score_run(run_dir(variant, transfer, seed), transfer, labels)
+        if supplied_baseline(variant, seed, init):
+            return score_baseline(transfer, labels)
+        return score_run(run_dir(variant, transfer, seed, init), transfer, labels)
     result = {}
     for split in ALL_SPLITS:
-        with np.load(prediction_file(variant, transfer, seed, split)) as stored:
+        with np.load(prediction_file(variant, transfer, seed, split, init)) as stored:
             result[split] = compute_metrics(labels[split], stored["y_pred"], num_classes)
     return result
 
@@ -215,11 +226,16 @@ def difference_rows(scores: dict) -> list[list]:
 
 
 def main() -> None:
-    tables = check_output_dir(TABLES)
-    commits = check_outputs()
+    parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
+    parser.add_argument("--init", choices=INITS, default="per_seed",
+                        help="per_seed: stage 2 as run so far; shared: shared starting point (T11)")
+    init = parser.parse_args().init
+    tables = check_output_dir(tables_dir(init))
+    tables.mkdir(parents=True, exist_ok=True)
+    commits = check_outputs(init)
 
     # Steps 1 and 2: criterion and selection without target labels.
-    criteria, chosen = criteria_and_selection()
+    criteria, chosen = criteria_and_selection(init)
 
     # Step 3: scoring; target labels are read from here on.
     scores, all_splits, per_class, confusion = {}, [], [], []
@@ -231,13 +247,13 @@ def main() -> None:
         names = sorted(label_map, key=label_map.get)
         for seed in SEEDS:
             for variant in OUTPUTS:
-                result = score(variant, transfer, seed, labels, len(names))
+                result = score(variant, transfer, seed, labels, len(names), init)
                 scores[transfer.name, seed, variant] = result
                 head = [transfer.family, transfer.name, seed, variant]
                 all_splits += [[*head, split, result[split]["n_windows"], *(f"{result[split][m]:.6f}" for m in METRICS)]
                                for split in result]
                 if variant in SOUP_VARIANTS or variant in ENSEMBLE_VARIANTS:
-                    with np.load(prediction_file(variant, transfer, seed, "target_test")) as stored:
+                    with np.load(prediction_file(variant, transfer, seed, "target_test", init)) as stored:
                         f1, matrix = per_class_f1_and_confusion(labels["target_test"], stored["y_pred"], len(names))
                     for i, cls in enumerate(names):
                         per_class.append([*head, i, cls, int(matrix[i].sum()), f"{f1[i]:.6f}"])
@@ -258,7 +274,7 @@ def main() -> None:
     for transfer in TRANSFERS:
         for seed in SEEDS:
             for variant in [*SOUP_VARIANTS, *ENSEMBLE_VARIANTS]:
-                c = config(output_dir(variant, transfer, seed))
+                c = config(output_dir(variant, transfer, seed, init))
                 seconds = c["seconds"]
                 train = sum(i["train_seconds"] for i in c["ingredients"])
                 own = sum(v for k, v in seconds.items() if k != "load_ingredients_and_logits")

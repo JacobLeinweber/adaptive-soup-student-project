@@ -27,7 +27,7 @@ from src.training.train_transfer import ROOT
 from src.training.utils import SEED
 from uda.data import check_output_dir, load_label_map
 from uda.evaluation import METRICS, SPLITS, per_class_f1_and_confusion, score_baseline, score_run, true_labels
-from uda.runs import SEEDS, source_only_dir
+from uda.runs import SEEDS, SHARED_INIT_ROOT, init_seed, runs_root, source_only_dir
 
 RESULTS = ROOT / "results"
 TABLES = RESULTS / "tables"
@@ -36,8 +36,44 @@ SUMMARY_METRICS = ("weighted_f1", "macro_f1", "accuracy")
 FAMILIES = ("cross_dataset", "cross_gender", "cross_age")
 
 
-def run_dir(variant: str, transfer: Transfer, seed: int) -> Path:
-    return source_only_dir(transfer, seed) if variant == "baseline" else RESULTS / variant / f"seed_{seed}" / transfer.name
+def run_dir(variant: str, transfer: Transfer, seed: int, init: str = "per_seed") -> Path:
+    """Folder of a run. The baseline is the source-only run the runs of the seed start from (uda.runs.INITS)."""
+    if variant == "baseline":
+        return source_only_dir(transfer, init_seed(seed, init))
+    return runs_root(init, seed) / variant / f"seed_{seed}" / transfer.name
+
+
+def tables_dir(init: str = "per_seed") -> Path:
+    """results/tables/ for the stage-2 start, results/shared_init/tables/ for the shared start (same file names)."""
+    return TABLES if init == "per_seed" else SHARED_INIT_ROOT / "tables"
+
+
+def supplied_baseline(variant: str, seed: int, init: str = "per_seed") -> bool:
+    """True if the baseline of this seed is the supplied seed-52 source-only run, scored from its stored predictions."""
+    return variant == "baseline" and init_seed(seed, init) == SEED
+
+
+def run_commits(variant: str, init: str = "per_seed") -> tuple[str, int, int]:
+    """(code commit, runs with a commit, supplied runs without one) of the runs of a variant on all transfers and seeds.
+
+    Stops unless the runs carry exactly one commit. The supplied seed-52 source-only runs were trained outside this
+    repository and carry none. With the shared start the seed-52 runs are the stage-2 runs and the other seeds were
+    trained by run_shared_init.py: each of the two parts must carry one commit, and both are named. The baseline is
+    then the supplied model for every seed and carries no commit.
+    """
+    others = tuple(seed for seed in SEEDS if seed != SEED)
+    parts = [("", SEEDS)] if init == "per_seed" else [(f"seed {SEED}", (SEED,)), ("seeds " + ", ".join(map(str, others)), others)]
+    names, with_commit, without = [], 0, 0
+    for label, seeds in parts:
+        commits = [json.loads((run_dir(variant, t, s, init) / "config.json").read_text(encoding="utf-8")).get("repository_commit")
+                   for t in TRANSFERS for s in seeds]
+        found = sorted({commit for commit in commits if commit})
+        if len(found) != 1 and not (not found and supplied_baseline(variant, seeds[0], init)):
+            raise SystemExit(f"{variant}: expected one code commit{' for ' + label if label else ''}, found {found}")
+        names += [f"{found[0]} ({label})" if label else found[0]] if found else []
+        with_commit += len(commits) - commits.count(None)
+        without += commits.count(None)
+    return "; ".join(names), with_commit, without
 
 
 def summary_rows(scores: dict) -> list[list]:
