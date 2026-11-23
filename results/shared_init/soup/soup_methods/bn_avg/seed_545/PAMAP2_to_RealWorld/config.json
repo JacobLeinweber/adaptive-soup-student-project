@@ -1,0 +1,116 @@
+{
+  "method": "uniform_soup",
+  "soup": "soup_methods",
+  "bn_variant": "bn_avg",
+  "transfer": "PAMAP2_to_RealWorld",
+  "family": "cross_dataset",
+  "source": "PAMAP2",
+  "target": "RealWorld",
+  "label_map": {
+    "lying": 0,
+    "sitting": 1,
+    "standing": 2,
+    "walking": 3,
+    "running": 4
+  },
+  "seed": 545,
+  "init": "shared",
+  "init_checkpoint": "models/cross_dataset/PAMAP2_to_RealWorld/model_last.pt",
+  "init_checkpoint_sha256": "4d79188fca981a9fe665584f98d12a7672c89da9c8faf08a4db00622cf59c76c",
+  "target_labels_used": false,
+  "ingredients": [
+    {
+      "variant": "deep_coral",
+      "run_dir": "results/shared_init/deep_coral/seed_545/PAMAP2_to_RealWorld",
+      "checkpoint": "results/shared_init/deep_coral/seed_545/PAMAP2_to_RealWorld/model_last.pt",
+      "checkpoint_sha256": "8367d6d39a4402774086c9d6d8fab0e889861a73a3bf855f2bd8176f56ed6cd5",
+      "init_checkpoint_sha256": "4d79188fca981a9fe665584f98d12a7672c89da9c8faf08a4db00622cf59c76c",
+      "repository_commit": "63d799f81d92cd0f70aad8314194787f5e28e7d9",
+      "device": "mps",
+      "train_seconds": 61.5,
+      "prediction_agreement_with_saved": {
+        "source_test": 1.0,
+        "target_train": 1.0,
+        "target_val": 1.0,
+        "target_test": 1.0
+      }
+    },
+    {
+      "variant": "dann",
+      "run_dir": "results/shared_init/dann/seed_545/PAMAP2_to_RealWorld",
+      "checkpoint": "results/shared_init/dann/seed_545/PAMAP2_to_RealWorld/model_last.pt",
+      "checkpoint_sha256": "d07cac43e73c7dd4a227b8228d07c3b7bf4ac34cf962b0fba54b098dd59c7af0",
+      "init_checkpoint_sha256": "4d79188fca981a9fe665584f98d12a7672c89da9c8faf08a4db00622cf59c76c",
+      "repository_commit": "63d799f81d92cd0f70aad8314194787f5e28e7d9",
+      "device": "mps",
+      "train_seconds": 71.4,
+      "prediction_agreement_with_saved": {
+        "source_test": 1.0,
+        "target_train": 1.0,
+        "target_val": 1.0,
+        "target_test": 1.0
+      }
+    },
+    {
+      "variant": "dsan",
+      "run_dir": "results/shared_init/dsan/seed_545/PAMAP2_to_RealWorld",
+      "checkpoint": "results/shared_init/dsan/seed_545/PAMAP2_to_RealWorld/model_last.pt",
+      "checkpoint_sha256": "1b7915aaa759e05be048976fcc0f5d34852fd759cb071e11215811448469527a",
+      "init_checkpoint_sha256": "4d79188fca981a9fe665584f98d12a7672c89da9c8faf08a4db00622cf59c76c",
+      "repository_commit": "63d799f81d92cd0f70aad8314194787f5e28e7d9",
+      "device": "mps",
+      "train_seconds": 69.8,
+      "prediction_agreement_with_saved": {
+        "source_test": 1.0,
+        "target_train": 1.0,
+        "target_val": 1.0,
+        "target_test": 1.0
+      }
+    }
+  ],
+  "ingredient_weights": [
+    0.3333333333333333,
+    0.3333333333333333,
+    0.3333333333333333
+  ],
+  "averaging": {
+    "code": "create_method_soup.py by the project partner (Denis Petrov), averaging step average_state_dicts",
+    "rule": "arithmetic mean of every floating-point state_dict entry in float32 (weights, biases, BatchNorm affine parameters and running statistics); integer entries (num_batches_tracked) by integer division, dtype kept",
+    "num_batches_tracked_of_ingredients": {
+      "features.1.num_batches_tracked": [
+        10260
+      ],
+      "features.5.num_batches_tracked": [
+        10260
+      ],
+      "features.9.num_batches_tracked": [
+        10260
+      ]
+    }
+  },
+  "batchnorm": "running statistics averaged like the weights (1/3 each)",
+  "averaged_part": "HAR predictor only (features + classifier); no discriminator",
+  "target_input": "none",
+  "saved_predictions": [
+    "source_val",
+    "source_test",
+    "target_train",
+    "target_val",
+    "target_test"
+  ],
+  "seconds": {
+    "load_ingredients_and_logits": 3.04,
+    "average": 0.0052,
+    "bn_recompute": 0.0,
+    "predict": 0.944
+  },
+  "device": "mps",
+  "torch": "2.14.1",
+  "numpy": "2.4.6",
+  "python": "3.13.15",
+  "platform": "macOS-27.2.1-arm64-arm-64bit-Mach-O",
+  "nondeterminism": "Trained on Apple MPS. PyTorch does not guarantee bitwise reproducible results on MPS; a repeated run with the same seed can differ slightly.",
+  "repository_commit": "0130ba3b2d5b8c68be8551f24a805829e01c55c8",
+  "started_utc": "2026-11-23T17:50:28.907422+00:00",
+  "finished_utc": "2026-11-23T17:50:33.113934+00:00"
+}

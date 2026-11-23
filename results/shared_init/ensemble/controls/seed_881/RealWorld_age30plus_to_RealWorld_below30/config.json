@@ -1,0 +1,97 @@
+{
+  "method": "output_ensemble",
+  "ensemble": "controls",
+  "belongs_to_soup": "soup_controls",
+  "transfer": "RealWorld_age30plus_to_RealWorld_below30",
+  "family": "cross_age",
+  "source": "RealWorld_age30plus",
+  "target": "RealWorld_below30",
+  "label_map": {
+    "climbingdown": 0,
+    "climbingup": 1,
+    "jumping": 2,
+    "lying": 3,
+    "running": 4,
+    "sitting": 5,
+    "standing": 6,
+    "walking": 7
+  },
+  "seed": 881,
+  "init": "shared",
+  "init_checkpoint": "models/cross_age/RealWorld_age30plus_to_RealWorld_below30/model_last.pt",
+  "init_checkpoint_sha256": "cc967f2ae60ef83cf6c1edccadb107b55c7973ebeabc083fa5e94327d121c846",
+  "target_labels_used": false,
+  "ingredients": [
+    {
+      "variant": "lambda0_target_pass",
+      "run_dir": "results/shared_init/lambda0_target_pass/seed_881/RealWorld_age30plus_to_RealWorld_below30",
+      "checkpoint": "results/shared_init/lambda0_target_pass/seed_881/RealWorld_age30plus_to_RealWorld_below30/model_last.pt",
+      "checkpoint_sha256": "3e14ab9d6fd6c15daaca2bea38afbce62661017e8171c83928436f6638e3d8e5",
+      "init_checkpoint_sha256": "cc967f2ae60ef83cf6c1edccadb107b55c7973ebeabc083fa5e94327d121c846",
+      "repository_commit": "63d799f81d92cd0f70aad8314194787f5e28e7d9",
+      "device": "mps",
+      "train_seconds": 71.2,
+      "prediction_agreement_with_saved": {
+        "source_test": 1.0,
+        "target_train": 1.0,
+        "target_val": 1.0,
+        "target_test": 1.0
+      }
+    },
+    {
+      "variant": "dann_lambda0_target_pass",
+      "run_dir": "results/shared_init/dann_lambda0_target_pass/seed_881/RealWorld_age30plus_to_RealWorld_below30",
+      "checkpoint": "results/shared_init/dann_lambda0_target_pass/seed_881/RealWorld_age30plus_to_RealWorld_below30/model_last.pt",
+      "checkpoint_sha256": "c5f9d61097a9b8b7aa4d57fc06c0b6b02de6d0cf4ad052c4c7ad0537fe54058c",
+      "init_checkpoint_sha256": "cc967f2ae60ef83cf6c1edccadb107b55c7973ebeabc083fa5e94327d121c846",
+      "repository_commit": "63d799f81d92cd0f70aad8314194787f5e28e7d9",
+      "device": "mps",
+      "train_seconds": 53.4,
+      "prediction_agreement_with_saved": {
+        "source_test": 1.0,
+        "target_train": 1.0,
+        "target_val": 1.0,
+        "target_test": 1.0
+      }
+    },
+    {
+      "variant": "dsan_lambda0_target_pass",
+      "run_dir": "results/shared_init/dsan_lambda0_target_pass/seed_881/RealWorld_age30plus_to_RealWorld_below30",
+      "checkpoint": "results/shared_init/dsan_lambda0_target_pass/seed_881/RealWorld_age30plus_to_RealWorld_below30/model_last.pt",
+      "checkpoint_sha256": "7e87870e90cf3687d32d7b9a6ed4c133d142849d7152144fd081bd84289617f9",
+      "init_checkpoint_sha256": "cc967f2ae60ef83cf6c1edccadb107b55c7973ebeabc083fa5e94327d121c846",
+      "repository_commit": "63d799f81d92cd0f70aad8314194787f5e28e7d9",
+      "device": "mps",
+      "train_seconds": 72.1,
+      "prediction_agreement_with_saved": {
+        "source_test": 1.0,
+        "target_train": 1.0,
+        "target_val": 1.0,
+        "target_test": 1.0
+      }
+    }
+  ],
+  "rule": "mean of the softmax outputs of the ingredients (eval mode, each with its own BatchNorm statistics), prediction = argmax",
+  "target_input": "none",
+  "saved_predictions": [
+    "source_val",
+    "source_test",
+    "target_train",
+    "target_val",
+    "target_test"
+  ],
+  "min_prediction_agreement_with_saved": 1.0,
+  "seconds": {
+    "load_ingredients_and_logits": 2.919,
+    "combine": 0.018
+  },
+  "device": "mps",
+  "torch": "2.14.1",
+  "numpy": "2.4.6",
+  "python": "3.13.15",
+  "platform": "macOS-27.2.1-arm64-arm-64bit-Mach-O",
+  "nondeterminism": "Trained on Apple MPS. PyTorch does not guarantee bitwise reproducible results on MPS; a repeated run with the same seed can differ slightly.",
+  "repository_commit": "0130ba3b2d5b8c68be8551f24a805829e01c55c8",
+  "started_utc": "2026-11-23T17:54:04.261639+00:00",
+  "finished_utc": "2026-11-23T17:54:11.279511+00:00"
+}

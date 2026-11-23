@@ -1,0 +1,132 @@
+{
+  "method": "uniform_soup",
+  "soup": "soup_methods",
+  "bn_variant": "bn_target",
+  "transfer": "PAMAP2_female_to_PAMAP2_male",
+  "family": "cross_gender",
+  "source": "PAMAP2_female",
+  "target": "PAMAP2_male",
+  "label_map": {
+    "Nordic walking": 0,
+    "ascending stairs": 1,
+    "cycling": 2,
+    "descending stairs": 3,
+    "ironing": 4,
+    "lying": 5,
+    "rope jumping": 6,
+    "running": 7,
+    "sitting": 8,
+    "standing": 9,
+    "vacuum cleaning": 10,
+    "walking": 11
+  },
+  "seed": 545,
+  "init": "shared",
+  "init_checkpoint": "models/cross_gender/PAMAP2_female_to_PAMAP2_male/model_last.pt",
+  "init_checkpoint_sha256": "7e2baad1cf985b266df2196f5703186a0bcd2d94dd9110d330ad4ed7b82c2e02",
+  "target_labels_used": false,
+  "ingredients": [
+    {
+      "variant": "deep_coral",
+      "run_dir": "results/shared_init/deep_coral/seed_545/PAMAP2_female_to_PAMAP2_male",
+      "checkpoint": "results/shared_init/deep_coral/seed_545/PAMAP2_female_to_PAMAP2_male/model_last.pt",
+      "checkpoint_sha256": "88487b32e3e3ca899e3922cd5ccbb0fb4a6af571d999dbe63e146a5b00020e65",
+      "init_checkpoint_sha256": "7e2baad1cf985b266df2196f5703186a0bcd2d94dd9110d330ad4ed7b82c2e02",
+      "repository_commit": "63d799f81d92cd0f70aad8314194787f5e28e7d9",
+      "device": "mps",
+      "train_seconds": 23.6,
+      "prediction_agreement_with_saved": {
+        "source_test": 1.0,
+        "target_train": 1.0,
+        "target_val": 1.0,
+        "target_test": 1.0
+      }
+    },
+    {
+      "variant": "dann",
+      "run_dir": "results/shared_init/dann/seed_545/PAMAP2_female_to_PAMAP2_male",
+      "checkpoint": "results/shared_init/dann/seed_545/PAMAP2_female_to_PAMAP2_male/model_last.pt",
+      "checkpoint_sha256": "26b21422f8c6e6f07fa8d735139f5ee7ea0249bda1a2277c0d30e12e77edfef5",
+      "init_checkpoint_sha256": "7e2baad1cf985b266df2196f5703186a0bcd2d94dd9110d330ad4ed7b82c2e02",
+      "repository_commit": "63d799f81d92cd0f70aad8314194787f5e28e7d9",
+      "device": "mps",
+      "train_seconds": 26.9,
+      "prediction_agreement_with_saved": {
+        "source_test": 1.0,
+        "target_train": 1.0,
+        "target_val": 1.0,
+        "target_test": 1.0
+      }
+    },
+    {
+      "variant": "dsan",
+      "run_dir": "results/shared_init/dsan/seed_545/PAMAP2_female_to_PAMAP2_male",
+      "checkpoint": "results/shared_init/dsan/seed_545/PAMAP2_female_to_PAMAP2_male/model_last.pt",
+      "checkpoint_sha256": "ff20c187cc633c31c5e535e1e6c43c90d90c29970f7e56745a9e69f43bb90d66",
+      "init_checkpoint_sha256": "7e2baad1cf985b266df2196f5703186a0bcd2d94dd9110d330ad4ed7b82c2e02",
+      "repository_commit": "63d799f81d92cd0f70aad8314194787f5e28e7d9",
+      "device": "mps",
+      "train_seconds": 26.6,
+      "prediction_agreement_with_saved": {
+        "source_test": 1.0,
+        "target_train": 1.0,
+        "target_val": 1.0,
+        "target_test": 1.0
+      }
+    }
+  ],
+  "ingredient_weights": [
+    0.3333333333333333,
+    0.3333333333333333,
+    0.3333333333333333
+  ],
+  "averaging": {
+    "code": "create_method_soup.py by the project partner (Denis Petrov), averaging step average_state_dicts",
+    "rule": "arithmetic mean of every floating-point state_dict entry in float32 (weights, biases, BatchNorm affine parameters and running statistics); integer entries (num_batches_tracked) by integer division, dtype kept",
+    "num_batches_tracked_of_ingredients": {
+      "features.1.num_batches_tracked": [
+        3870
+      ],
+      "features.5.num_batches_tracked": [
+        3870
+      ],
+      "features.9.num_batches_tracked": [
+        3870
+      ]
+    }
+  },
+  "batchnorm": "running statistics re-estimated on target train after averaging; weights unchanged",
+  "bn_recompute": {
+    "data": "target train windows (features.pkl), no labels",
+    "procedure": "torch.optim.swa_utils.update_bn: reset running_mean/running_var/num_batches_tracked, momentum None (cumulative average over the batches), one pass in train mode without gradients (dropout active)",
+    "batch_size": 32,
+    "n_batches": 185,
+    "n_windows": 5902,
+    "order": "random permutation from torch.Generator().manual_seed(545)",
+    "dropout_seed": 545
+  },
+  "averaged_part": "HAR predictor only (features + classifier); no discriminator",
+  "target_input": "target train windows only (features.pkl), no labels",
+  "saved_predictions": [
+    "source_val",
+    "source_test",
+    "target_train",
+    "target_val",
+    "target_test"
+  ],
+  "seconds": {
+    "load_ingredients_and_logits": 2.066,
+    "average": 0.0446,
+    "bn_recompute": 1.479,
+    "predict": 0.672
+  },
+  "device": "mps",
+  "torch": "2.14.1",
+  "numpy": "2.4.6",
+  "python": "3.13.15",
+  "platform": "macOS-27.2.1-arm64-arm-64bit-Mach-O",
+  "nondeterminism": "Trained on Apple MPS. PyTorch does not guarantee bitwise reproducible results on MPS; a repeated run with the same seed can differ slightly.",
+  "repository_commit": "0130ba3b2d5b8c68be8551f24a805829e01c55c8",
+  "started_utc": "2026-11-23T17:51:25.950867+00:00",
+  "finished_utc": "2026-11-23T17:51:31.125366+00:00"
+}

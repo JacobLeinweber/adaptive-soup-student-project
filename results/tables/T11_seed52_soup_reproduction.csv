@@ -1,0 +1,14 @@
+variant,rows_transfer_x_split,rows_identical,max_abs_difference_any_metric
+baseline,48,48,0.000000
+deep_coral,60,60,0.000000
+dann,60,60,0.000000
+dsan,60,60,0.000000
+lambda0_target_pass,60,60,0.000000
+dann_lambda0_target_pass,60,60,0.000000
+dsan_lambda0_target_pass,60,60,0.000000
+soup_methods_bn_avg,60,60,0.000000
+soup_methods_bn_target,60,60,0.000000
+soup_controls_bn_avg,60,60,0.000000
+soup_controls_bn_target,60,60,0.000000
+ensemble_methods,60,60,0.000000
+ensemble_controls,60,60,0.000000

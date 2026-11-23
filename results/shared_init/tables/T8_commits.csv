@@ -1,0 +1,10 @@
+outputs,repository_commit,count
+soup,0130ba3b2d5b8c68be8551f24a805829e01c55c8,240
+ensemble,0130ba3b2d5b8c68be8551f24a805829e01c55c8,120
+source_val_predictions,0130ba3b2d5b8c68be8551f24a805829e01c55c8,360
+ingredient deep_coral,"7db879b34940d78607c5f867ad7ef3a6ba1906d0 (seed 52); 63d799f81d92cd0f70aad8314194787f5e28e7d9 (seeds 100, 445, 545, 881)",60
+ingredient dann,"d9ca82f4af96cf2141f4cf80d3312bdd1b7c4a10 (seed 52); 63d799f81d92cd0f70aad8314194787f5e28e7d9 (seeds 100, 445, 545, 881)",60
+ingredient dsan,"cdef98bba18d3b170998d6233e31531a0e0bfbc2 (seed 52); 63d799f81d92cd0f70aad8314194787f5e28e7d9 (seeds 100, 445, 545, 881)",60
+ingredient lambda0_target_pass,"7db879b34940d78607c5f867ad7ef3a6ba1906d0 (seed 52); 63d799f81d92cd0f70aad8314194787f5e28e7d9 (seeds 100, 445, 545, 881)",60
+ingredient dann_lambda0_target_pass,"d9ca82f4af96cf2141f4cf80d3312bdd1b7c4a10 (seed 52); 63d799f81d92cd0f70aad8314194787f5e28e7d9 (seeds 100, 445, 545, 881)",60
+ingredient dsan_lambda0_target_pass,"cdef98bba18d3b170998d6233e31531a0e0bfbc2 (seed 52); 63d799f81d92cd0f70aad8314194787f5e28e7d9 (seeds 100, 445, 545, 881)",60

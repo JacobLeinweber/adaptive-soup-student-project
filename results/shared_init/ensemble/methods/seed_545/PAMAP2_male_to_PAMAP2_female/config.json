@@ -1,0 +1,101 @@
+{
+  "method": "output_ensemble",
+  "ensemble": "methods",
+  "belongs_to_soup": "soup_methods",
+  "transfer": "PAMAP2_male_to_PAMAP2_female",
+  "family": "cross_gender",
+  "source": "PAMAP2_male",
+  "target": "PAMAP2_female",
+  "label_map": {
+    "Nordic walking": 0,
+    "ascending stairs": 1,
+    "cycling": 2,
+    "descending stairs": 3,
+    "ironing": 4,
+    "lying": 5,
+    "rope jumping": 6,
+    "running": 7,
+    "sitting": 8,
+    "standing": 9,
+    "vacuum cleaning": 10,
+    "walking": 11
+  },
+  "seed": 545,
+  "init": "shared",
+  "init_checkpoint": "models/cross_gender/PAMAP2_male_to_PAMAP2_female/model_last.pt",
+  "init_checkpoint_sha256": "15c7af1f54b88d052a32560bdfa8e8db2e7d99755cf0b77bff16f2423479a498",
+  "target_labels_used": false,
+  "ingredients": [
+    {
+      "variant": "deep_coral",
+      "run_dir": "results/shared_init/deep_coral/seed_545/PAMAP2_male_to_PAMAP2_female",
+      "checkpoint": "results/shared_init/deep_coral/seed_545/PAMAP2_male_to_PAMAP2_female/model_last.pt",
+      "checkpoint_sha256": "d98fd5527d98792a95a9f60f541cce5f1546e5d193236c7dc4ab513c813edb38",
+      "init_checkpoint_sha256": "15c7af1f54b88d052a32560bdfa8e8db2e7d99755cf0b77bff16f2423479a498",
+      "repository_commit": "63d799f81d92cd0f70aad8314194787f5e28e7d9",
+      "device": "mps",
+      "train_seconds": 103.9,
+      "prediction_agreement_with_saved": {
+        "source_test": 1.0,
+        "target_train": 1.0,
+        "target_val": 1.0,
+        "target_test": 1.0
+      }
+    },
+    {
+      "variant": "dann",
+      "run_dir": "results/shared_init/dann/seed_545/PAMAP2_male_to_PAMAP2_female",
+      "checkpoint": "results/shared_init/dann/seed_545/PAMAP2_male_to_PAMAP2_female/model_last.pt",
+      "checkpoint_sha256": "8634f8162f04e8b59cd4805af46d914e62010de8c933c6d51d41c2de05d8aead",
+      "init_checkpoint_sha256": "15c7af1f54b88d052a32560bdfa8e8db2e7d99755cf0b77bff16f2423479a498",
+      "repository_commit": "63d799f81d92cd0f70aad8314194787f5e28e7d9",
+      "device": "mps",
+      "train_seconds": 115.4,
+      "prediction_agreement_with_saved": {
+        "source_test": 1.0,
+        "target_train": 1.0,
+        "target_val": 1.0,
+        "target_test": 1.0
+      }
+    },
+    {
+      "variant": "dsan",
+      "run_dir": "results/shared_init/dsan/seed_545/PAMAP2_male_to_PAMAP2_female",
+      "checkpoint": "results/shared_init/dsan/seed_545/PAMAP2_male_to_PAMAP2_female/model_last.pt",
+      "checkpoint_sha256": "91b4c2ccbbfa1f1e648128a220955a98249e8bfe69562856813920f6d720f47a",
+      "init_checkpoint_sha256": "15c7af1f54b88d052a32560bdfa8e8db2e7d99755cf0b77bff16f2423479a498",
+      "repository_commit": "63d799f81d92cd0f70aad8314194787f5e28e7d9",
+      "device": "mps",
+      "train_seconds": 114.2,
+      "prediction_agreement_with_saved": {
+        "source_test": 1.0,
+        "target_train": 1.0,
+        "target_val": 1.0,
+        "target_test": 1.0
+      }
+    }
+  ],
+  "rule": "mean of the softmax outputs of the ingredients (eval mode, each with its own BatchNorm statistics), prediction = argmax",
+  "target_input": "none",
+  "saved_predictions": [
+    "source_val",
+    "source_test",
+    "target_train",
+    "target_val",
+    "target_test"
+  ],
+  "min_prediction_agreement_with_saved": 1.0,
+  "seconds": {
+    "load_ingredients_and_logits": 1.208,
+    "combine": 0.017
+  },
+  "device": "mps",
+  "torch": "2.14.1",
+  "numpy": "2.4.6",
+  "python": "3.13.15",
+  "platform": "macOS-27.2.1-arm64-arm-64bit-Mach-O",
+  "nondeterminism": "Trained on Apple MPS. PyTorch does not guarantee bitwise reproducible results on MPS; a repeated run with the same seed can differ slightly.",
+  "repository_commit": "0130ba3b2d5b8c68be8551f24a805829e01c55c8",
+  "started_utc": "2026-11-23T17:51:21.233249+00:00",
+  "finished_utc": "2026-11-23T17:51:23.725001+00:00"
+}

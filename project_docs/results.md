@@ -327,6 +327,123 @@ Values are mean ± sample SD over the five seeds in percent; a group value is fi
 - Transfers on which the soup of the methods is above the best branch by target test (oracle) in the mean over seeds: Soup, BN averaged: MHEALTH → PAMAP2; Soup, BN re-estimated on target: PAMAP2 female → male.
 - Branch chosen per transfer and seed (60 cases) among Deep CORAL / DANN / DSAN: Best branch by SRC (CE): deep_coral 18, dann 3, dsan 39; Best branch by SRC (macro-F1): deep_coral 8, dann 21, dsan 31; Best branch by target test (oracle): deep_coral 9, dann 23, dsan 28.
 
+## Shared starting point: stage 2 and stage 3 again
+
+**Setup.** Requested by the supervisor in meeting 3: all branches start from the same source-only checkpoint, for every seed and for methods and controls alike, so that the initialisation cannot shape the soup. Every run now starts from the supplied seed-52 source-only model of its transfer; the seed only steers the randomness of the adaptation (order of the source and target batches, dropout, initialisation of the DANN discriminator). Everything else is unchanged: AdaTime weights, 30 epochs, model after the last epoch, the same controls. The seed-52 runs are the same runs as before; seeds 100, 445, 545 and 881 were trained again (288 runs, `results/shared_init/`). Stage 3 (both soups, both BatchNorm variants, output ensembles, source-validation predictions of the branches) was computed again for all five seeds with the same code and the same checks, and every seed of a transfer is checked to start from the same checkpoint. With the shared start the baseline is the same model for every seed, so its SD over the seeds is 0.
+
+*Old*: every seed starts from its own source-only model (the sections above). *New*: shared start. Cells show old → new, mean ± sample SD over the five seeds in percent; a group value is first averaged over its transfers within each seed. Differences are paired by transfer and seed, in brackets the number of seeds in which the first variant is higher. Tables: `results/tables/T11_*.csv`; the full tables of the shared start in `results/shared_init/tables/` (same names as for the old start).
+
+**Stage 2: weighted F1 on target test (%), old → new**
+
+| Variant | All 12 | Cross-dataset (6) | Cross-gender (4) | Cross-age (2) |
+|---|---:|---:|---:|---:|
+| Baseline | 41.9 ± 1.0 → 42.0 ± 0.0 | 25.1 ± 1.6 → 27.4 ± 0.0 | 65.2 ± 1.3 → 64.6 ± 0.0 | 45.7 ± 3.5 → 40.8 ± 0.0 |
+| Deep CORAL | 45.7 ± 1.8 → 46.1 ± 1.9 | 29.5 ± 3.9 → 27.9 ± 2.3 | 67.3 ± 2.1 → 70.1 ± 1.3 | 51.1 ± 3.4 → 52.6 ± 3.7 |
+| CORAL control | 43.4 ± 2.0 → 44.4 ± 2.0 | 26.5 ± 3.8 → 26.0 ± 2.3 | 65.9 ± 2.3 → 68.5 ± 2.6 | 49.2 ± 6.4 → 51.1 ± 3.0 |
+| DANN | 52.6 ± 1.0 → 51.6 ± 2.0 | 39.7 ± 2.4 → 36.7 ± 4.4 | 69.0 ± 2.9 → 70.1 ± 3.1 | 58.3 ± 3.0 → 59.2 ± 3.5 |
+| DANN control | 44.6 ± 1.5 → 45.2 ± 1.9 | 29.5 ± 1.7 → 30.6 ± 3.1 | 65.7 ± 1.2 → 67.0 ± 1.8 | 48.0 ± 2.8 → 45.2 ± 3.7 |
+| DSAN | 52.7 ± 3.0 → 50.4 ± 2.3 | 36.4 ± 5.9 → 34.1 ± 2.4 | 73.8 ± 1.6 → 72.1 ± 2.6 | 59.7 ± 4.1 → 56.1 ± 2.8 |
+| DSAN control | 44.5 ± 1.7 → 44.4 ± 0.7 | 29.9 ± 2.7 → 29.9 ± 1.5 | 65.0 ± 3.4 → 66.4 ± 1.3 | 47.7 ± 2.5 → 44.0 ± 2.0 |
+
+**Stage 2: paired differences in weighted F1 on target test (points), old → new**
+
+| Difference | All 12 | Cross-dataset (6) | Cross-gender (4) | Cross-age (2) |
+|---|---:|---:|---:|---:|
+| Deep CORAL − own control | +2.2 ± 2.3 (4/5) → +1.7 ± 1.6 (4/5) | +2.9 ± 4.2 (4/5) → +1.8 ± 2.4 (4/5) | +1.4 ± 1.2 (4/5) → +1.6 ± 2.5 (4/5) | +1.9 ± 3.9 (4/5) → +1.5 ± 1.9 (4/5) |
+| Deep CORAL − baseline | +3.8 ± 2.1 (5/5) → +4.0 ± 1.9 (5/5) | +4.4 ± 4.6 (4/5) → +0.5 ± 2.3 (2/5) | +2.1 ± 3.1 (4/5) → +5.5 ± 1.3 (5/5) | +5.4 ± 5.4 (5/5) → +11.8 ± 3.7 (5/5) |
+| DANN − own control | +7.9 ± 1.0 (5/5) → +6.4 ± 3.1 (5/5) | +10.3 ± 2.2 (5/5) → +6.1 ± 4.5 (5/5) | +3.3 ± 3.2 (4/5) → +3.1 ± 3.6 (4/5) | +10.3 ± 3.0 (5/5) → +14.0 ± 4.3 (5/5) |
+| DANN − baseline | +10.7 ± 1.8 (5/5) → +9.5 ± 2.0 (5/5) | +14.7 ± 3.8 (5/5) → +9.4 ± 4.4 (5/5) | +3.8 ± 3.8 (4/5) → +5.4 ± 3.1 (5/5) | +12.6 ± 4.3 (5/5) → +18.3 ± 3.5 (5/5) |
+| DSAN − own control | +8.2 ± 3.6 (5/5) → +6.0 ± 1.9 (5/5) | +6.5 ± 5.9 (5/5) → +4.1 ± 2.1 (5/5) | +8.8 ± 4.5 (5/5) → +5.7 ± 2.6 (5/5) | +12.0 ± 3.9 (5/5) → +12.0 ± 2.6 (5/5) |
+| DSAN − baseline | +10.9 ± 2.8 (5/5) → +8.4 ± 2.3 (5/5) | +11.3 ± 6.1 (5/5) → +6.7 ± 2.4 (5/5) | +8.6 ± 1.1 (5/5) → +7.5 ± 2.6 (5/5) | +14.0 ± 3.3 (5/5) → +15.2 ± 2.8 (5/5) |
+
+**Stage 3: weighted F1 on target test (%), Soup of the methods (Deep CORAL + DANN + DSAN), old → new**
+
+| Variant | All 12 | Cross-dataset (6) | Cross-gender (4) | Cross-age (2) |
+|---|---:|---:|---:|---:|
+| Baseline | 41.9 ± 1.0 → 42.0 ± 0.0 | 25.1 ± 1.6 → 27.4 ± 0.0 | 65.2 ± 1.3 → 64.6 ± 0.0 | 45.7 ± 3.5 → 40.8 ± 0.0 |
+| Mean of the 3 branches | 50.3 ± 1.5 → 49.4 ± 1.6 | 35.2 ± 3.4 → 32.9 ± 2.3 | 70.0 ± 1.2 → 70.8 ± 1.5 | 56.4 ± 1.2 → 55.9 ± 1.4 |
+| Best branch by SRC (CE) | 52.4 ± 2.4 → 50.2 ± 2.4 | 37.5 ± 5.2 → 33.4 ± 3.5 | 71.3 ± 3.2 → 72.9 ± 2.0 | 59.6 ± 4.2 → 55.2 ± 2.3 |
+| Best branch by SRC (macro-F1) | 52.0 ± 2.3 → 51.3 ± 3.1 | 35.9 ± 5.4 → 34.4 ± 6.8 | 72.6 ± 2.7 → 72.9 ± 1.2 | 58.9 ± 3.5 → 58.8 ± 2.2 |
+| Best branch by target test (oracle) | 58.0 ± 1.6 → 56.1 ± 1.8 | 44.7 ± 2.7 → 41.8 ± 3.2 | 75.6 ± 1.4 → 74.6 ± 1.2 | 62.8 ± 2.8 → 61.9 ± 3.8 |
+| Output ensemble | 51.8 ± 2.4 → 51.0 ± 1.3 | 35.3 ± 5.4 → 33.0 ± 2.7 | 72.6 ± 1.5 → 72.9 ± 2.0 | 59.4 ± 1.4 → 61.1 ± 1.1 |
+| Soup, BN averaged | 43.0 ± 2.7 → 45.5 ± 2.1 | 29.5 ± 2.4 → 29.8 ± 3.4 | 63.5 ± 3.8 → 66.1 ± 2.7 | 42.2 ± 10.1 → 51.2 ± 4.8 |
+| Soup, BN re-estimated on target | 42.9 ± 2.4 → 44.7 ± 3.0 | 30.7 ± 5.0 → 32.3 ± 4.0 | 59.3 ± 2.8 → 60.7 ± 3.1 | 46.8 ± 5.2 → 49.9 ± 2.7 |
+
+**Stage 3: weighted F1 on target test (%), Soup of the controls (their three λ = 0 runs), old → new**
+
+| Variant | All 12 | Cross-dataset (6) | Cross-gender (4) | Cross-age (2) |
+|---|---:|---:|---:|---:|
+| Baseline | 41.9 ± 1.0 → 42.0 ± 0.0 | 25.1 ± 1.6 → 27.4 ± 0.0 | 65.2 ± 1.3 → 64.6 ± 0.0 | 45.7 ± 3.5 → 40.8 ± 0.0 |
+| Mean of the 3 branches | 44.2 ± 1.3 → 44.7 ± 1.0 | 28.6 ± 2.2 → 28.9 ± 1.7 | 65.5 ± 1.9 → 67.3 ± 1.0 | 48.3 ± 2.4 → 46.8 ± 1.9 |
+| Best branch by SRC (CE) | 44.2 ± 2.9 → 44.7 ± 1.8 | 27.9 ± 5.5 → 26.9 ± 2.6 | 65.6 ± 2.2 → 68.8 ± 1.4 | 50.1 ± 4.5 → 49.8 ± 4.4 |
+| Best branch by SRC (macro-F1) | 44.9 ± 2.3 → 46.6 ± 1.2 | 29.4 ± 3.6 → 31.1 ± 1.5 | 65.7 ± 2.1 → 68.2 ± 1.5 | 49.8 ± 1.1 → 49.6 ± 2.8 |
+| Best branch by target test (oracle) | 48.1 ± 1.7 → 49.4 ± 1.2 | 33.1 ± 2.3 → 34.5 ± 2.1 | 68.5 ± 1.7 → 70.3 ± 0.8 | 52.6 ± 1.3 → 52.1 ± 1.6 |
+| Output ensemble | 45.2 ± 1.6 → 45.2 ± 1.1 | 29.3 ± 2.4 → 29.0 ± 2.0 | 66.7 ± 1.7 → 68.4 ± 1.5 | 50.0 ± 1.2 → 47.2 ± 2.1 |
+| Soup, BN averaged | 43.3 ± 2.5 → 43.2 ± 1.3 | 26.6 ± 4.4 → 26.0 ± 2.7 | 66.4 ± 1.8 → 68.5 ± 0.3 | 47.4 ± 2.8 → 44.4 ± 1.2 |
+| Soup, BN re-estimated on target | 45.8 ± 1.2 → 45.1 ± 0.6 | 30.0 ± 1.8 → 28.7 ± 1.3 | 67.4 ± 1.9 → 68.8 ± 1.3 | 49.9 ± 1.6 → 46.7 ± 1.7 |
+
+**Stage 3: paired differences in weighted F1 on target test (points), old → new**
+
+| Difference | All 12 | Cross-dataset (6) | Cross-gender (4) | Cross-age (2) |
+|---|---:|---:|---:|---:|
+| Methods, BN averaged: Soup − mean of the branches | −7.4 ± 2.2 (0/5) → −3.9 ± 1.6 (0/5) | −5.6 ± 2.9 (0/5) → −3.1 ± 2.4 (0/5) | −6.5 ± 3.9 (0/5) → −4.7 ± 3.1 (0/5) | −14.2 ± 11.1 (1/5) → −4.8 ± 5.2 (2/5) |
+| Methods, BN averaged: Soup − best branch by SRC (CE) | −9.5 ± 2.2 (0/5) → −4.8 ± 2.1 (0/5) | −7.9 ± 3.6 (0/5) → −3.6 ± 3.2 (1/5) | −7.8 ± 5.5 (0/5) → −6.8 ± 2.4 (0/5) | −17.4 ± 13.2 (1/5) → −4.1 ± 5.4 (2/5) |
+| Methods, BN averaged: Soup − best branch by SRC (macro-F1) | −9.0 ± 2.7 (0/5) → −5.8 ± 1.8 (0/5) | −6.3 ± 4.5 (0/5) → −4.5 ± 4.5 (0/5) | −9.1 ± 1.8 (0/5) → −6.8 ± 2.9 (0/5) | −16.7 ± 11.8 (1/5) → −7.7 ± 5.0 (1/5) |
+| Methods, BN averaged: Soup − best branch by target test (oracle, uses target labels) | −15.1 ± 2.8 (0/5) → −10.6 ± 2.1 (0/5) | −15.2 ± 2.2 (0/5) → −12.0 ± 2.9 (0/5) | −12.1 ± 4.2 (0/5) → −8.5 ± 2.6 (0/5) | −20.6 ± 12.0 (0/5) → −10.7 ± 1.6 (0/5) |
+| Methods, BN averaged: Soup − baseline | +1.1 ± 3.0 (3/5) → +3.4 ± 2.1 (5/5) | +4.5 ± 2.3 (5/5) → +2.5 ± 3.4 (3/5) | −1.7 ± 3.1 (2/5) → +1.4 ± 2.7 (3/5) | −3.5 ± 13.0 (2/5) → +10.3 ± 4.8 (5/5) |
+| Methods, BN averaged: Soup − output ensemble | −8.8 ± 2.2 (0/5) → −5.5 ± 1.2 (0/5) | −5.7 ± 4.4 (0/5) → −3.2 ± 2.0 (0/5) | −9.1 ± 3.6 (0/5) → −6.9 ± 4.1 (0/5) | −17.2 ± 10.4 (0/5) → −9.9 ± 3.8 (0/5) |
+| Methods, BN re-estimated on target: Soup − mean of the branches | −7.4 ± 1.0 (0/5) → −4.6 ± 2.3 (0/5) | −4.5 ± 3.6 (0/5) → −0.6 ± 2.8 (2/5) | −10.7 ± 3.0 (0/5) → −10.0 ± 3.5 (0/5) | −9.6 ± 5.8 (1/5) → −6.0 ± 3.3 (0/5) |
+| Methods, BN re-estimated on target: Soup − best branch by SRC (CE) | −9.5 ± 1.2 (0/5) → −5.5 ± 2.6 (0/5) | −6.7 ± 3.1 (0/5) → −1.1 ± 3.5 (1/5) | −12.0 ± 2.0 (0/5) → −12.2 ± 2.4 (0/5) | −12.8 ± 7.0 (0/5) → −5.3 ± 3.9 (1/5) |
+| Methods, BN re-estimated on target: Soup − best branch by SRC (macro-F1) | −9.0 ± 0.6 (0/5) → −6.6 ± 2.1 (0/5) | −5.1 ± 3.8 (0/5) → −2.1 ± 4.3 (1/5) | −13.3 ± 4.6 (0/5) → −12.1 ± 3.4 (0/5) | −12.1 ± 6.2 (0/5) → −9.0 ± 3.9 (0/5) |
+| Methods, BN re-estimated on target: Soup − best branch by target test (oracle, uses target labels) | −15.1 ± 2.0 (0/5) → −11.4 ± 2.8 (0/5) | −14.0 ± 4.1 (0/5) → −9.5 ± 3.5 (0/5) | −16.3 ± 2.2 (0/5) → −13.9 ± 2.9 (0/5) | −16.0 ± 5.9 (0/5) → −12.0 ± 3.5 (0/5) |
+| Methods, BN re-estimated on target: Soup − baseline | +1.0 ± 2.3 (3/5) → +2.7 ± 3.0 (3/5) | +5.7 ± 4.6 (5/5) → +4.9 ± 4.0 (4/5) | −5.9 ± 3.4 (0/5) → −3.9 ± 3.1 (0/5) | +1.1 ± 7.2 (2/5) → +9.1 ± 2.7 (5/5) |
+| Methods, BN re-estimated on target: Soup − output ensemble | −8.8 ± 0.5 (0/5) → −6.3 ± 2.1 (0/5) | −4.6 ± 3.9 (0/5) → −0.7 ± 1.5 (2/5) | −13.3 ± 3.6 (0/5) → −12.2 ± 4.5 (0/5) | −12.7 ± 5.2 (0/5) → −11.2 ± 2.4 (0/5) |
+| Methods: BN re-estimated − BN averaged | −0.1 ± 2.5 (1/5) → −0.7 ± 1.0 (2/5) | +1.2 ± 2.8 (4/5) → +2.5 ± 1.6 (5/5) | −4.2 ± 5.4 (1/5) → −5.3 ± 0.9 (0/5) | +4.6 ± 6.6 (3/5) → −1.3 ± 3.5 (1/5) |
+| Controls, BN averaged: Soup − mean of the branches | −0.9 ± 1.2 (2/5) → −1.4 ± 1.1 (1/5) | −2.1 ± 2.3 (2/5) → −2.9 ± 1.9 (0/5) | +0.9 ± 0.9 (4/5) → +1.2 ± 1.1 (4/5) | −0.9 ± 3.8 (2/5) → −2.3 ± 2.0 (1/5) |
+| Controls, BN averaged: Soup − best branch by SRC (CE) | −0.9 ± 1.3 (1/5) → −1.5 ± 0.7 (0/5) | −1.4 ± 1.6 (2/5) → −0.9 ± 1.3 (1/5) | +0.8 ± 0.7 (5/5) → −0.3 ± 1.3 (2/5) | −2.7 ± 6.6 (2/5) → −5.4 ± 4.5 (0/5) |
+| Controls, BN averaged: Soup − best branch by SRC (macro-F1) | −1.6 ± 1.1 (0/5) → −3.3 ± 0.7 (0/5) | −2.8 ± 1.6 (0/5) → −5.2 ± 2.2 (0/5) | +0.7 ± 0.7 (5/5) → +0.3 ± 1.3 (3/5) | −2.4 ± 2.6 (1/5) → −5.1 ± 2.8 (0/5) |
+| Controls, BN averaged: Soup − best branch by target test (oracle, uses target labels) | −4.8 ± 1.2 (0/5) → −6.2 ± 1.5 (0/5) | −6.5 ± 2.4 (0/5) → −8.6 ± 3.1 (0/5) | −2.1 ± 0.5 (0/5) → −1.8 ± 0.8 (0/5) | −5.2 ± 4.0 (0/5) → −7.7 ± 2.1 (0/5) |
+| Controls, BN averaged: Soup − baseline | +1.4 ± 3.1 (4/5) → +1.2 ± 1.3 (5/5) | +1.5 ± 5.2 (2/5) → −1.4 ± 2.7 (1/5) | +1.2 ± 2.9 (4/5) → +3.8 ± 0.3 (5/5) | +1.7 ± 4.2 (4/5) → +3.6 ± 1.2 (5/5) |
+| Controls, BN averaged: Soup − output ensemble | −1.9 ± 1.1 (0/5) → −1.9 ± 0.8 (0/5) | −2.7 ± 2.3 (0/5) → −3.0 ± 1.9 (0/5) | −0.2 ± 1.3 (1/5) → +0.1 ± 1.4 (2/5) | −2.6 ± 2.6 (1/5) → −2.8 ± 1.7 (0/5) |
+| Controls, BN re-estimated on target: Soup − mean of the branches | +1.6 ± 0.5 (5/5) → +0.4 ± 0.9 (3/5) | +1.3 ± 1.6 (4/5) → −0.2 ± 1.3 (1/5) | +1.8 ± 1.0 (5/5) → +1.5 ± 1.4 (5/5) | +1.6 ± 1.7 (5/5) → −0.1 ± 1.2 (2/5) |
+| Controls, BN re-estimated on target: Soup − best branch by SRC (CE) | +1.6 ± 2.3 (4/5) → +0.4 ± 1.6 (3/5) | +2.0 ± 5.0 (3/5) → +1.8 ± 2.5 (4/5) | +1.8 ± 1.5 (4/5) → −0.0 ± 2.1 (2/5) | −0.1 ± 4.5 (2/5) → −3.1 ± 3.3 (1/5) |
+| Controls, BN re-estimated on target: Soup − best branch by SRC (macro-F1) | +0.9 ± 1.6 (3/5) → −1.5 ± 0.9 (0/5) | +0.6 ± 3.2 (3/5) → −2.5 ± 1.5 (1/5) | +1.6 ± 1.5 (4/5) → +0.6 ± 2.3 (3/5) | +0.2 ± 2.0 (2/5) → −2.9 ± 2.5 (1/5) |
+| Controls, BN re-estimated on target: Soup − best branch by target test (oracle, uses target labels) | −2.4 ± 0.8 (0/5) → −4.3 ± 1.4 (0/5) | −3.1 ± 1.4 (0/5) → −5.9 ± 2.7 (0/5) | −1.1 ± 1.2 (0/5) → −1.5 ± 1.6 (1/5) | −2.6 ± 2.4 (1/5) → −5.4 ± 1.4 (0/5) |
+| Controls, BN re-estimated on target: Soup − baseline | +3.9 ± 1.9 (5/5) → +3.0 ± 0.6 (5/5) | +4.9 ± 2.5 (5/5) → +1.3 ± 1.3 (5/5) | +2.2 ± 3.0 (4/5) → +4.2 ± 1.3 (5/5) | +4.3 ± 2.6 (5/5) → +5.9 ± 1.7 (5/5) |
+| Controls, BN re-estimated on target: Soup − output ensemble | +0.6 ± 0.9 (4/5) → −0.1 ± 1.1 (2/5) | +0.7 ± 1.7 (3/5) → −0.3 ± 1.7 (2/5) | +0.7 ± 0.5 (5/5) → +0.4 ± 1.3 (3/5) | −0.1 ± 0.5 (1/5) → −0.5 ± 0.9 (1/5) |
+| Controls: BN re-estimated − BN averaged | +2.4 ± 1.6 (5/5) → +1.8 ± 1.3 (5/5) | +3.4 ± 3.6 (4/5) → +2.7 ± 2.2 (5/5) | +1.0 ± 1.2 (4/5) → +0.3 ± 1.3 (3/5) | +2.5 ± 2.4 (4/5) → +2.2 ± 1.4 (5/5) |
+| Soup of the methods − soup of the controls, BN averaged | −0.4 ± 4.0 (2/5) → +2.2 ± 1.9 (4/5) | +3.0 ± 6.0 (3/5) → +3.9 ± 3.4 (4/5) | −2.9 ± 4.9 (2/5) → −2.4 ± 2.4 (1/5) | −5.2 ± 10.2 (2/5) → +6.7 ± 4.9 (5/5) |
+| Soup of the methods − soup of the controls, BN re-estimated on target | −2.9 ± 1.9 (1/5) → −0.3 ± 2.6 (3/5) | +0.7 ± 4.5 (3/5) → +3.6 ± 3.3 (4/5) | −8.1 ± 1.6 (0/5) → −8.1 ± 2.5 (0/5) | −3.2 ± 5.9 (1/5) → +3.2 ± 4.2 (4/5) |
+
+**Figure 13.** Stage 2 per group of transfers: the baseline, the three methods (circles) and their controls (squares); open markers: old start, filled markers: shared start. Lines: SD over the seeds.
+
+![Figure 13](figures/fig13_shared_init_groups.png)
+
+**Figure 14.** Each method minus its own control per transfer, open: old start, filled: shared start; points right of zero mean the method is higher.
+
+![Figure 14](figures/fig14_shared_init_method_minus_control.png)
+
+**Figure 15.** Stage 3 per group of transfers: baseline, mean of the three branches, output ensemble and the two soups; top: soup of the methods, bottom: soup of the controls. Open: old start, filled: shared start.
+
+![Figure 15](figures/fig15_shared_init_soup.png)
+
+**Observations (shared start).** Only statements that follow directly from the T11 tables; no causes are claimed.
+
+- Stage 2, all 12 transfers, old → new: Baseline 41.9 ± 1.0 → 42.0 ± 0.0 %, Deep CORAL 45.7 ± 1.8 → 46.1 ± 1.9 %, CORAL control 43.4 ± 2.0 → 44.4 ± 2.0 %, DANN 52.6 ± 1.0 → 51.6 ± 2.0 %, DANN control 44.6 ± 1.5 → 45.2 ± 1.9 %, DSAN 52.7 ± 3.0 → 50.4 ± 2.3 %, DSAN control 44.5 ± 1.7 → 44.4 ± 0.7 %.
+- SD over the seeds (all 12) of the six branches, own source-only model per seed (as before): 1.0 to 3.0 points, mean 1.8.
+- SD over the seeds (all 12) of the six branches, shared start: seed-52 model for all seeds: 0.7 to 2.3 points, mean 1.8.
+- Each method minus its own control, all 12, old → new: Deep CORAL +2.2 ± 2.3 (4/5) → +1.7 ± 1.6 (4/5); DANN +7.9 ± 1.0 (5/5) → +6.4 ± 3.1 (5/5); DSAN +8.2 ± 3.6 (5/5) → +6.0 ± 1.9 (5/5).
+- Each method minus the baseline, all 12, old → new: Deep CORAL +3.8 ± 2.1 (5/5) → +4.0 ± 1.9 (5/5); DANN +10.7 ± 1.8 (5/5) → +9.5 ± 2.0 (5/5); DSAN +10.9 ± 2.8 (5/5) → +8.4 ± 2.3 (5/5).
+- Soup of the methods (Deep CORAL + DANN + DSAN), all 12 transfers, old → new: Baseline 41.9 ± 1.0 → 42.0 ± 0.0 %, Mean of the 3 branches 50.3 ± 1.5 → 49.4 ± 1.6 %, Output ensemble 51.8 ± 2.4 → 51.0 ± 1.3 %, Soup, BN averaged 43.0 ± 2.7 → 45.5 ± 2.1 %, Soup, BN re-estimated on target 42.9 ± 2.4 → 44.7 ± 3.0 %.
+- Soup, BN averaged (methods), all 12, old → new, soup minus mean of the branches −7.4 ± 2.2 (0/5) → −3.9 ± 1.6 (0/5); baseline +1.1 ± 3.0 (3/5) → +3.4 ± 2.1 (5/5); output ensemble −8.8 ± 2.2 (0/5) → −5.5 ± 1.2 (0/5); transfer-seed pairs above the baseline 33/60 → 41/60.
+- Soup, BN re-estimated on target (methods), all 12, old → new, soup minus mean of the branches −7.4 ± 1.0 (0/5) → −4.6 ± 2.3 (0/5); baseline +1.0 ± 2.3 (3/5) → +2.7 ± 3.0 (3/5); output ensemble −8.8 ± 0.5 (0/5) → −6.3 ± 2.1 (0/5); transfer-seed pairs above the baseline 29/60 → 39/60.
+- Soup of the controls (their three λ = 0 runs), all 12 transfers, old → new: Baseline 41.9 ± 1.0 → 42.0 ± 0.0 %, Mean of the 3 branches 44.2 ± 1.3 → 44.7 ± 1.0 %, Output ensemble 45.2 ± 1.6 → 45.2 ± 1.1 %, Soup, BN averaged 43.3 ± 2.5 → 43.2 ± 1.3 %, Soup, BN re-estimated on target 45.8 ± 1.2 → 45.1 ± 0.6 %.
+- Soup, BN averaged (controls), all 12, old → new, soup minus mean of the branches −0.9 ± 1.2 (2/5) → −1.4 ± 1.1 (1/5); baseline +1.4 ± 3.1 (4/5) → +1.2 ± 1.3 (5/5); output ensemble −1.9 ± 1.1 (0/5) → −1.9 ± 0.8 (0/5); transfer-seed pairs above the baseline 29/60 → 29/60.
+- Soup, BN re-estimated on target (controls), all 12, old → new, soup minus mean of the branches +1.6 ± 0.5 (5/5) → +0.4 ± 0.9 (3/5); baseline +3.9 ± 1.9 (5/5) → +3.0 ± 0.6 (5/5); output ensemble +0.6 ± 0.9 (4/5) → −0.1 ± 1.1 (2/5); transfer-seed pairs above the baseline 35/60 → 36/60.
+- Soup of the methods minus soup of the controls (BN averaged), all 12, old → new: −0.4 ± 4.0 (2/5) → +2.2 ± 1.9 (4/5); the same for the means of the branches: +6.1 ± 1.5 (5/5) → +4.7 ± 0.8 (5/5).
+- Soup of the methods minus soup of the controls (BN re-estimated on target), all 12, old → new: −2.9 ± 1.9 (1/5) → −0.3 ± 2.6 (3/5); the same for the means of the branches: +6.1 ± 1.5 (5/5) → +4.7 ± 0.8 (5/5).
+- Seed 52, where both starts use the same branches: 768 of 768 metric rows (transfer × split) of the baseline, the branches, the soups and the ensembles are identical to stage 3, among them all 360 of 360 rows of the soups and ensembles computed again; largest difference 0.00 points.
+
 ## Limitations
 
 Five seeds, the last epoch without model selection, loss weights taken over from another benchmark without tuning, and small target test sets on some transfers limit what these numbers show. See [limitations.md](limitations.md).
