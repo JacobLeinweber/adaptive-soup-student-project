@@ -46,6 +46,8 @@ Five paired seeds: 52, 100, 445, 545, 881. For every transfer and seed there is 
 
 The seed of a run sets the global random state, the order of the source batches and the stream of target batches. The baseline of a seed in all tables is the source-only model of that seed.
 
+**Shared start (since meeting 3, option `--init shared`).** Every method and every control of every seed starts from the supplied seed-52 source-only model of its transfer; the seed then only sets the randomness of the adaptation (order of the source batches, stream of target batches, dropout, initialisation of the DANN discriminator). The baseline of every seed is that one model. The seed-52 runs are the same under both starts; the runs of the other seeds are in `results/shared_init/`, their tables in `results/shared_init/tables/`. See [decisions.md](decisions.md).
+
 ## Training budget
 
 Identical for the source-only models, all methods and all controls:

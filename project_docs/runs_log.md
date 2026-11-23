@@ -1,6 +1,6 @@
 # Runs log
 
-One entry per block of runs. "Code commit" is the commit recorded in the `config.json` of every run of the block (`repository_commit`); "results commit" is the commit that added the run folders and tables to the repository. All runs: 30 epochs, last epoch, Apple M1 with MPS, PyTorch 2.14.1. The prefixes of the table names (`T1`, `T5`, `T2`, `T3`, `T7`, `T8`) are the internal numbers of the work packages, in the order in which they were done.
+One entry per block of runs. "Code commit" is the commit recorded in the `config.json` of every run of the block (`repository_commit`); "results commit" is the commit that added the run folders and tables to the repository. All runs: 30 epochs, last epoch, Apple M1 with MPS, PyTorch 2.14.1. The prefixes of the table names (`T1`, `T5`, `T2`, `T3`, `T7`, `T8`, `T11`) are the internal numbers of the work packages, in the order in which they were done.
 
 ## Overview
 
@@ -13,6 +13,8 @@ One entry per block of runs. "Code commit" is the commit recorded in the `config
 | DSAN and its control, five seeds | 2026-11-10 | `cdef98b` | `8349276` | 120 | `results/dsan/`, `results/dsan_lambda0_target_pass/` | `results/tables/T3_summary_target_test.csv` |
 | Alignment-weight sensitivity in the paper convention, seed 52 | 2026-11-11 to 2026-11-12 | `bd0cd35` | `907631e`, tables script `dad603e` | 192 | `results/paper_convention/` | `results/tables/T7_sensitivity_summary.csv` |
 | Uniform soups (methods, controls; two BatchNorm variants), output ensembles, source-val predictions of the branches; five seeds | 2026-11-12 | `586579f` | `7c5b142`, tables script `6c280b9` | 240 soups, 120 ensembles, 360 source-val predictions | `results/soup/`, `results/ensemble/`, `results/source_val_predictions/` | `results/tables/T8_summary_target_test.csv`, `T8_differences_target_test.csv` |
+| Shared starting point (meeting 3): the three methods and their controls for the seeds 100, 445, 545, 881, every run from the supplied seed-52 model | 2026-11-23 | `63d799f` | `6aedd47` | 288 | `results/shared_init/<variant>/seed_<seed>/<transfer>/` | `results/shared_init/tables/T3_summary_target_test.csv`; comparison `results/tables/T11_branches_old_vs_new.csv` |
+| Shared starting point: uniform soups, output ensembles, source-val predictions of the branches; five seeds | 2026-11-23 | `0130ba3` | `6aedd47`, comparison scripts `f7d822f` | 240 soups, 120 ensembles, 360 source-val predictions | `results/shared_init/soup/`, `ensemble/`, `source_val_predictions/` | `results/shared_init/tables/T8_summary_target_test.csv`; comparison `results/tables/T11_soup_old_vs_new.csv` |
 
 The supplied source-only models of seed 52 (12 transfers, in `models/`) were trained by the supervisor and carry no commit of this repository.
 
@@ -62,6 +64,13 @@ The supplied source-only models of seed 52 (12 transfers, in `models/`) were tra
 - Computed on Apple MPS in one batch of 12 min wall time, without interruption. Averaging takes about 11 ms per soup, the batch-normalisation re-estimation about 2 s.
 - Tables written by `make_soup_tables.py` (commit `6c280b9`); figures 10 to 12 and the section in `results.md` by `make_soup_figures.py`.
 
+### Shared starting point (stage 2 and stage 3 again, since meeting 3)
+
+- Requested by the supervisor in meeting 3 (see [decisions.md](decisions.md)): every run of every seed starts from the supplied seed-52 source-only model of its transfer. Seed 52 was not trained again, because its stage-2 runs already start from that model; DANN on MHEALTH → PAMAP2 with seed 52, recomputed with the new code, was bitwise identical to stage 2.
+- The 288 runs of the seeds 100, 445, 545, 881 were computed by `run_shared_init.py` in one detached batch on 2026-11-23, 03:04 to 10:03 (local time), without a failed run: 6.9 h of training on macOS 27.2.1 (stage 2: macOS 26.5). The same runs took 5.0 h in stage 2; the speed was constant over the batch, the cause of the difference is not established.
+- Stage 3 by `run_soup.py --all --init shared` for all five seeds in 10 min wall time. Every ingredient started from the seed-52 checkpoint of its transfer (SHA-256), and all seeds of a transfer share it (checked by `make_soup_tables.py --init shared`). The recomputed predictions of the branches agreed with the saved ones in every run (agreement 1.0). The soups and ensembles of seed 52, computed again, are bitwise identical to those of stage 3 (weights, predictions, logits).
+- Tables of the shared start by `make_dsan_tables.py --init shared` and `make_soup_tables.py --init shared` in `results/shared_init/tables/`; the comparison with the start per seed by `make_shared_init_tables.py` (`results/tables/T11_*.csv`); figures 13 to 15 and the section in `results.md` by `make_shared_init_figures.py`.
+
 ## Code commit of every variant
 
 From `results/tables/T3_commits_per_variant.csv`:
@@ -75,6 +84,8 @@ From `results/tables/T3_commits_per_variant.csv`:
 | DANN control | `d9ca82f` | 60 | 0 |
 | DSAN | `cdef98b` | 60 | 0 |
 | DSAN control | `cdef98b` | 60 | 0 |
+
+With the shared starting point (`results/shared_init/tables/T3_commits_per_variant.csv`) the seed-52 runs keep the commits above, the runs of the seeds 100, 445, 545, 881 carry `63d799f` (48 runs per variant); the baseline is the supplied seed-52 model for every seed and carries no commit.
 
 ## Known small inconsistency between tables
 

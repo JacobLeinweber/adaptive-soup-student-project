@@ -40,9 +40,13 @@ From the supervisor's code we use the list of transfers (`src/training/experimen
 | `create_method_soup.py` | The soup script of the project partner (Denis Petrov): averages the checkpoints of three runs per transfer and seed. Its averaging step `average_state_dicts` is used by `run_soup.py`. |
 | `run_soup.py` | Stage 3: per transfer and seed the soups of the methods and of the controls in both batch-normalisation variants, the two output ensembles, and the source-validation predictions of the six branches; checks the shared start checkpoint; writes predictions and `config.json`. |
 | `make_soup_tables.py` | SRC and the "best branch" choice without target labels, then the scores and paired comparisons of the soups (`T8_*.csv`). |
-| `make_figures.py` | Figures and `project_docs/results.md`, built only from `results/tables/*.csv`; adds the sections of `make_sensitivity_figures.py` and `make_soup_figures.py` when their tables exist. |
+| `run_shared_init.py` | Shared starting point (since meeting 3): seeds 100, 445, 545, 881 × 12 transfers × the three methods and their controls, every run from the supplied seed-52 source-only model (`--init shared` of the three run scripts); stops after three failed runs in a row. |
+| `make_shared_init_tables.py` | The start per seed next to the shared start: reads the T3 and T8 tables of both starts and writes `T11_*.csv`; checks that the seed-52 rows agree. |
+| `make_figures.py` | Figures and `project_docs/results.md`, built only from `results/tables/*.csv`; adds the sections of `make_sensitivity_figures.py`, `make_soup_figures.py` and `make_shared_init_figures.py` when their tables exist. |
 
 The run scripts open target data only as windows; they never open the label file of the target. The table scripts read the target labels, after all training has finished.
+
+Option `--init` of `run_deep_coral.py`, `run_dann.py`, `run_dsan.py`, `run_soup.py`, `make_dsan_tables.py` and `make_soup_tables.py`: `per_seed` (default) starts every seed from its own source-only model, `shared` starts every seed from the supplied seed-52 model and reads and writes `results/shared_init/` (seed 52 is the same under both and is read from `results/`).
 
 ## Commands from zero to the figures
 
@@ -60,6 +64,9 @@ Run from the repository root, in this order. Every run script skips finished run
 | 8 | `python run_soup.py --all` | 240 soups, 120 ensembles | 12 min wall time on MPS (no training) |
 | 9 | `python make_soup_tables.py` | | under a minute |
 | 10 | `python make_figures.py` | | seconds |
+| 11 | `nohup caffeinate -is python run_shared_init.py --device mps >> logs/shared_init/run.log 2>&1 < /dev/null &` | 288 | 6.9 h (macOS 27.2.1; see `runs_log.md`) |
+| 12 | `python run_soup.py --all --init shared` | 240 soups, 120 ensembles | about 12 min wall time on MPS (no training) |
+| 13 | `python make_dsan_tables.py --init shared`, `python make_soup_tables.py --init shared`, `python make_shared_init_tables.py`, then step 10 again | | under a minute each |
 
 Useful options of the run scripts: `--transfer <name>` instead of `--all`, `--seeds 52 100`, `--control` (only a control; see `--help` of each script, Deep CORAL has two controls), `--device cuda`, `--output-dir <folder>` (for tests outside `results/`), `--overwrite`.
 
@@ -81,6 +88,8 @@ results/
 ├── soup/<soup_methods|soup_controls>/<bn_avg|bn_target>/seed_<seed>/<transfer>/
 ├── ensemble/<methods|controls>/seed_<seed>/<transfer>/
 ├── source_val_predictions/<branch>/seed_<seed>/<transfer>/   source-val predictions of the phase-2 branches, for SRC
+├── shared_init/                                      shared starting point: the same layout (runs of seeds 100–881;
+│                                                     soup/, ensemble/, source_val_predictions/ of all five seeds; tables/)
 └── tables/                                           all CSV tables
 ```
 
@@ -104,8 +113,9 @@ Fields of `config.json` (the method-specific ones differ in name): method, trans
 - **Consequence.** While a batch of runs is computing, nothing may be committed and no Python file may be added or changed in the repository; the next run of the batch would stop, or would carry a different commit.
 - **Start checkpoint.** The SHA-256 of the start checkpoint is computed before and after the run and written into `config.json`.
 - **Soups.** `run_soup.py` checks the clean commit before and after the whole batch; `make_soup_tables.py` stops unless all soups, ensembles and source-val predictions carry one commit and every soup's ingredients share its start checkpoint, and writes the commits of the outputs and of the ingredient runs to `results/tables/T8_commits.csv`.
+- **Shared start.** With `--init shared`, `make_dsan_tables.py` and `make_soup_tables.py` accept one commit for the seed-52 runs of stage 2 and one for the other seeds and name both; `make_soup_tables.py` also stops unless all seeds of a transfer started from the same checkpoint.
 - **One commit per variant.** `make_dsan_tables.py` stops before writing tables if the runs of a variant carry different code commits, and writes the commit of every variant to `results/tables/T3_commits_per_variant.csv`. The 12 supplied seed-52 baselines were trained by the supervisor and carry no commit of this repository.
 
 ## Resume and overwrite
 
-A run counts as finished only if all its files exist and `config.json` can be read; `config.json` is written last. Repeating a command skips finished runs and recomputes started ones. After a correction of the code, affected runs must be recomputed explicitly with `--overwrite`; without it the old results would be kept and skipped.
+A run counts as finished only if all its files exist and `config.json` can be read; `config.json` is written last. Since commit `63d799f` a run writes into a folder `<transfer>.tmp/` that is renamed when the run is complete, so a run folder is either complete or absent. Repeating a command skips finished runs and recomputes started ones. After a correction of the code, affected runs must be recomputed explicitly with `--overwrite`; without it the old results would be kept and skipped.

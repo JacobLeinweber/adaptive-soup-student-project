@@ -3,7 +3,7 @@
 Three UDA methods are implemented, one per future branch of the model soup. All three share the same frame:
 
 - **Model:** the supervisor's `SelfHARCNN`: three convolution blocks with batch normalisation and dropout, global pooling to a 96-dimensional feature vector $f$, and a classifier (one hidden layer) on top. The model code is not changed.
-- **Start:** the source-only model of the transfer and seed. A method continues training this model.
+- **Start:** the source-only model of the transfer and seed. A method continues training this model. With the shared start (since meeting 3) this is the supplied seed-52 model for every seed.
 - **Step:** one labelled source batch and one unlabelled target batch of the same size (32). They go through the model in **two separate forward passes in train mode**, source first. Batch normalisation therefore normalises each batch with its own statistics, and the running statistics are updated by both domains.
 - **Optimiser:** Adam with the values of the baseline (learning rate 3e-4, weight decay 1e-4), 30 epochs, last epoch.
 - **Loss, loss weights and schedules:** taken from the AdaTime implementation and its hyper-parameters for the HAR (UCIHAR) dataset, at commit `2d9be6bd0542e150518afaf8aa0c6ea0823b4a3d` of <https://github.com/emadeldeen24/AdaTime> (branch `adatime_v2`). The weights were **not** tuned for this project, see [limitations.md](limitations.md).

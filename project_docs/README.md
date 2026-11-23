@@ -17,10 +17,11 @@ Several unsupervised domain adaptation (UDA) methods are trained separately for 
 | 1 | Evaluate the source-only baseline of every transfer | done |
 | 2 | Train three UDA methods separately on every transfer, starting from the source-only model, and compare them with the baseline | done for Deep CORAL, DANN and DSAN on 12 transfers and 5 seeds |
 | 2b | Uniform soup of the three branches per transfer (stage 3, averaging at the end) | done on 12 transfers and 5 seeds, with two batch-normalisation variants and an output ensemble as comparison |
+| 2c | Stage 2 and the uniform soup again with a shared starting point (meeting 3): every seed starts from the supplied seed-52 model | done on 12 transfers and 5 seeds; compared with the start per seed in results.md |
 | 3 | When to average: at the end, per epoch or per batch | not started |
 | 4 | How to average: uniform or weighted without target labels | not started |
 
-Headline result of phase 2 (weighted F1 on the target test split, mean over the 12 transfers, mean ± SD over 5 seeds): baseline 41.9 ± 1.0 %, Deep CORAL 45.7 ± 1.8 %, DANN 52.6 ± 1.0 %, DSAN 52.7 ± 3.0 %. The uniform soup of the three branches reaches 43.0 ± 2.7 % (averaged batch-normalisation statistics) and 42.9 ± 2.4 % (re-estimated on target), below the mean of its branches (50.3 ± 1.5 %) in every seed. All numbers, tables and figures are in [results.md](results.md); read them together with [limitations.md](limitations.md).
+Headline result of phase 2 (weighted F1 on the target test split, mean over the 12 transfers, mean ± SD over 5 seeds): baseline 41.9 ± 1.0 %, Deep CORAL 45.7 ± 1.8 %, DANN 52.6 ± 1.0 %, DSAN 52.7 ± 3.0 %. The uniform soup of the three branches reaches 43.0 ± 2.7 % (averaged batch-normalisation statistics) and 42.9 ± 2.4 % (re-estimated on target), below the mean of its branches (50.3 ± 1.5 %) in every seed. With the shared starting point (since meeting 3): baseline 42.0 %, Deep CORAL 46.1 ± 1.9 %, DANN 51.6 ± 2.0 %, DSAN 50.4 ± 2.3 %; the soup of the methods reaches 45.5 ± 2.1 % (averaged) and 44.7 ± 3.0 % (re-estimated), still below the mean of its branches (49.4 ± 1.6 %) in every seed, and with averaged statistics above the baseline in every seed. All numbers, tables and figures are in [results.md](results.md); read them together with [limitations.md](limitations.md).
 
 ## Setup
 
