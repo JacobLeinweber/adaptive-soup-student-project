@@ -1,8 +1,10 @@
 """Figures and the results-page section for the uniform soup of the final checkpoints (stage 3, "at the end").
 
-Built only from the T8 tables in results/tables/ (written by make_soup_tables.py); reads no raw data, no labels and
-no checkpoints. make_figures.py calls soup_section() when these tables exist, so that project_docs/results.md keeps
-a single generator. Figures:
+Built only from the T8 tables of the shared start in results/shared_init/tables/ (written by
+make_soup_tables.py --init shared); reads no raw data, no labels and no checkpoints. The soups with the start per
+seed are compared with these in the section on the previous variant (make_shared_init_figures.py).
+make_figures.py calls soup_section() when these tables exist, so that project_docs/results.md keeps a single
+generator. Figures:
 
     project_docs/figures/fig10_soup_by_group.png
     project_docs/figures/fig11_soup_differences_per_transfer.png
@@ -13,8 +15,8 @@ from __future__ import annotations
 import numpy as np
 import pandas as pd
 
-from make_figures import (GREY, GRID, INK, INK_SOFT, SURFACE, TABLES, markdown_table, new_figure, save, signed, tint,
-                          transfer_label)
+from make_figures import (FIGURE_NUMBERS, GREY, GRID, INK, INK_SOFT, MAIN_TABLES, ROOT, SUPPLIED_SEED, SURFACE, markdown_table,
+                          new_figure, save, signed, tint, transfer_label)
 
 GROUP_NAMES = {"methods": "Soup of the methods (Deep CORAL + DANN + DSAN)",
                "controls": "Soup of the controls (their three λ = 0 runs)"}
@@ -41,15 +43,15 @@ def key(kind: str, group: str) -> str:
 
 
 class Soup:
-    """The T8 tables; scores in percent."""
+    """The T8 tables of the shared start; scores in percent."""
 
     def __init__(self) -> None:
-        self.summary = pd.read_csv(TABLES / "T8_summary_target_test.csv")
-        self.differences = pd.read_csv(TABLES / "T8_differences_target_test.csv")
-        self.selection = pd.read_csv(TABLES / "T8_selection.csv")
-        self.costs = pd.read_csv(TABLES / "T8_costs_summary.csv").set_index("variant")
-        self.commits = pd.read_csv(TABLES / "T8_commits.csv").set_index("outputs")
-        self.criteria = pd.read_csv(TABLES / "T8_criteria.csv")
+        self.summary = pd.read_csv(MAIN_TABLES / "T8_summary_target_test.csv")
+        self.differences = pd.read_csv(MAIN_TABLES / "T8_differences_target_test.csv")
+        self.selection = pd.read_csv(MAIN_TABLES / "T8_selection.csv")
+        self.costs = pd.read_csv(MAIN_TABLES / "T8_costs_summary.csv").set_index("variant")
+        self.commits = pd.read_csv(MAIN_TABLES / "T8_commits.csv").set_index("outputs")
+        self.criteria = pd.read_csv(MAIN_TABLES / "T8_criteria.csv")
         self.transfers = list(dict.fromkeys(self.summary[self.summary["scope"] == "transfer"]["name"]))
         self.groups = ["all", "cross_dataset", "cross_gender", "cross_age"]
 
@@ -97,7 +99,7 @@ def figure_groups(data: Soup) -> str:
     axes[0].set_ylabel("Weighted F1 on target test (%)", color=INK_SOFT, fontsize=10)
     handles, labels = axes[0].get_legend_handles_labels()
     figure.legend(handles, labels, ncol=len(kinds), frameon=False, fontsize=9, loc="upper center", bbox_to_anchor=(0.5, 1.03))
-    figure.suptitle("Uniform soup of the final checkpoints: weighted F1 on target test, mean ± SD over five seeds",
+    figure.suptitle("Uniform soup of the final checkpoints, shared start: weighted F1 on target test, mean ± SD over five seeds",
                     fontsize=12, color=INK, y=1.09)
     return save(figure, "fig10_soup_by_group.png")
 
@@ -141,8 +143,8 @@ def figure_differences(data: Soup) -> str:
     columns = [(c, COMPARISONS[c].replace(" (oracle, uses target labels)", "\n(oracle, uses target labels)"), series)
                for c in ("1_soup_minus_branch_mean", "2a_soup_minus_best_src_ce", "2b_soup_minus_best_src_macro_f1",
                          "2c_soup_minus_oracle_best_branch", "3_soup_minus_baseline")]
-    return dot_panels(data, columns, "Soup of the three methods against its branches and the baseline (target test), "
-                                     "mean ± SD over five seeds", "fig11_soup_differences_per_transfer.png", True)
+    return dot_panels(data, columns, "Soup of the three methods against its branches and the baseline (target test, shared "
+                                     "start), mean ± SD over five seeds", "fig11_soup_differences_per_transfer.png", True)
 
 
 def figure_variants(data: Soup) -> str:
@@ -157,8 +159,8 @@ def figure_variants(data: Soup) -> str:
          [("BN averaged", key("bn_avg", "methods"), COLORS["bn_avg"], True),
           ("BN re-estimated on target", key("bn_target", "methods"), COLORS["bn_target"], True)]),
     ]
-    return dot_panels(data, columns, "Alignment, BatchNorm statistics and weight vs. output averaging (target test), "
-                                     "mean ± SD over five seeds", "fig12_soup_variants_per_transfer.png", False)
+    return dot_panels(data, columns, "Alignment, BatchNorm statistics and weight vs. output averaging (target test, shared "
+                                     "start), mean ± SD over five seeds", "fig12_soup_variants_per_transfer.png", False)
 
 
 def observations(data: Soup) -> list[str]:
@@ -217,7 +219,8 @@ def soup_section(first_figure: int = 10) -> list[str]:
     page = ["## Stage 3: uniform soup of the final checkpoints", "",
             "**Setup.** For every transfer and seed, the three branches of stage 2 (Deep CORAL, DANN, DSAN with the AdaTime "
             "weights, last epoch) are averaged with equal weight 1/3 into one model; the same is done with their three control "
-            "runs. All six runs of a seed start from the same source-only checkpoint, which is checked before averaging. "
+            "runs. With the shared start, all runs of a transfer start from the same source-only checkpoint for every seed "
+            f"(the supplied seed-{SUPPLIED_SEED} model), which is checked before averaging. "
             "Only the HAR predictor is averaged; the DANN discriminator is not part of the soup. The averaging step is the soup "
             "script of the project partner (`create_method_soup.py`). Two BatchNorm variants: *averaged* keeps the averaged "
             "running statistics; *re-estimated on target* recomputes them after averaging in one pass over the unlabelled "
@@ -259,8 +262,8 @@ def soup_section(first_figure: int = 10) -> list[str]:
              f"per soup; re-estimating the BatchNorm statistics takes {costs.loc[[v for v in soup_rows if v.endswith('bn_target')], 'total_seconds_bn_recompute'].sum() / costs.loc[[v for v in soup_rows if v.endswith('bn_target')], 'outputs'].sum():.1f} s "
              "per soup (one pass over target train in batches of 32 on MPS). Training the three branches of one soup took "
              f"{costs.loc[key('bn_avg', 'methods'), 'total_minutes_training_of_ingredients'] / costs.loc[key('bn_avg', 'methods'), 'outputs'] * 60:.0f} s "
-             "on average. A soup is evaluated at the cost of one model, the ensemble at the cost of three. Details: "
-             "`results/tables/T8_costs.csv`, `T8_costs_summary.csv`.", ""]
+             f"on average (see the note on Figure {FIGURE_NUMBERS['costs']}). A soup is evaluated at the cost of one model, the "
+             f"ensemble at the cost of three. Details: `{MAIN_TABLES.relative_to(ROOT)}/T8_costs.csv`, `T8_costs_summary.csv`.", ""]
     captions = [
         "Weighted F1 on target test per group: the baseline, the mean of the three branches, the output ensemble and the two "
         "soups; left the soup of the methods, right the soup of the control runs (hatched). Error bars: SD over the seeds.",

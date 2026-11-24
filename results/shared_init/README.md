@@ -31,8 +31,10 @@ Ein Lauf enthält `model_last.pt` (nicht in Git), bei DANN `discriminator_last.p
 Stufe-2-Läufe in `results/<Variante>/seed_52/` und werden von dort gelesen. Soups, Ensembles und
 Source-Val-Vorhersagen wurden für alle fünf Seeds neu berechnet, auch für Seed 52.
 
-Vergleich mit dem bisherigen Startpunkt (jeder Seed vom eigenen Source-only-Modell): `results/tables/T11_*.csv`,
-Abbildungen 13–15 und Abschnitt „Shared starting point“ in `project_docs/results.md`.
+Seit dem 24.11.2026 zeigt der Hauptteil von `project_docs/results.md` diese Ergebnisse (Abbildungen 1–3, 5, 6 und
+10–12, Nummern unverändert). Der bisherige Startpunkt (jeder Seed vom eigenen Source-only-Modell) steht dort im Abschnitt
+„Previous variant: own starting point per seed“: Vergleichstabellen alt gegen neu (`results/tables/T11_*.csv`),
+Abbildungen 13–15 und die Domänen-Probe (Abbildung 4), die es nur für den bisherigen Startpunkt gibt.
 
 ## Herkunft
 

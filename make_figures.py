@@ -1,20 +1,25 @@
-"""Figures and the results page for project_docs/, built only from the tables in results/tables/.
+"""Figures and the results page for project_docs/, built only from the tables in results/.
 
-The script reads no raw data, no labels and no checkpoints. It merges every T*_runs_all_splits.csv
-(and the confusion, domain-probe and cost tables), checks that rows which occur in several tables
-agree, and writes:
+The main part of the page shows the shared starting point (since meeting 3: every seed starts from the supplied
+seed-52 source-only model), from the tables in results/shared_init/tables/. The domain probe exists only for the
+previous variant (every seed from its own source-only model) and is read from results/tables/.
 
-    project_docs/figures/fig1_weighted_f1_by_group.png
-    project_docs/figures/fig2_method_minus_control.png
-    project_docs/figures/fig3_difference_to_baseline.png
-    project_docs/figures/fig4_domain_probe.png
-    project_docs/figures/fig5_confusion_MHEALTH_to_PAMAP2.png
-    project_docs/figures/fig6_training_time.png
+The script reads no raw data, no labels and no checkpoints. It merges every T*_runs_all_splits.csv of a folder
+(and the confusion, domain-probe and cost tables), checks that rows which occur in several tables agree, and writes:
+
+    project_docs/figures/fig1_weighted_f1_by_group.png        shared start
+    project_docs/figures/fig2_method_minus_control.png        shared start
+    project_docs/figures/fig3_difference_to_baseline.png      shared start
+    project_docs/figures/fig4_domain_probe.png                previous variant
+    project_docs/figures/fig5_confusion_MHEALTH_to_PAMAP2.png shared start
+    project_docs/figures/fig6_training_time.png               shared start
     project_docs/results.md
 
-If the tables of the alignment-weight sensitivity (T7_*.csv) exist, make_sensitivity_figures.py adds
-figures 7 to 9 and its own section to the results page. If the T11 tables of the shared starting point
-exist, make_shared_init_figures.py adds figures 13 to 15 and its section.
+If the tables of the alignment-weight sensitivity (T7_*.csv, seed 52) exist, make_sensitivity_figures.py adds
+figures 7 to 9 and its own section. If the stage-3 tables of the shared start exist, make_soup_figures.py adds
+figures 10 to 12 and its section. make_shared_init_figures.py adds the section on the previous variant with
+figures 13 to 15 (old against new); figure 4 follows in the same section. The figure numbers are fixed
+(FIGURE_NUMBERS), because the meeting-3 brief refers to them.
 
 All values are on the target test split unless stated otherwise. A group value (for example
 "Cross-dataset") is first averaged over the transfers of the group within each seed; mean and
@@ -24,6 +29,7 @@ Example: python make_figures.py
 """
 from __future__ import annotations
 
+import re
 from pathlib import Path
 
 import matplotlib
@@ -35,9 +41,15 @@ import pandas as pd
 from matplotlib.colors import LinearSegmentedColormap, to_rgb
 
 ROOT = Path(__file__).resolve().parent
-TABLES = ROOT / "results" / "tables"
+TABLES = ROOT / "results" / "tables"  # start per seed (previous variant), sensitivity, comparison of the two starts
+MAIN_TABLES = ROOT / "results" / "shared_init" / "tables"  # shared start: the main part of the page
 OUT = ROOT / "project_docs"
 FIGURES = OUT / "figures"
+SUPPLIED_SEED = 52  # seed of the supplied source-only checkpoints, the shared start of every seed
+PREVIOUS_SECTION = "Previous variant: own starting point per seed"
+# A figure keeps its number when the page changes, because the meeting-3 brief refers to figures by number.
+FIGURE_NUMBERS = {"groups": 1, "paired": 2, "heatmap": 3, "probe": 4, "confusion": 5, "costs": 6,
+                  "sensitivity": 7, "soup": 10, "comparison": 13}
 
 CONTROL_SUFFIX = "lambda0_target_pass"  # a control: alignment weight 0, target windows still pass through the model
 BASELINE = "baseline"
@@ -56,11 +68,11 @@ CONFUSION_TRANSFER = "MHEALTH_to_PAMAP2"
 
 # ---------------------------------------------------------------- loading
 
-def read_merged(pattern: str, keys: list[str], values: list[str]) -> pd.DataFrame:
-    """Read all tables that match the pattern; rows with the same key must carry the same values."""
-    paths = sorted(TABLES.glob(pattern))
+def read_merged(tables: Path, pattern: str, keys: list[str], values: list[str]) -> pd.DataFrame:
+    """Read all tables of the folder that match the pattern; rows with the same key must carry the same values."""
+    paths = sorted(tables.glob(pattern))
     if not paths:
-        raise SystemExit(f"No table matches results/tables/{pattern}")
+        raise SystemExit(f"No table matches {tables.relative_to(ROOT)}/{pattern}")
     data = pd.concat([pd.read_csv(path) for path in paths], ignore_index=True)
     distinct = data.groupby(keys, sort=False)[values].nunique(dropna=False)
     conflicts = distinct[(distinct > 1).any(axis=1)]
@@ -70,16 +82,18 @@ def read_merged(pattern: str, keys: list[str], values: list[str]) -> pd.DataFram
 
 
 class Results:
-    """All merged tables and the variants found in them."""
+    """All merged tables of one folder and the variants found in them."""
 
-    def __init__(self) -> None:
+    def __init__(self, tables: Path) -> None:
         key = ["transfer", "seed", "variant"]
-        self.runs = read_merged("T*_runs_all_splits.csv", [*key, "split"], [*METRICS, "n_windows"])
-        self.confusion = read_merged("T*_confusion_target_test.csv", [*key, "true_index", "predicted_index"], ["count"])
-        self.probe = read_merged("T*_domain_probe_runs.csv", key, ["probe_accuracy"])
-        self.costs = read_merged("T*_costs_per_run.csv", key, ["train_seconds"])
+        self.runs = read_merged(tables, "T*_runs_all_splits.csv", [*key, "split"], [*METRICS, "n_windows"])
+        self.confusion = read_merged(tables, "T*_confusion_target_test.csv", [*key, "true_index", "predicted_index"], ["count"])
+        # The domain probe was computed only for the start per seed, not again for the shared start.
+        has_probe = any(tables.glob("T*_domain_probe_runs.csv"))
+        self.probe = read_merged(tables, "T*_domain_probe_runs.csv", key, ["probe_accuracy"]) if has_probe else None
+        self.costs = read_merged(tables, "T*_costs_per_run.csv", key, ["train_seconds"])
 
-        latest = pd.read_csv(sorted(TABLES.glob("T*_runs_all_splits.csv"))[-1])  # keeps the order of the transfers
+        latest = pd.read_csv(sorted(tables.glob("T*_runs_all_splits.csv"))[-1])  # keeps the order of the transfers
         self.transfers = list(dict.fromkeys(latest["transfer"]))
         self.family = dict(zip(latest["transfer"], latest["family"]))
         self.families = list(dict.fromkeys(latest["family"]))
@@ -195,7 +209,8 @@ def figure_groups(results: Results) -> str:
     axis.yaxis.grid(True, color=GRID, linewidth=0.8)
     axis.set_axisbelow(True)
     axis.legend(ncol=len(results.variants), frameon=False, fontsize=9, loc="upper center", bbox_to_anchor=(0.5, 1.12))
-    figure.suptitle("Weighted F1 on the target test split, mean ± SD over five seeds", fontsize=12, color=INK, y=1.04)
+    figure.suptitle("Weighted F1 on the target test split, shared start, mean ± SD over five seeds", fontsize=12, color=INK,
+                    y=1.04)
     return save(figure, "fig1_weighted_f1_by_group.png")
 
 
@@ -222,7 +237,8 @@ def figure_paired(results: Results) -> str:
     first.scatter([], [], s=22, color=GREY, alpha=0.55, linewidths=0, label="one seed")
     first.scatter([], [], s=70, marker="D", color=GREY, edgecolors=INK, linewidths=1.0, label="mean of five seeds")
     figure.legend(frameon=False, fontsize=9, loc="upper center", ncol=2, bbox_to_anchor=(0.5, 1.0))
-    figure.suptitle("Each method minus its own control run (target test), paired by seed", fontsize=12, color=INK, y=1.04)
+    figure.suptitle("Each method minus its own control run (target test, shared start), paired by seed", fontsize=12,
+                    color=INK, y=1.04)
     return save(figure, "fig2_method_minus_control.png")
 
 
@@ -250,7 +266,8 @@ def figure_heatmap(results: Results) -> str:
     bar.set_label("Weighted F1: method − baseline (points)", fontsize=9, color=INK_SOFT)
     bar.outline.set_visible(False)
     bar.ax.tick_params(labelsize=8, colors=INK_SOFT, length=0)
-    axis.set_title("Difference to the baseline on target test, mean over five seeds", fontsize=12, color=INK, pad=28)
+    axis.set_title("Difference to the baseline on target test, shared start, mean over five seeds", fontsize=12, color=INK,
+                   pad=28)
     return save(figure, "fig3_difference_to_baseline.png")
 
 
@@ -313,8 +330,8 @@ def figure_confusion(results: Results) -> tuple[str, list[str]]:
     first = np.atleast_1d(axes)[0]
     first.set_yticks(range(len(names)), names, fontsize=9, color=INK)
     first.set_ylabel("True", fontsize=9, color=INK_SOFT)
-    figure.suptitle(f"{transfer_label(CONFUSION_TRANSFER)}, target test: share of each true class (%), mean over five seeds",
-                    fontsize=12, color=INK, y=1.03)
+    figure.suptitle(f"{transfer_label(CONFUSION_TRANSFER)}, target test, shared start: share of each true class (%), "
+                    "mean over five seeds", fontsize=12, color=INK, y=1.03)
     return save(figure, f"fig5_confusion_{CONFUSION_TRANSFER}.png"), shown
 
 
@@ -335,7 +352,7 @@ def figure_costs(results: Results) -> str:
         axis.set_axisbelow(True)
         axis.set_xlabel(label, fontsize=9, color=INK_SOFT)
     axes[0].set_yticks(list(positions), [f"{results.name[v]} ({seconds.count()[v]} runs)" for v in variants], fontsize=9, color=INK)
-    figure.suptitle("Training time on Apple M1 (MPS), training loop only", fontsize=12, color=INK, y=1.02)
+    figure.suptitle("Training time on Apple M1 (MPS), training loop only, shared start", fontsize=12, color=INK, y=1.02)
     return save(figure, "fig6_training_time.png")
 
 
@@ -386,40 +403,95 @@ def observations(results: Results) -> list[str]:
                  + ", ".join(f"{name[v]} on {count}" for v, count in best.items()) + f" of {len(results.transfers)} transfers.")
     below = [t for t in results.transfers if all(means.loc[t, m] < means.loc[t, BASELINE] for m in results.methods)]
     if below:
-        lines.append("On " + ", ".join(transfer_label(t) for t in below) + " every method has a lower mean weighted F1 than the "
-                     "baseline (" + ", ".join(f"{name[m]} {signed(means.loc[t, m] - means.loc[t, BASELINE])}" for t in below
-                                              for m in results.methods) + " points).")
+        parts = [f"{transfer_label(t)} (" + ", ".join(f"{name[m]} {signed(means.loc[t, m] - means.loc[t, BASELINE])}"
+                                                       for m in results.methods) + " points)" for t in below]
+        lines.append(f"On {listed(parts)} every method has a lower mean weighted F1 than the baseline.")
     for method in results.methods:
         gain = (means[method] - means[BASELINE]).sort_values(ascending=False)
         lines.append(f"{name[method]}: the three transfers with the largest gain over the baseline ("
                      + ", ".join(f"{transfer_label(t)} {signed(gain[t])}" for t in gain.index[:3])
                      + f") carry {gain.iloc[:3].sum() / gain.sum() * 100:.0f} % of the summed mean gain.")
-    probe = results.probe_per_seed(everything)
-    available = [v for v in results.variants if v in probe]
-    lines.append("Domain probe over all transfers (accuracy of a linear classifier that separates source from target features; "
-                 "50 % = not separable): " + ", ".join(f"{name[v]} {cell(probe[v])} %" for v in available) + ".")
-    lines.append("Domain probe, method minus its own control, paired by seed: "
-                 + ", ".join(f"{name[m]} {signed(paired(probe[m], probe[results.control[m]])[0])} ± "
-                             f"{paired(probe[m], probe[results.control[m]])[1]:.1f} points" for m in results.methods if m in probe) + ".")
     source = results.per_seed(everything, "macro_f1", "source_test")
     lines.append("Macro-F1 on the source test split, averaged over all transfers and seeds: "
                  + ", ".join(f"{name[v]} {source[v].mean():.1f} %" for v in [BASELINE, *results.methods]) + ".")
-    timed = results.costs.dropna(subset=["train_seconds"]).groupby("variant")["train_seconds"]
-    lines.append("Mean training time per run: " + ", ".join(f"{name[v]} {timed.mean()[v]:.0f} s" for v in results.variants) + ".")
+    timed = results.costs.dropna(subset=["train_seconds"]).groupby("variant")["train_seconds"].mean()
+    untimed = "" if BASELINE in timed else f"; the baseline is the supplied seed-{SUPPLIED_SEED} model and was not trained here"
+    lines.append("Mean training time per run: " + ", ".join(f"{name[v]} {timed[v]:.0f} s" for v in results.variants if v in timed)
+                 + f" (see the note on Figure {FIGURE_NUMBERS['costs']}{untimed}).")
     return lines
 
 
-def results_page(results: Results, figures: dict[str, str], confusion_variants: list[str], extra: list[str] = ()) -> None:
+def probe_observations(results: Results) -> list[str]:
+    """The domain-probe statements; only the tables of the start per seed contain the probe."""
+    name, probe = results.name, results.probe_per_seed(results.groups[0][1])
+    available = [v for v in results.variants if v in probe]
+    return ["Domain probe over all transfers (accuracy of a linear classifier that separates source from target features; "
+            "50 % = not separable): " + ", ".join(f"{name[v]} {cell(probe[v])} %" for v in available) + ".",
+            "Domain probe, method minus its own control, paired by seed: "
+            + ", ".join(f"{name[m]} {signed(paired(probe[m], probe[results.control[m]])[0])} ± "
+                        f"{paired(probe[m], probe[results.control[m]])[1]:.1f} points" for m in results.methods if m in probe) + "."]
+
+
+def anchor(title: str) -> str:
+    """Link target of a markdown heading, as GitHub builds it."""
+    return re.sub(r"[^\w\- ]", "", title.lower()).replace(" ", "-")
+
+
+def listed(values: list) -> str:
+    """[100, 445, 545] -> '100, 445 and 545'."""
+    items = [str(v) for v in values]
+    return items[0] if len(items) == 1 else ", ".join(items[:-1]) + " and " + items[-1]
+
+
+def trained_again(results: Results, previous: Results) -> tuple[list[int], int, float]:
+    """Seeds whose runs were trained again for the shared start, their number of runs, and their summed training time
+    divided by that of the same training loops (variant, transfer, seed) with the start per seed."""
+    key = ["transfer", "seed", "variant"]
+    again = results.costs[(results.costs["seed"] != SUPPLIED_SEED) & (results.costs["variant"] != BASELINE)]
+    before = previous.costs.merge(again[key], on=key, how="inner")
+    if len(before) != len(again) or again["train_seconds"].isna().any() or before["train_seconds"].isna().any():
+        raise SystemExit("The training times of the runs trained again do not match the runs with the start per seed")
+    return sorted(again["seed"].unique()), len(again), again["train_seconds"].sum() / before["train_seconds"].sum()
+
+
+PROBE_CAPTION = ("Accuracy of a logistic regression (5-fold cross-validation) that separates source-train from target-train "
+                 "windows on the frozen 96-dimensional features; controls are drawn as open circles.")
+
+
+def probe_section(previous: Results, path: str) -> list[str]:
+    """Figure 4 with its observations, as the last part of the section on the previous variant."""
+    number = FIGURE_NUMBERS["probe"]
+    return ["### Domain probe", "",
+            "The domain probe was computed only for the previous variant (five seeds, each from its own source-only model) "
+            f"and not again for the shared start; for seed {SUPPLIED_SEED} both variants have the same runs.", "",
+            f"**Figure {number}.** {PROBE_CAPTION}", "", f"![Figure {number}]({path})", "",
+            "**Observations (domain probe).** Only statements that follow directly from the tables; no causes are claimed.", "",
+            *(f"- {line}" for line in probe_observations(previous)), ""]
+
+
+def results_page(results: Results, figures: dict[str, str], confusion_variants: list[str], again: tuple[list[int], int, float],
+                 extra: list[str] = ()) -> None:
     name = results.name
     group_names = [group for group, _ in results.groups]
+    seeds_again, runs_again, time_ratio = again
+    previous_link = f"[{PREVIOUS_SECTION}](#{anchor(PREVIOUS_SECTION)})"
     page = ["# Results", "",
-            "This page is generated by `make_figures.py` from the tables in `results/tables/`. Do not edit it by hand.", "",
+            f"This page is generated by `make_figures.py` from the tables in `{MAIN_TABLES.relative_to(ROOT)}/` (shared start) "
+            f"and `{TABLES.relative_to(ROOT)}/` (alignment-weight sensitivity, previous variant, comparison of the two starts). "
+            "Do not edit it by hand.", "",
             "## Setup", "",
-            f"Every method continues training from the source-only model of its transfer and seed, on {len(results.transfers)} "
-            f"transfers and {len(results.seeds)} seeds ({', '.join(str(s) for s in results.seeds)}), with labelled source data and "
-            "unlabelled target training windows. Each method has its own control run: the same loop, the same target forward pass "
-            "and the same source loss weight, but with the alignment weight set to 0. Target labels are read only after all "
-            "training has finished, to compute the metrics below on the target test split of the last epoch.", "",
+            f"Every branch starts from the supplied seed-{SUPPLIED_SEED} source-only model of its transfer, for all "
+            f"{len(results.seeds)} seeds ({', '.join(str(s) for s in results.seeds)}) and for methods and controls alike "
+            "(shared starting point, requested by the supervisor in meeting 3). The seed only steers the randomness of the "
+            "adaptation: the order of the source and target batches, dropout and the initialisation of the DANN discriminator. "
+            f"Every method continues training on {len(results.transfers)} transfers with labelled source data and unlabelled "
+            "target training windows. Each method has its own control run: the same loop, the same target forward pass and the "
+            "same source loss weight, but with the alignment weight set to 0. Target labels are read only after all training "
+            "has finished, to compute the metrics below on the target test split of the last epoch.", "",
+            f"The seed-{SUPPLIED_SEED} runs are those of stage 2, which already started from this model; the seeds "
+            f"{listed(seeds_again)} were trained again ({runs_again} runs, `results/shared_init/`). The baseline is the same "
+            "model for every seed, so its SD over the seeds is 0. The previous variant, in which every seed started from its "
+            f"own source-only model, is compared with the shared start in the section {previous_link}.", "",
             "Values are mean ± sample standard deviation over the seeds, in percent. A group value is first averaged over the "
             "transfers of the group within each seed.", ""]
 
@@ -450,15 +522,21 @@ def results_page(results: Results, figures: dict[str, str], confusion_variants: 
                   "points right of the zero line mean the method is higher.",
         "heatmap": "Mean difference in weighted F1 between each method and the baseline for every transfer and group; "
                    "blue cells are above the baseline, red cells below.",
-        "probe": "Accuracy of a logistic regression (5-fold cross-validation) that separates source-train from target-train windows "
-                 "on the frozen 96-dimensional features; controls are drawn as open circles.",
         "confusion": f"Row-normalised confusion matrices on target test for {transfer_label(CONFUSION_TRANSFER)}, averaged over the "
                      f"seeds, for {shown} (best and worst method by mean weighted F1 on this transfer).",
-        "costs": "Training time of the training loop on an Apple M1 with MPS, summed over all runs of a variant and as mean per run; "
-                 "the baseline row covers only the source-only models trained in this project.",
+        "costs": "Training time of the training loop on an Apple M1 with MPS, summed over all runs of a variant and as mean per run. "
+                 f"The baseline is the supplied seed-{SUPPLIED_SEED} model and has no training time. Seed {SUPPLIED_SEED}: the "
+                 f"runs of stage 2 under macOS 26.5. The seeds {listed(seeds_again)} were trained again in one batch under macOS "
+                 f"27.2.1 and took {time_ratio:.2f} times as long as the same training loops of the previous variant (stage 2, "
+                 "macOS 26.5); the cause is not established (see [runs_log.md](runs_log.md)).",
     }
     page += ["## Figures", ""]
-    for number, key in enumerate(("groups", "paired", "heatmap", "probe", "confusion", "costs"), start=1):
+    for key in ("groups", "paired", "heatmap", "probe", "confusion", "costs"):
+        number = FIGURE_NUMBERS[key]
+        if key == "probe":  # exists only for the previous variant
+            page += [f"*Figure {number} (domain probe) was computed only for the previous variant and is shown in the section "
+                     f"{previous_link}.*", ""]
+            continue
         page += [f"**Figure {number}.** {captions[key]}", "", f"![Figure {number}]({figures[key]})", ""]
 
     page += ["## Observations", "", "Only statements that follow directly from the tables; no causes are claimed.", ""]
@@ -474,30 +552,31 @@ def results_page(results: Results, figures: dict[str, str], confusion_variants: 
 
     page += list(extra)
     page += ["## Limitations", "",
-             "Five seeds, the last epoch without model selection, loss weights taken over from another benchmark without tuning, and "
-             "small target test sets on some transfers limit what these numbers show. See [limitations.md](limitations.md).", ""]
+             "Five seeds that all start from one source-only model, the last epoch without model selection, loss weights taken "
+             "over from another benchmark without tuning, and small target test sets on some transfers limit what these numbers "
+             "show. See [limitations.md](limitations.md).", ""]
     OUT.mkdir(parents=True, exist_ok=True)
     (OUT / "results.md").write_text("\n".join(page), encoding="utf-8")
     print("Saved: project_docs/results.md")
 
 
 def main() -> None:
-    results = Results()
+    results, previous = Results(MAIN_TABLES), Results(TABLES)  # shared start; start per seed (for the domain probe)
     print("Variants:", ", ".join(results.variants), "| detailed only:", ", ".join(results.extra) or "none")
     confusion, confusion_variants = figure_confusion(results)
     figures = {"groups": figure_groups(results), "paired": figure_paired(results), "heatmap": figure_heatmap(results),
-               "probe": figure_probe(results), "confusion": confusion, "costs": figure_costs(results)}
+               "confusion": confusion, "costs": figure_costs(results)}
     extra = []
     if (TABLES / "T7_sensitivity_summary.csv").is_file():
         from make_sensitivity_figures import sensitivity_section  # imports helpers of this module
-        extra = sensitivity_section(first_figure=len(figures) + 1)
-    if (TABLES / "T8_summary_target_test.csv").is_file():
+        extra = sensitivity_section(first_figure=FIGURE_NUMBERS["sensitivity"])
+    if (MAIN_TABLES / "T8_summary_target_test.csv").is_file():
         from make_soup_figures import soup_section  # imports helpers of this module
-        extra = [*extra, *soup_section(first_figure=len(figures) + 4)]
-    if (TABLES / "T11_branches_old_vs_new.csv").is_file():
-        from make_shared_init_figures import shared_init_section  # imports helpers of this module
-        extra = [*extra, *shared_init_section(first_figure=len(figures) + 7)]
-    results_page(results, figures, confusion_variants, extra)
+        extra = [*extra, *soup_section(first_figure=FIGURE_NUMBERS["soup"])]
+    from make_shared_init_figures import previous_variant_section  # imports helpers of this module
+    extra = [*extra, *previous_variant_section(first_figure=FIGURE_NUMBERS["comparison"]),
+             *probe_section(previous, figure_probe(previous))]
+    results_page(results, figures, confusion_variants, trained_again(results, previous), extra)
 
 
 if __name__ == "__main__":

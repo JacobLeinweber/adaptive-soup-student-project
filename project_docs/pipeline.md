@@ -42,7 +42,7 @@ From the supervisor's code we use the list of transfers (`src/training/experimen
 | `make_soup_tables.py` | SRC and the "best branch" choice without target labels, then the scores and paired comparisons of the soups (`T8_*.csv`). |
 | `run_shared_init.py` | Shared starting point (since meeting 3): seeds 100, 445, 545, 881 × 12 transfers × the three methods and their controls, every run from the supplied seed-52 source-only model (`--init shared` of the three run scripts); stops after three failed runs in a row. |
 | `make_shared_init_tables.py` | The start per seed next to the shared start: reads the T3 and T8 tables of both starts and writes `T11_*.csv`; checks that the seed-52 rows agree. |
-| `make_figures.py` | Figures and `project_docs/results.md`, built only from `results/tables/*.csv`; adds the sections of `make_sensitivity_figures.py`, `make_soup_figures.py` and `make_shared_init_figures.py` when their tables exist. |
+| `make_figures.py` | Figures and `project_docs/results.md`, built only from tables: the main part from `results/shared_init/tables/*.csv` (shared start), the sensitivity, the previous variant and its domain probe from `results/tables/*.csv`; adds the sections of `make_sensitivity_figures.py` and `make_soup_figures.py` (when their tables exist) and of `make_shared_init_figures.py` (previous variant). Every figure keeps a fixed number. |
 
 The run scripts open target data only as windows; they never open the label file of the target. The table scripts read the target labels, after all training has finished.
 

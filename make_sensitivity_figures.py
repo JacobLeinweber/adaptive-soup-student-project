@@ -300,7 +300,9 @@ def sensitivity_section(first_figure: int = 7) -> list[str]:
             f"**Only seed 52 was run, and target labels were not used for any choice in this section.** Target values are "
             f"reported as a sensitivity curve only; the marked choices come from label-free criteria computed on the source "
             f"validation split. This is a sensitivity analysis, not the final choice of the alignment weight. Values are "
-            f"mean ± sample SD over the {n} transfers (not over seeds, unlike the sections above).", "",
+            f"mean ± sample SD over the {n} transfers (not over seeds, unlike the sections above). With seed {SEED}, the "
+            f"shared start and the previous variant use the same start model and the same runs, so this section holds for "
+            f"both.", "",
             "**Setup.** All three methods are run in the convention of their papers: loss = 1 · source cross-entropy + "
             "λ · alignment loss. The base λ of a method is the ratio of AdaTime's alignment weight to its source-loss weight "
             "for HAR, so that factor 1 has the same ratio as the runs above with the AdaTime weights. With Adam, scaling the "

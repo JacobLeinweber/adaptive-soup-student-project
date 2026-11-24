@@ -1,9 +1,10 @@
-"""Figures and the results-page section for stage 2 and stage 3 with the shared starting point (T11), next to the old start.
+"""Figures and the results-page section on the previous variant: stage 2 and stage 3 with the start per seed, next to the
+shared starting point (T11) that the rest of the page shows.
 
 Built only from the T11 tables in results/tables/ (written by make_shared_init_tables.py); reads no raw data, no labels
-and no checkpoints. make_figures.py calls shared_init_section() when these tables exist, so that
-project_docs/results.md keeps a single generator. "Old": every seed starts from its own source-only model; "new":
-every seed starts from the supplied seed-52 source-only model. Figures:
+and no checkpoints. make_figures.py calls previous_variant_section(), so that project_docs/results.md keeps a single
+generator. "Old": every seed starts from its own source-only model (previous variant); "new": every seed starts from
+the supplied seed-52 source-only model (shared start, since meeting 3). Figures:
     project_docs/figures/fig13_shared_init_groups.png
     project_docs/figures/fig14_shared_init_method_minus_control.png
     project_docs/figures/fig15_shared_init_soup.png
@@ -14,8 +15,8 @@ import numpy as np
 import pandas as pd
 from matplotlib.lines import Line2D
 
-from make_figures import (CONTROL_NAMES, GREY, GRID, INK, INK_SOFT, METHOD_COLORS, METHOD_NAMES, SURFACE, TABLES,
-                          markdown_table, new_figure, save, signed, transfer_label)
+from make_figures import (CONTROL_NAMES, GREY, GRID, INK, INK_SOFT, METHOD_COLORS, METHOD_NAMES, PREVIOUS_SECTION,
+                          SUPPLIED_SEED, SURFACE, TABLES, markdown_table, new_figure, save, signed, transfer_label)
 from make_soup_figures import COLORS as SOUP_COLORS
 from make_soup_figures import FAMILY_NAMES, GROUP_NAMES, key
 from make_soup_figures import NAMES as SOUP_NAMES
@@ -24,7 +25,7 @@ CONTROLS = {"deep_coral": "lambda0_target_pass", "dann": "dann_lambda0_target_pa
 BRANCHES = ["baseline", *(v for pair in CONTROLS.items() for v in pair)]
 NAMES = {"baseline": "Baseline", **METHOD_NAMES, **{CONTROLS[m]: CONTROL_NAMES[m] for m in CONTROLS}}
 COLORS = {"baseline": GREY, **METHOD_COLORS, **{CONTROLS[m]: METHOD_COLORS[m] for m in CONTROLS}}
-START_NAMES = {"old": "own source-only model per seed (as before)", "new": "shared start: seed-52 model for all seeds"}
+START_NAMES = {"old": "own source-only model per seed (previous variant)", "new": "shared start: seed-52 model for all seeds"}
 SOUP_KINDS = ["baseline", "branch_mean", "ensemble", "bn_avg", "bn_target"]
 SOUP_TABLE_KINDS = ["baseline", "branch_mean", "best_src_ce", "best_src_macro_f1", "oracle", "ensemble", "bn_avg", "bn_target"]
 SOUP_COMPARISONS = {"1_soup_minus_branch_mean": "Soup − mean of the branches",
@@ -198,26 +199,24 @@ def observations(data: Compare) -> list[str]:
     return lines
 
 
-def shared_init_section(first_figure: int = 13) -> list[str]:
+def previous_variant_section(first_figure: int = 13) -> list[str]:
     data = Compare()
     figures = [figure_groups(data), figure_method_minus_control(data), figure_soup(data)]
     names = [FAMILY_NAMES[g] for g in data.groups]
-    page = ["## Shared starting point: stage 2 and stage 3 again", "",
-            "**Setup.** Requested by the supervisor in meeting 3: all branches start from the same source-only checkpoint, for "
-            "every seed and for methods and controls alike, so that the initialisation cannot shape the soup. Every run now "
-            "starts from the supplied seed-52 source-only model of its transfer; the seed only steers the randomness of the "
-            "adaptation (order of the source and target batches, dropout, initialisation of the DANN discriminator). "
-            "Everything else is unchanged: AdaTime weights, 30 epochs, model after the last epoch, the same controls. The "
-            "seed-52 runs are the same runs as before; seeds 100, 445, 545 and 881 were trained again (288 runs, "
-            "`results/shared_init/`). Stage 3 (both soups, both BatchNorm variants, output ensembles, source-validation "
-            "predictions of the branches) was computed again for all five seeds with the same code and the same checks, and "
-            "every seed of a transfer is checked to start from the same checkpoint. With the shared start the baseline is the "
-            "same model for every seed, so its SD over the seeds is 0.", "",
-            "*Old*: every seed starts from its own source-only model (the sections above). *New*: shared start. Cells show "
-            "old → new, mean ± sample SD over the five seeds in percent; a group value is first averaged over its transfers "
-            "within each seed. Differences are paired by transfer and seed, in brackets the number of seeds in which the "
-            "first variant is higher. Tables: `results/tables/T11_*.csv`; the full tables of the shared start in "
-            "`results/shared_init/tables/` (same names as for the old start).", ""]
+    page = [f"## {PREVIOUS_SECTION}", "",
+            f"Until meeting 3, every seed started from its own source-only model (seed {SUPPLIED_SEED} from the supplied "
+            "checkpoint, the other seeds from source-only models trained in this project with the supplied training code). "
+            "Since meeting 3 all branches of all seeds start from the same source-only checkpoint, as the supervisor "
+            "requested, so that the initialisation cannot shape the soup; the sections above therefore show the shared start, "
+            "and the previous variant is kept here for comparison. Everything else is the same in both variants: AdaTime "
+            "weights, 30 epochs, model after the last epoch, the same controls, the same stage-3 code and checks. The full "
+            "tables of the previous variant are in `results/tables/` (stage 2: `T3_*.csv`, source-only continued: `T5_*.csv`, "
+            "stage 3: `T8_*.csv`); the results page as it was before the switch is in commit `26279be`.", "",
+            "### Old against new", "",
+            f"*Old*: previous variant. *New*: shared start (the sections above). The seed-{SUPPLIED_SEED} runs are the same in "
+            "both. Cells show old → new, mean ± sample SD over the five seeds in percent; a group value is first averaged over "
+            "its transfers within each seed. Differences are paired by transfer and seed, in brackets the number of seeds in "
+            "which the first variant is higher. Tables: `results/tables/T11_*.csv`.", ""]
     rows = [[NAMES[v], *(data.cell(data.branches, g, v) for g in data.groups)] for v in BRANCHES]
     page += ["**Stage 2: weighted F1 on target test (%), old → new**", "", markdown_table(["Variant", *names], rows)]
     rows = [[f"{METHOD_NAMES[m]} − {label}", *(data.method_cell(g, m, reference) for g in data.groups)]
@@ -251,6 +250,7 @@ def shared_init_section(first_figure: int = 13) -> list[str]:
     ]
     for k, (path, caption) in enumerate(zip(figures, captions)):
         page += [f"**Figure {first_figure + k}.** {caption}", "", f"![Figure {first_figure + k}]({path})", ""]
-    page += ["**Observations (shared start).** Only statements that follow directly from the T11 tables; no causes are claimed.", ""]
+    page += ["**Observations (old against new).** Only statements that follow directly from the T11 tables; no causes are "
+             "claimed.", ""]
     page += [f"- {line}" for line in observations(data)] + [""]
     return page
